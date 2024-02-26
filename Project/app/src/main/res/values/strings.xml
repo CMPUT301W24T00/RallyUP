@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ui-test</string>
+    <string name="event_name"><u>EVENT NAME</u></string>
+</resources>
