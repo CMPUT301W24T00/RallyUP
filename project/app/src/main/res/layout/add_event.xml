@@ -37,12 +37,13 @@
 
                 <ImageView
                     android:id="@+id/uploadPosterView"
-                    android:layout_width="373dp"
-                    android:layout_height="132dp"
+                    android:layout_width="417dp"
+                    android:layout_height="130dp"
                     android:layout_marginEnd="13dp"
+                    android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
@@ -61,10 +62,10 @@
                     app:fabCustomSize="70dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/uploadPosterView"
-                    app:layout_constraintHorizontal_bias="0.99"
+                    app:layout_constraintHorizontal_bias="0.979"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.911"
+                    app:layout_constraintVertical_bias="0.737"
                     app:maxImageSize="56dp"
                     app:rippleColor="@color/lightColor"
                     app:srcCompat="@android:drawable/stat_sys_upload" />
@@ -73,7 +74,7 @@
                     android:id="@+id/uploadPosterText"
                     android:layout_width="286dp"
                     android:layout_height="56dp"
-                    android:layout_marginEnd="80dp"
+                    android:layout_marginEnd="84dp"
                     android:fontFamily="@font/inter_bold"
                     android:text="UPLOAD POSTER"
                     android:textAlignment="center"

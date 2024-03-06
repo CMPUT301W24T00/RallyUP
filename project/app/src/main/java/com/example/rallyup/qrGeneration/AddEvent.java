@@ -403,6 +403,7 @@ public class AddEvent extends AppCompatActivity {
         }
     }
 
+
     /**
      * This method saves all the input fields in new variables, resets the views of all the input fields on the screen,
      * and passes the saved variables to firebase as an instance of the Event Class.
