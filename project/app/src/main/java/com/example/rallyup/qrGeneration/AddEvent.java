@@ -32,6 +32,8 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import android.widget.NumberPicker;
+
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -39,23 +41,24 @@ import java.util.Calendar;
 public class AddEvent extends AppCompatActivity {
     EditText eventLocationInput, eventNameInput, eventDescriptionInput;
 
-    TextView eventDateInput, eventTimeInput;
+    TextView eventDateInput, eventTimeInput, uploadPosterText;
 
     Button createButton;
 
-    FloatingActionButton eventImageInput;
+    // b2 is the back button
+    FloatingActionButton eventImageInput, b2;
 
-    CheckBox attendeeInfoInput, geoInput, newQRSelect;
+    CheckBox geoInput, newQRSelect, attendeeSignUpLimitInput;
 
-    // Only for navigating between pages for now
-    Button b2;
+    NumberPicker attendeeLimitPicker;
 
     String eventName, eventLocation, eventDescription, eventID;
 
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
     Integer eventDate, eventTime;
-    Boolean geolocation, attendeeInfo;
+    Integer signupLimit = 0;
+    Boolean geolocation, signupLimitInput;
 
     ImageView qrView, posterImage;
 
@@ -99,6 +102,28 @@ public class AddEvent extends AppCompatActivity {
             }
         });
 
+        attendeeSignUpLimitInput.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {
+                    setAttendeeLimit();
+                } else {
+                    resetAttendeeLimit();
+                }
+            }
+        });
+
+        attendeeLimitPicker.setOnScrollListener(new NumberPicker.OnScrollListener() {
+            @Override
+            public void onScrollStateChange(NumberPicker numberPicker, int scrollState) {
+                if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
+                    //We get the different between oldValue and the new value
+                    signupLimit = numberPicker.getValue();
+                }
+            }
+        });
+
         // Generating the new QR Code that is encoded with the event name when the user checks the
         // "Generate new QR Code" box
         newQRSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -134,11 +159,13 @@ public class AddEvent extends AppCompatActivity {
         b2 = findViewById(R.id.pageSwitcher2);
 
         eventNameInput = findViewById(R.id.eventNameInput);
+        uploadPosterText = findViewById(R.id.uploadPosterText);
         eventLocationInput = findViewById(R.id.eventLocationInput);
         eventDateInput = findViewById(R.id.eventDateInput);
         eventTimeInput = findViewById(R.id.eventTimeInput);
         eventDescriptionInput = findViewById(R.id.eventDetailsInput);
-        attendeeInfoInput = findViewById(R.id.attendeeInfoInput);
+        attendeeSignUpLimitInput = findViewById(R.id.attendeeSignUpLimitInput);
+        attendeeLimitPicker = findViewById(R.id.attendeeLimitPicker);
         geoInput = findViewById(R.id.geolocationInput);
         createButton = findViewById(R.id.createEventButton);
         eventImageInput = findViewById(R.id.posterUploadButton);
@@ -187,6 +214,7 @@ public class AddEvent extends AppCompatActivity {
                         }
                         posterImage.setImageBitmap(
                                 selectedImageBitmap);
+                        uploadPosterText.setVisibility(uploadPosterText.GONE);
                     }
                 }
             });
@@ -252,6 +280,16 @@ public class AddEvent extends AppCompatActivity {
         }, hour, minute, true); //Setting it to 24 hour time
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
+    }
+
+    public void setAttendeeLimit() {
+        attendeeLimitPicker.setVisibility(attendeeLimitPicker.VISIBLE);
+        attendeeLimitPicker.setMaxValue(1000);
+        attendeeLimitPicker.setMinValue(1);
+    }
+
+    public void resetAttendeeLimit() {
+        attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
     }
 
     public void switchPage() {
@@ -374,8 +412,8 @@ public class AddEvent extends AppCompatActivity {
         eventName = String.valueOf(eventNameInput.getText());
         eventLocation = String.valueOf(eventLocationInput.getText());
         geolocation = geoInput.isChecked();
-        attendeeInfo = attendeeInfoInput.isChecked();
         eventDescription = String.valueOf(eventDescriptionInput.getText());
+        signupLimitInput = attendeeSignUpLimitInput.isChecked();
 
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
@@ -385,8 +423,9 @@ public class AddEvent extends AppCompatActivity {
             eventDateInput.setText("");
             eventTimeInput.setText("");
             geoInput.setChecked(false);
-            attendeeInfoInput.setChecked(false);
             newQRSelect.setChecked(false);
+            attendeeSignUpLimitInput.setChecked(false);
+            attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
 
             // send values to fb
             Event newEvent = new Event(eventName, eventLocation, eventDescription);
