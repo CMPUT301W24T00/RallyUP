@@ -1,5 +1,6 @@
 package com.example.rallyup.progressBar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -47,6 +49,7 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         TextView eventTime = findViewById(R.id.ProgressBarEventDateView);
         TextView eventLocation = findViewById(R.id.ProgressBarEventLocationView);
         TextView eventDescription = findViewById(R.id.ProgressBarEventDescriptionView);
+        ImageView eventPoster = findViewById(R.id.ProgressBarEventPosterView);
 
         eventView.setText(event.getEventName());
         eventTime.setText(event.getEventTime());
@@ -55,7 +58,7 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
 
          // Load in poster for this event
          FirestoreController fc = FirestoreController.getInstance();
-         fc.getPosterByEvent(event, this);
+         fc.getPosterByEventID(event.getPosterRef(), this, eventPoster);
     }
 
     @Override
@@ -117,8 +120,8 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         Button sendAnnouncementButton = findViewById(R.id.ProgressBarAnnouncementSendButton);
 
         FirestoreController fc = FirestoreController.getInstance();
-        fc.getEventByID("Actual last test before pushing lol", this);
-        fc.getEventAttendantsByEventID("Actual last test before pushing lol", this);
+        fc.getEventByID("Sample Event Updated", this);
+        fc.getEventAttendantsByEventID("Sample Event Updated", this);
 
         eventViewAttendees.setOnClickListener(new View.OnClickListener() {
             @Override

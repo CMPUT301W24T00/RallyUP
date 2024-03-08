@@ -15,5 +15,7 @@ public class RallyUpApplication extends Application {
         FirestoreController.getInstance();
         LocalStorageController.getInstance();
     }
+
+
 }
 

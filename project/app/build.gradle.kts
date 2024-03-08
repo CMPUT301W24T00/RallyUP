@@ -53,8 +53,10 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-storage")
 
+
     // FirebaseUI Storage only
     implementation ("com.firebaseui:firebase-ui-storage:7.2.0")
+
 
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
