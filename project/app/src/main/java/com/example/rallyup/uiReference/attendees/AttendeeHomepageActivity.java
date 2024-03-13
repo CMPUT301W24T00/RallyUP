@@ -37,6 +37,11 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     TextView usernameView;
     String scannedEvent;
 
+
+    /**
+     * Upon getting a user, we will initialize the views using the details of the user
+     * @param user an object containing the details of a user
+     */
     @Override
     public void onGetUser(User user) {
 //        Log.d("HomepageActivity", user.getFirstName());
@@ -48,6 +53,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     // String attFirstName = findViewById(R.id.att_first_name)
     // String attLastName = findViewById(R.id.att_last_name)
     FloatingActionButton QRCodeScannerBtn;
+
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {

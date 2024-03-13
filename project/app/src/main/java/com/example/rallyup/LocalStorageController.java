@@ -12,6 +12,9 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.util.UUID;
 
+/**
+ * This class contains the local storage controller
+ */
 public class LocalStorageController {
     private static final LocalStorageController instance = new LocalStorageController();
 
@@ -19,10 +22,18 @@ public class LocalStorageController {
     private static final String KEY_USER_ID = "userID";
     private boolean idInitialized = false;
 
+    /**
+     * This method retrieves the instance of a local storage controller
+     * @return the instance of a local storage controller
+     */
     public static LocalStorageController getInstance() {
         return instance;
     }
 
+    /**
+     * This method initializes the local user's ID
+     * @param context the context for this method
+     */
     public void initialization(Context context) {
         if (existsUserID(context)) {
             idInitialized = true;
@@ -31,14 +42,21 @@ public class LocalStorageController {
         }
     }
 
-    // Method to retrieve userID from SharedPreferences
+    /**
+     * Method to retrieve userID from SharedPreferences
+     * @param context the context for this method
+     * @return the string for the user's id
+     */
     public String getUserID(Context context) {
         assert idInitialized;
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USER_ID, null);
     }
 
-    // Method to create userID and save it to SharedPreferences
+    /**
+     * Method to create userID and save it to SharedPreferences
+     * @param context the context for this method
+     */
     public void createNewUserID(Context context) {
         FirestoreController fc = FirestoreController.getInstance();
         fc.createUserID(task -> {
@@ -62,7 +80,11 @@ public class LocalStorageController {
         });
     }
 
-    // Method to check if userID exists in SharedPreferences
+    /**
+     * Method to check if userID exists in SharedPreferences
+     * @param context the context of this method
+     * @return the boolean if the userID exists or not
+     */
     public boolean existsUserID(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.contains(KEY_USER_ID);

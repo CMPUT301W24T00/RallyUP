@@ -12,8 +12,17 @@ import com.example.rallyup.uiReference.attendees.AttendeeUpdateActivity;
 import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ProgressBarActivity;
 
+/**
+ * This class contains the main activity of the app which will temporarily hold direct access to features
+ */
 public class MainActivity extends AppCompatActivity {
-
+    /**
+     * Initializes the main activity when it is first created
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

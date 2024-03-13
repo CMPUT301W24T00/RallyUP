@@ -41,6 +41,10 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
 
     NotificationObject notificationObject = new NotificationObject(this);
 
+    /**
+     * Upon getting an event object it will initialize the necessary views with event details
+     * @param event an event object that has a time, name, and other important details
+     */
     @Override
     public void onGetEvent(Event event) {
         TextView eventView = findViewById(R.id.ProgressBarEventNameTextView);
@@ -61,6 +65,10 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         fc.getPosterByEventID(event.getPosterRef(), this, eventPoster);
     }
 
+    /**
+     * Upon getting an attendee lists it will initialize the necessary attendee views
+     * @param attendantList an array of the attendees in attendance
+     */
     @Override
     public void onGetAttendants(List<Attendance> attendantList) {
         TextView eventVerifiedAttendeesView = findViewById(R.id.ProgressBarEventAttendeesNumberView);
@@ -82,6 +90,13 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         eventPoster.setImageBitmap(bm);
     }*/
 
+    /**
+     * Initializes the progress bar activity when it is created for the first time
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -198,6 +213,12 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
 
     }
 
+    /**
+     * Takes in the progress bar, number of attendees, and the goal of the event to set the progess of the event
+     * @param progressBar
+     * @param currentAttendees
+     * @param goalOrMax
+     */
     private void setProgressOfEvent(ProgressBar progressBar, int currentAttendees, int goalOrMax){
         int maximum = progressBar.getMax();
 

@@ -28,9 +28,14 @@ public class Attendance {
     private String userID;
 
     /**
-     * Constructs a new Attendance object.
+     * Constructs a new empty Attendance object.
      */
     public Attendance() {};
+
+    /**
+     * Constructs a new attendance object from a document snapshot
+     * @param documentSnapshot a snapshot for the document
+     */
     public Attendance(DocumentSnapshot documentSnapshot) {
         setEventID(documentSnapshot.getString("eventID"));
         setUserID(documentSnapshot.getString("userID"));

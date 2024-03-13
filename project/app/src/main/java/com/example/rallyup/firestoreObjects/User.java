@@ -25,6 +25,20 @@ public class User {
     }
 
     /**
+     * Constructor mainly used for unit testing
+     * @param email the email of the user
+     * @param firstName the first name of the user
+     * @param lastName the last name of the usr
+     * @param id the id of the user
+     */
+    public User(String email, String firstName, String lastName, String id) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
+    }
+
+    /**
      * Gets the email of the user.
      *
      * @return The email of the user.

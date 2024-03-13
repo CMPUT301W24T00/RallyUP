@@ -31,6 +31,10 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
     TextView descriptionTextView;
     TextView nameTextView;
 
+    /**
+     * Upon getting an event, it will initialize the necessary views with the event's details
+     * @param event an object containing the details of a specific event
+     */
     @Override
     public void onGetEvent(Event event) {
         dateTextView.setText(event.getEventDate());
@@ -73,6 +77,10 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
         FirestoreController fc = FirestoreController.getInstance();
         fc.getEventByID("Actual last test before pushing lol", this);
     }
+
+    /**
+     * This method shows a popup fragment
+     */
     public void showPopupFragment() {
         AnnouncementPopupFragment popupFragment = new AnnouncementPopupFragment();
         getSupportFragmentManager().beginTransaction()
@@ -83,6 +91,9 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
         backgroundOverlay.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * This method hides a pop up fragment
+     */
     public void hidePopupFragment() {
         getSupportFragmentManager().popBackStack();
         backgroundOverlay.setVisibility(View.GONE);

@@ -48,6 +48,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * This class contains the activity that allows an organizer to add events
+ */
 public class AddEventActivity extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener, FirestoreCallbackListener {
     private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
 
@@ -140,11 +143,22 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
         fc.updateQrCode(qrCode, bitmap);
     }
 
+    /**
+     * Upon creating an event, retrieved it's stored ID
+     * @param event an object containing the details of an event
+     */
     @Override
     public void onCreateEvent(Event event) {
         eventID = event.getEventID();
     }
 
+    /**
+     * Initializes the add event activity
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -445,9 +459,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     }
 
     /**
-     * Adds a leading 0 to the inputted int number if it is <10 and converts the number to a String
+     * Adds a leading 0 to the inputted int number if it is less than 10 and converts the number to a String
      * @param number: the number to be converted
-     * @return the String representation of the inputted number with a leading 0 added to it if the number is < 10
+     * @return the String representation of the inputted number with a leading 0 added to it if the number is less than 10
      */
     public String toStringCheckZero(int number){
         if(number<=9) {
@@ -524,6 +538,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 //        checkInDisplayText.setVisibility(View.VISIBLE);
 //    }
 
+    /**
+     * This method resets the QR
+     */
     public void resetQR() {
         checkInImageView.setVisibility(View.GONE);
         checkInDisplayText.setVisibility(View.GONE);
@@ -592,10 +609,16 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     }
 
 
+    /**
+     * This method generates an event id
+     */
     public void generateEventID() {
         eventID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
     }
 
+    /**
+     * This method gets the id of a user from the local storage
+     */
     public void getUserID(){
         LocalStorageController lc = new LocalStorageController();
         lc.initialization(this);
