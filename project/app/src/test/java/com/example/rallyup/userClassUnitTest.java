@@ -6,7 +6,7 @@ import com.example.rallyup.firestoreObjects.User;
 
 import org.junit.Test;
 
-public class userTest {
+public class userClassUnitTest {
     private User mockUser() {
         User newMock = new User("test@gmail.com", "bob", "david", "123");
         return newMock;

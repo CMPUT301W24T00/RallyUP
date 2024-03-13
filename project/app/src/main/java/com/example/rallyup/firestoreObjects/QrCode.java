@@ -33,6 +33,20 @@ public class QrCode {
     }
 
     /**
+     * Construct mainly used for testing
+     * @param qrId a string for the identification of the qr
+     * @param checkIn if the qr is a check in qr
+     * @param eventID a string for the identification of the event
+     * @param image a string for the associated qr image
+     */
+    public QrCode(String qrId, boolean checkIn, String eventID, String image) {
+        this.qrId = qrId;
+        this.checkIn = checkIn;
+        this.eventID = eventID;
+        this.image = image;
+    }
+
+    /**
      * Checks if the QR code has been checked in.
      * @return true if the QR code has been checked in; otherwise, false.
      */
