@@ -209,7 +209,11 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         progressBar.setProgress(percentageOfProgress);
     }
 
-    // For formatting the date stored in firebase into something more user friendly
+    /**
+     * For formatting the date stored in firebase into something more user friendly
+     * @param date the string of the date
+     * @return the string for proper date formatting
+     */
     public String getProperDateFormatting(String date) {
         String year = date.substring(0,4);
         String month;

@@ -39,6 +39,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class represents the firestore controller that contains references to the firebase and important collections
+ */
 public class FirestoreController {
     private static final FirestoreController instance = new FirestoreController();
 
@@ -48,7 +51,9 @@ public class FirestoreController {
     private final CollectionReference eventAttendanceRef;
     private final CollectionReference qrRef;
 
-
+    /**
+     * This method constructs a firestore controller using references to the firecase and important collections
+     */
     public FirestoreController() {
         dbRef = FirebaseFirestore.getInstance();
         usersRef = dbRef.collection("users");
@@ -57,16 +62,29 @@ public class FirestoreController {
         qrRef = dbRef.collection("qrCodes");
     }
 
+    /**
+     * This method returns an instance of the firestore controller
+     * @return an instance of the firestore controller
+     */
     public static FirestoreController getInstance() {
         return instance;
     }
 
+    /**
+     * This method takes an event object and allows it to be modified/updated
+     * @param event an object containing the details of an event
+     * @param callbackListener a listener for the firestore
+     */
     public void updateEvent(Event event, FirestoreCallbackListener callbackListener) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("ownerID", event.getOwnerID());
         qrRef.document(event.getEventID()).set(data);
     }
 
+    /**
+     * This method creates a new event and sets a unique ID for it
+     * @param callbackListener a listener for the firestore
+     */
     public void createEvent(FirestoreCallbackListener callbackListener) {
 
         Event event = new Event();
@@ -76,6 +94,11 @@ public class FirestoreController {
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
 
+    /**
+     * This method takes in a qr code objecet and a bitmap, and allows the user to modify/update a qr code
+     * @param qrCode an object containing the details of a qr code
+     * @param bm a bitmap
+     */
     public void updateQrCode(QrCode qrCode, Bitmap bm) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("eventID", qrCode.getEventID());
@@ -91,6 +114,11 @@ public class FirestoreController {
         qrRef.document(qrCode.getQrId()).set(data);
     }
 
+    /**
+     * This method allows the user to create a new QR code
+     * @param jobId a string for the identification of a job
+     * @param callbackListener a listener for the firestore
+     */
     public void createQRCode(String jobId, FirestoreCallbackListener callbackListener) {
 
         QrCode newQr = new QrCode();
@@ -100,6 +128,11 @@ public class FirestoreController {
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
 
+    /**
+     * This method retrieves the events of a given user
+     * @param userID the string identification of a user
+     * @param callbackListener a listener for the firestore
+     */
     public void getEventsByOwnerID(String userID, FirestoreCallbackListener callbackListener) {
         Query query = eventsRef.whereEqualTo("userID", userID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -115,6 +148,12 @@ public class FirestoreController {
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
 
     }
+
+    /**
+     * This method retrieves a user by the user id
+     * @param userID a string for the identification of a user
+     * @param callbackListener a listener for the firestore
+     */
     public void getUserByID(String userID, FirestoreCallbackListener callbackListener) {
         DocumentReference docRef = usersRef.document(userID);
         docRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -128,7 +167,11 @@ public class FirestoreController {
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
     }
 
-
+    /**
+     * This method retrieves the poster of an event
+     * @param event an object that contains the details of an event
+     * @param callbackListener a listener for the firestore
+     */
     public void getPosterByEvent(Event event, FirestoreCallbackListener callbackListener) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(event.getPosterRef());
 
@@ -145,6 +188,11 @@ public class FirestoreController {
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting picture: " + e));
     }
 
+    /**
+     * This method retireves an event based on the event's QR id
+     * @param eventQRID a string for the identification of an event's qr id
+     * @param callbackListener a listener for the firestore
+     */
     public void getEventByQRID(String eventQRID, FirestoreCallbackListener callbackListener) {
         Query query = qrRef.whereEqualTo("qrID", eventQRID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -157,6 +205,11 @@ public class FirestoreController {
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
 
+    /**
+     * This method gets the event of an attendant based on the id of the event
+     * @param eventID a string for the identification of an event
+     * @param callbackListener a listener for the firestore
+     */
     public void getEventAttendantsByEventID(String eventID, FirestoreCallbackListener callbackListener) {
         Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -168,6 +221,13 @@ public class FirestoreController {
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
 
+    /**
+     * This method retrieves an event based on the date of the event
+     * @param year an integer for the year
+     * @param month an integer for the month
+     * @param day an integer for the day
+     * @param callbackListener a listener for the firestore
+     */
     public void getEventsByDate(int year, int month, int day, FirestoreCallbackListener callbackListener) {
         Query query = eventsRef.whereGreaterThan("signUpLimit", -1);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -190,6 +250,11 @@ public class FirestoreController {
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
 
+    /**
+     * This method gets an event based on the id of the event
+     * @param eventID a string for the identification of the event
+     * @param callbackListener a listener for the firestore
+     */
     public void getEventByID(String eventID, FirestoreCallbackListener callbackListener) {
 
         DocumentReference docRef = eventsRef.document(eventID);
@@ -230,7 +295,7 @@ public class FirestoreController {
 
     /**
      * Generates a new User ID in the Firestore.
-     *
+     * @param onCompleteListener a listener of type document reference
      */
     // Create a new user in the Firestore and return its userID
     public void createUserID(final OnCompleteListener<DocumentReference> onCompleteListener) {
@@ -281,6 +346,11 @@ public class FirestoreController {
         });
     }
 
+    /**
+     * This method uploads an image bitmap
+     * @param bitmap an object containing the details of a bitmap
+     * @param sReference an object containing the details of the storage reference
+     */
     public void uploadImageBitmap(Bitmap bitmap, StorageReference sReference) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -296,18 +366,24 @@ public class FirestoreController {
         });
     }
 
-    @Deprecated
-    public void getEventAttendantsByEventID(String eventID, final OnSuccessListener<QuerySnapshot> onSuccessListener) {
-        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
-        query.get().addOnSuccessListener(onSuccessListener).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
-    }
+//    @Deprecated
+//    public void getEventAttendantsByEventID(String eventID, final OnSuccessListener<QuerySnapshot> onSuccessListener) {
+//        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
+//        query.get().addOnSuccessListener(onSuccessListener).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+//    }
+//
+//    @Deprecated
+//    public void getEventByID(String eventID, final OnSuccessListener<DocumentSnapshot> onSuccessListener) {
+//        DocumentReference docRef = eventsRef.document(eventID);
+//        docRef.get().addOnSuccessListener(onSuccessListener).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
+//    }
 
-    @Deprecated
-    public void getEventByID(String eventID, final OnSuccessListener<DocumentSnapshot> onSuccessListener) {
-        DocumentReference docRef = eventsRef.document(eventID);
-        docRef.get().addOnSuccessListener(onSuccessListener).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
-    }
-
+    /**
+     * This method retrieves the poster of an event
+     * @param posterPath the string for the path of the poster
+     * @param context the context for this method
+     * @param poster an imageview object of a poster
+     */
     public void getPosterByEventID(String posterPath, Context context, ImageView poster) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(posterPath);
         Glide.with(context)

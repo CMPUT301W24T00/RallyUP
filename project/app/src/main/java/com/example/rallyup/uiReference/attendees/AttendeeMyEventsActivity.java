@@ -81,7 +81,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
 
     /**
      * Upon getting the list of events, it links the necessary adapter
-     * @param events
+     * @param events a collection of event objects
      */
     @Override
     public void onGetEvents(List<Event> events){

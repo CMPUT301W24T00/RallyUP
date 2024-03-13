@@ -445,9 +445,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     }
 
     /**
-     * Adds a leading 0 to the inputted int number if it is <10 and converts the number to a String
+     * Adds a leading 0 to the inputted int number if it is less than 10 and converts the number to a String
      * @param number: the number to be converted
-     * @return the String representation of the inputted number with a leading 0 added to it if the number is < 10
+     * @return the String representation of the inputted number with a leading 0 added to it if the number is less than 10
      */
     public String toStringCheckZero(int number){
         if(number<=9) {

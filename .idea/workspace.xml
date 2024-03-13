@@ -12,17 +12,23 @@
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/attendeeHomepageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/attendeeHomepageTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/organizerEventListTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/organizerEventListTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/splashScreenTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/splashScreenTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreCallbackListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreCallbackListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/LocalStorageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/LocalStorageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/RallyUpApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/RallyUpApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/Event.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/progressBar/ManageMilestoneDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/progressBar/ManageMilestoneDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/progressBar/ProgressBarActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/progressBar/ProgressBarActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AnnouncementPopupFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AnnouncementPopupFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeBrowseEventsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeBrowseEventsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeEventDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeEventDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeHomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeHomepageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/ListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/ListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/MyAppGlideModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/MyAppGlideModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeMyEventsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeMyEventsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeRegisteredEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeRegisteredEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeUpdateActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeUpdateActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/TextDrawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/TextDrawable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/AddEventActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/AddEventActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/OrganizerEventDetailsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/OrganizerEventDetailsActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,16 +64,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "docTesting",
-    "last_opened_file_path": "C:/Users/reima/Code/CMPUT 301/javaTesting/RallyUP"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;docTesting&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/reima/AndroidStudioProjects/lab62&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />

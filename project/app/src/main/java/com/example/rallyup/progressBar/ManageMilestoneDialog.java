@@ -36,7 +36,7 @@ public class ManageMilestoneDialog extends DialogFragment {
      * @param savedInstanceState If non-null, this fragment is being re-constructed
      * from a previous saved state as given here.
      *
-     * @return
+     * @return the dialog view on creation
      */
     @Nullable
     @Override

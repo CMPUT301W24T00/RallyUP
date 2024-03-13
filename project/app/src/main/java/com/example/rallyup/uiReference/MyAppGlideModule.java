@@ -14,9 +14,18 @@ import com.google.firebase.storage.StorageReference;
 import java.io.InputStream;
 
 //  code sourced from: https://firebaseopensource.com/projects/firebase/firebaseui-android/storage/readme/
+
+/**
+ * This class represents the apps glide module
+ */
 @GlideModule
 public class MyAppGlideModule extends AppGlideModule {
-
+    /**
+     * This method registers all necessary components
+     * @param context An Application {@link android.content.Context}.
+     * @param glide The Glide singleton that is in the process of being initialized.
+     * @param registry An {@link com.bumptech.glide.Registry} to use to register components.
+     */
     @Override
     public void registerComponents(@NonNull Context context, @NonNull Glide glide, Registry registry) {
         // Register FirebaseImageLoader to handle StorageReference

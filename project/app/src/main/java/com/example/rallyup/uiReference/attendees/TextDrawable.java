@@ -72,7 +72,7 @@ public class TextDrawable extends Drawable {
 
     /**
      * This method returns the opacity of the drawable to the user
-     * @return
+     * @return an integer for opacity
      */
     @Override
     public int getOpacity() {
