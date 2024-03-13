@@ -22,14 +22,20 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
-@LargeTest
 /**
  * This class contains all attendee related intent tests
  */
+@RunWith(AndroidJUnit4.class)
+@LargeTest
 public class attendeeHomepageTest {
+    /**
+     * creates a new scenario to test the attendee's homepage activity
+     */
     @Rule
     public ActivityScenarioRule<AttendeeHomepageActivity> scenario = new ActivityScenarioRule<>(AttendeeHomepageActivity.class);
+    /**
+     * Allows the test to by pass the camera permission pop up
+     */
     @Rule
     public GrantPermissionRule permissionCamera = GrantPermissionRule.grant("android.permission.CAMERA");
 

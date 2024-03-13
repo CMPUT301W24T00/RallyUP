@@ -40,7 +40,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
 
     /**
      * Upon getting a user, we will initialize the views using the details of the user
-     * @param user
+     * @param user an object containing the details of a user
      */
     @Override
     public void onGetUser(User user) {

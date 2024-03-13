@@ -77,6 +77,10 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
         FirestoreController fc = FirestoreController.getInstance();
         fc.getEventByID("Actual last test before pushing lol", this);
     }
+
+    /**
+     * This method shows a popup fragment
+     */
     public void showPopupFragment() {
         AnnouncementPopupFragment popupFragment = new AnnouncementPopupFragment();
         getSupportFragmentManager().beginTransaction()
@@ -87,6 +91,9 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
         backgroundOverlay.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * This method hides a pop up fragment
+     */
     public void hidePopupFragment() {
         getSupportFragmentManager().popBackStack();
         backgroundOverlay.setVisibility(View.GONE);

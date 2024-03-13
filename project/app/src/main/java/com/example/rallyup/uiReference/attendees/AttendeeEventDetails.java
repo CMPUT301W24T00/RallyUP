@@ -79,6 +79,9 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
         });
     }
 
+    /**
+     * This method sets the fields for an event's details
+     */
     public void setFields() {
         controller.getPosterByEventID(displayEvent.getPosterRef(), this, poster);
         eventName.setText(displayEvent.getEventName());
@@ -92,6 +95,11 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
         eventDetails.setText(displayEvent.getEventDescription());
     }
 
+    /**
+     * This method corrects the string format of a date
+     * @param date a string for a date
+     * @return the string of the correct date format
+     */
     public String getProperDateFormatting(String date) {
         String year = date.substring(0,4);
         String month;

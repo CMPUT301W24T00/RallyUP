@@ -11,6 +11,9 @@ import com.example.rallyup.R;
 
 import java.util.ArrayList;
 
+/**
+ * This class contains a list adapter for an integer array list
+ */
 public class ListAdapter extends BaseAdapter {
     Context context;
     ArrayList<Integer> arrayList;

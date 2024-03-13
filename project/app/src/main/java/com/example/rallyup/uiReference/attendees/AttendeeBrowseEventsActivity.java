@@ -37,7 +37,7 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
 
     /**
      * Upon getting the lsit of events, it will set the necessary adapters
-     * @param events
+     * @param events a list of event objects
      */
     @Override
     public void onGetEvents(List<Event> events){

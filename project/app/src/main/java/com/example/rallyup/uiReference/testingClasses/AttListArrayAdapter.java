@@ -14,15 +14,35 @@ import com.example.rallyup.R;
 
 import java.util.ArrayList;
 
+/**
+ * This class contains the attendee's list array adapter
+ */
 public class AttListArrayAdapter extends ArrayAdapter<AttendeeStatsClass> {
 
+    /**
+     * Constructs an attendee list array adapter based on a given context and the stats of an attendee
+     * @param context the context for this method
+     * @param attStats the array of stats for an attendee
+     */
     public AttListArrayAdapter(Context context, ArrayList<AttendeeStatsClass> attStats) {
         super(context, 0, attStats);
     }
 
+    /**
+     * Custom view is created. this is the posting displayed for each book in the arraylist of books on main activity
+     * @param position The position of the item within the adapter's data set of the item whose view
+     *        we want.
+     * @param convertView The old view to reuse, if possible. Note: You should check that this view
+     *        is non-null and of an appropriate type before using. If it is not possible to convert
+     *        this view to display the correct data, this method can create a new view.
+     *        Heterogeneous lists can specify their number of view types, so that this View is
+     *        always of the right type (see {@link #getViewTypeCount()} and
+     *        {@link #getItemViewType(int)}).
+     * @param parent The parent that this view will eventually be attached to
+     * @return returns the view for the array adapter
+     */
     @NonNull
     @Override
-    // custom view is created. this is the posting displayed for each book in the arraylist of books on main activity
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view;
         if (convertView == null) {
