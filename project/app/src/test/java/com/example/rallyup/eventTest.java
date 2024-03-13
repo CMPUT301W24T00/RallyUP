@@ -120,8 +120,8 @@ public class eventTest {
 
     @Test
     public void testSetEmail () {
-        User testUser = mockUser();
-        testUser.setEmail("notest@gmail.com");
-        assertEquals("notest@gmail.com", testUser.getEmail());
+        Event testEvent = mockEvent();
+        testEvent.setEventName("new name");
+        assertEquals("new name", testEvent.getEventName());
     }
 }
