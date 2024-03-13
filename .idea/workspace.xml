@@ -10,22 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/ExampleInstrumentedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/attendeeHomepageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/androidTest/java/com/example/rallyup/attendeeHomepageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/Attendance.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/Attendance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/EventAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/EventAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/ListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/ListAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AnnouncementPopupFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AnnouncementPopupFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeBrowseEventsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeBrowseEventsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeEventDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeEventDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeHomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeHomepageActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeRegisteredEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeRegisteredEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/AddEventActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/AddEventActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/ChooseReUseEventFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/ChooseReUseEventFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/testingClasses/AttListArrayAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/testingClasses/AttListArrayAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/testingClasses/AttendeeStatsClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/testingClasses/AttendeeStatsClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/ExampleUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +36,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -61,17 +56,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;docTesting&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/reima/AndroidStudioProjects/lab62&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "docTesting",
+    "last_opened_file_path": "C:/Users/reima/Code/CMPUT 301/lab7/Android-UI-testing"
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RunManager" selected="Gradle.userTest">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />
       <option name="DEPLOY" value="true" />
@@ -139,6 +134,123 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tests in 'com.example.rallyup'" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="RallyUP.app.androidTest" />
+      <option name="TESTING_TYPE" value="1" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="com.example.rallyup" />
+      <option name="TEST_NAME_REGEX" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="RETENTION_ENABLED" value="No" />
+      <option name="RETENTION_MAX_SNAPSHOTS" value="2" />
+      <option name="RETENTION_COMPRESS_SNAPSHOTS" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tests in 'com.example.rallyup'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;com.example.rallyup.*&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="userTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;com.example.rallyup.userTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.userTest" />
+        <item itemvalue="Android Instrumented Tests.Tests in 'com.example.rallyup'" />
+        <item itemvalue="Gradle.Tests in 'com.example.rallyup'" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
