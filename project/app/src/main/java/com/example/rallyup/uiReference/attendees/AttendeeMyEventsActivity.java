@@ -79,11 +79,15 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
     ListView listView;
 //     ArrayList<Integer> arrayList = new ArrayList<>();
 
-@Override
-public void onGetEvents(List<Event> events){
-    EventAdapter eventAdapter = new EventAdapter(AttendeeMyEventsActivity.this, events);
-    listView.setAdapter(eventAdapter);
-}
+    /**
+     * Upon getting the list of events, it links the necessary adapter
+     * @param events
+     */
+    @Override
+    public void onGetEvents(List<Event> events){
+        EventAdapter eventAdapter = new EventAdapter(AttendeeMyEventsActivity.this, events);
+        listView.setAdapter(eventAdapter);
+    }
 
   /*
     @Override

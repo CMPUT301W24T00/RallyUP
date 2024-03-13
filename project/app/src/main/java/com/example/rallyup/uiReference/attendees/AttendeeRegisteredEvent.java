@@ -31,6 +31,10 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
     TextView descriptionTextView;
     TextView nameTextView;
 
+    /**
+     * Upon getting an event, it will initialize the necessary views with the event's details
+     * @param event an object containing the details of a specific event
+     */
     @Override
     public void onGetEvent(Event event) {
         dateTextView.setText(event.getEventDate());

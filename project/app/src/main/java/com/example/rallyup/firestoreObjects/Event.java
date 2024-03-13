@@ -67,8 +67,12 @@ public class Event {
         this.eventID = eventID;
     }
 
-    public Event() {}
+//    public Event() {}
 
+    /**
+     * Constructs a new event object based on a give document snapshop from the firebase
+     * @param documentSnapshot
+     */
     public Event(DocumentSnapshot documentSnapshot) {
         setEventID(documentSnapshot.getString("eventID"));
         setEventName(documentSnapshot.getString("eventName"));
