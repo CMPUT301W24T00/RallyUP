@@ -4,16 +4,50 @@
     <shared>
       <config />
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_attendee_event_details.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_attendeeupdateinfo.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_main_progress_bar.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_organizer_event_details.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_progressbar.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/appInsightsSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/appInsightsSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/QrCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/QrCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/eventTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/eventClassUnitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userClassUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/progressBar/ManageMilestoneDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/progressBar/ManageMilestoneDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/progressBar/ProgressBarActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/progressBar/ProgressBarActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeUpdateActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeUpdateActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/OrganizerEventDetailsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/OrganizerEventDetailsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/drawable/progressbar_progressable.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/drawable/progressbar_progressable.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_attendeeupdateinfo.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_attendeeupdateinfo.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_organizer_event_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_organizer_event_details.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_progressbar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_progressbar.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +57,13 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\reima\.android\avd\Medium_Phone_API_UpsideDownCakePrivacySandbox.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Chih-Hung\.android\avd\Pixel_5_API_34.avd]" />
   <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/fixgradle">
+      <ProjectState>
+        <option name="isInclusion" value="true" />
+      </ProjectState>
+    </projectState>
     <projectState path="$PROJECT_DIR$/project">
       <ProjectState />
     </projectState>
@@ -32,16 +71,17 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <projects_view />
+        <task path="$PROJECT_DIR$/project/app">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -51,23 +91,41 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2dHavPaxQd5Z2mgzVjBA8vbdOZK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "docTesting",
-    "last_opened_file_path": "C:/Users/reima/AndroidStudioProjects/lab62"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;progressBarTweak1&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/UofA/FALLANDWINTER2023-2024/WINTER2024/CMPUT301/fixgradle&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Dependencies&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Gradle.qrClassUnitTest">
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\UofA\FALLANDWINTER2023-2024\WINTER2024\CMPUT301\RallyUP\project" />
+      <recent name="E:\UofA\FALLANDWINTER2023-2024\WINTER2024\CMPUT301\RallyUP\project\gradle" />
+      <recent name="E:\UofA\FALLANDWINTER2023-2024\WINTER2024\CMPUT301\RallyUP" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android App.app">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />
       <option name="DEPLOY" value="true" />
@@ -151,8 +209,8 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="2147483645" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="lab5-testerino" />
       <option name="DEBUGGER_TYPE" value="Auto" />
       <Auto>
         <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
@@ -197,109 +255,58 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Tests in 'com.example.rallyup'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="E:/UofA/FALLANDWINTER2023-2024/WINTER2024/CMPUT301/RallyUP" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
-          <list>
-            <option value=":app:testDebugUnitTest" />
-            <option value="--tests" />
-            <option value="&quot;com.example.rallyup.*&quot;" />
-          </list>
+          <list />
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="eventTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="project:app [testReleaseUnitTest]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/project/app" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":app:testDebugUnitTest" />
-            <option value="--tests" />
-            <option value="&quot;com.example.rallyup.eventTest&quot;" />
+            <option value="testReleaseUnitTest" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="qrClassUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":app:testDebugUnitTest" />
-            <option value="--tests" />
-            <option value="&quot;com.example.rallyup.qrClassUnitTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="userTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":app:testDebugUnitTest" />
-            <option value="--tests" />
-            <option value="&quot;com.example.rallyup.userTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
+    <list>
+      <item itemvalue="Android App.app" />
+      <item itemvalue="Android Instrumented Tests.Tests in 'com.example.rallyup'" />
+      <item itemvalue="Gradle.E:/UofA/FALLANDWINTER2023-2024/WINTER2024/CMPUT301/RallyUP" />
+      <item itemvalue="Gradle.project:app [testReleaseUnitTest]" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.qrClassUnitTest" />
-        <item itemvalue="Gradle.eventTest" />
-        <item itemvalue="Gradle.userTest" />
         <item itemvalue="Android Instrumented Tests.Tests in 'com.example.rallyup'" />
-        <item itemvalue="Gradle.Tests in 'com.example.rallyup'" />
+        <item itemvalue="Gradle.project:app [testReleaseUnitTest]" />
       </list>
     </recent_temporary>
   </component>

@@ -42,7 +42,7 @@
         android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back_arrow"/>
+        app:srcCompat="@drawable/back_arrow" />
 
     <TextView
         android:id="@+id/ProgressBarEventNameTextView"
@@ -222,7 +222,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/ProgressBarprogressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="236dp"
                 android:layout_height="38dp"
@@ -230,6 +230,7 @@
                 android:indeterminateOnly="false"
                 android:max="100"
                 android:progressDrawable="@drawable/progressbar_progressable"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ProgressBarMilestonesView" />
@@ -252,6 +253,17 @@
                 app:layout_constraintStart_toEndOf="@+id/ProgressBarMilestonesView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/milestones" />
+
+            <ImageView
+                android:id="@+id/progressBarForegroundImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarMilestonesView"
+                app:srcCompat="@drawable/milestone_check_copy" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

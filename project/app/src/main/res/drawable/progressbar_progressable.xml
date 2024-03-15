@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
         <item
-            android:id="@+id/progress_Background"
-            android:drawable="@drawable/milestone_check"
+            android:id="@android:id/mask"
+            android:drawable="@drawable/milestone_check_copy"
             />
 
-        <item android:id="@+id/progress_Foreground">
+        <item android:id="@android:id/progress">
             <clip>
                 <shape>
                     <gradient

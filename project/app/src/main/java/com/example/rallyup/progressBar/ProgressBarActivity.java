@@ -1,7 +1,6 @@
 package com.example.rallyup.progressBar;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,11 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import com.example.rallyup.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -73,8 +68,11 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
     public void onGetAttendants(List<Attendance> attendantList) {
         TextView eventVerifiedAttendeesView = findViewById(R.id.ProgressBarEventAttendeesNumberView);
         TextView eventTotalAttendees = findViewById(R.id.ProgressBarEventTotalAttendeesView);
+        ProgressBar progressBar = findViewById(R.id.ProgressBarprogressBar);
 
         eventTotalAttendees.setText(attendantList.size() + " total attendees");
+
+        progressBar.setProgress(attendantList.size());
 
         int count = 0;
         for (Attendance attendance : attendantList) {
@@ -103,6 +101,8 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
 
         // Set your CONTENT VIEWS
         setContentView(R.layout.activity_progressbar);
+        Intent intent = getIntent();
+        String eventID = intent.getStringExtra("key");
 
         // create the notification channel
         notificationObject.createNotificationChannel(
@@ -129,15 +129,19 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         Button checkInQRCodeButton = findViewById(R.id.ProgressBarEventCheckInQRCodeButton);
         // Milestones
         ImageView editMilestonesDialogButton = findViewById(R.id.ProgressBarMilestonesEditButton);
-        ProgressBar progressBar = findViewById(R.id.progressBar);
+        ProgressBar progressBar = findViewById(R.id.ProgressBarprogressBar);
         // Announcements
         EditText editAnnouncementTitle = findViewById(R.id.ProgressBarAnnouncementEditTitle);
         EditText editAnnouncementBody = findViewById(R.id.ProgressBarAnnouncementBody);
         Button sendAnnouncementButton = findViewById(R.id.ProgressBarAnnouncementSendButton);
 
         FirestoreController fc = FirestoreController.getInstance();
-        fc.getEventByID("Actual last test before pushing lol", this);
-        fc.getEventAttendantsByEventID("Actual last test before pushing lol", this);
+        // Need to transport the eventID through the intent
+        fc.getEventByID("048ACC2B534046668F6BAA2EA43F170C", this);
+        fc.getEventAttendantsByEventID("048ACC2B534046668F6BAA2EA43F170C", this);
+
+        //fc.getEventByID(eventID, this);
+        //fc.getEventAttendantsByEventID(eventID, this);
 
         eventViewAttendees.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,8 +165,6 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         // Organizers.
         // I'm not too sure how we're going to keep track or update the progressBar
 
-        //setProgressOfEvent(progressBar, //int of current number of attendees, int of MaxAttendeesOrGoal);
-
         backToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,7 +187,6 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
                 // start the share event QR code dialog U.S. - 01.06.01
             }
         });
-
 
 
         editMilestonesDialogButton.setOnClickListener(new View.OnClickListener() {
@@ -213,18 +214,18 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
 
     }
 
-    /**
-     * Takes in the progress bar, number of attendees, and the goal of the event to set the progess of the event
-     * @param progressBar
-     * @param currentAttendees
-     * @param goalOrMax
-     */
-    private void setProgressOfEvent(ProgressBar progressBar, int currentAttendees, int goalOrMax){
-        int maximum = progressBar.getMax();
-
-        // (number of participants / Max or Goal) * maximum
-        int percentageOfProgress = (currentAttendees / goalOrMax) * maximum;
-
-        progressBar.setProgress(percentageOfProgress);
-    }
+//    /**
+//     * Takes in the progress bar, number of attendees, and the goal of the event to set the progess of the event
+//     * @param progressBar
+//     * @param currentAttendees
+//     * @param goalOrMax
+//     */
+//    private void setProgressOfEvent(ProgressBar progressBar, int currentAttendees, int goalOrMax){
+//        //int maximum = progressBar.getMax();
+//
+//        // (number of participants / Max or Goal) * maximum
+//        int percentageOfProgress = (currentAttendees / goalOrMax) * 100;
+//
+//        progressBar.setProgress(percentageOfProgress);
+//    }
 }

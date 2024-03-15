@@ -78,8 +78,10 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     public void onGetAttendants(List<Attendance> attendantList) {
         TextView eventVerifiedAttendeesView = findViewById(R.id.verifed_attendees);
         TextView eventTotalAttendees = findViewById(R.id.total_attendees);
+        progressBar = findViewById(R.id.progressBar3);
 
         eventTotalAttendees.setText(attendantList.size() + " total attendees");
+        progressBar.setProgress(attendantList.size());
 
         int count = 0;
         for (Attendance attendance : attendantList) {
@@ -126,7 +128,6 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         viewCheckInQRCode = findViewById(R.id.view_qr_code_button);
 
         milestoneEditButton = findViewById(R.id.imageButton5);
-        progressBar = findViewById(R.id.progressBar3);
         sendNotificationButton = findViewById(R.id.org_send_notification);
 
         editNotificationTitle = findViewById(R.id.notification_title);
@@ -137,10 +138,6 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         FirestoreController fc = FirestoreController.getInstance();
         fc.getEventByID(eventID, this);
         fc.getEventAttendantsByEventID(eventID, this);
-
-        // Need to implement firebase to get the proper count of attendees here
-        //setProgressOfEvent(progressBar,70, 100);
-        progressBar.setProgress(70);
 
         // Setting onClickListener for the back button to navigate back to the event list
         orgEventDetailsBackBtn.setOnClickListener(view -> {
@@ -160,8 +157,8 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         });
 
         sendNotificationButton.setOnClickListener(v -> {
-            if (!editNotificationBody.getText().toString().equals("") &&
-                    !editNotificationTitle.getText().toString().equals("")){
+            if (!editNotificationBody.getText().toString().isEmpty() &&
+                    !editNotificationTitle.getText().toString().isEmpty()){
                 // Create a new notification/announcement in the Firebase
                 // Which then if we go to Attendees side of the activities, they should be able
                 // to detect a new notification create for their specific event
@@ -185,6 +182,10 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
             }
         });
 
+        // Setting up milestone progress here
+        // Need the milestone dialog to bet set, and we can programmatically set new progressbar.setMax()
+        // TODO: create an if else system, that will check for ManageMilestoneDialog information
+        //  or something of the sort. I don't know.
         if (progressBar.getProgress() >= 30) {
             notificationObject.createNotification(MainActivity.class,
                     notification_channel_ID_milestone,
@@ -198,15 +199,6 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
                     true,
                     null);
         }
-    }
-
-    private void setProgressOfEvent(ProgressBar progressBar, int currentAttendees, int goalOrMax){
-        int maximum = progressBar.getMax();
-
-        // (number of participants / Max or Goal) * maximum
-        int percentageOfProgress = (currentAttendees / goalOrMax) * maximum;
-
-        progressBar.setProgress(percentageOfProgress);
     }
 
     /**

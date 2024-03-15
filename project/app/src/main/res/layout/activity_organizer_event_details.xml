@@ -201,14 +201,28 @@
 
                 </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/progressBar3"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="237dp"
-                    android:layout_height="38.5dp"
-                    android:max="100"
-                    android:maxWidth="48dip"
-                    android:progressDrawable="@drawable/progressbar_progressable" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|center_horizontal|center_vertical">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar3"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="237dp"
+                        android:layout_height="38.5dp"
+                        android:layout_gravity="center|center_horizontal"
+                        android:max="100"
+                        android:maxWidth="48dip"
+                        android:progressDrawable="@drawable/progressbar_progressable" />
+
+                    <ImageView
+                        android:id="@+id/progressBarForeground"
+                        android:layout_width="237dp"
+                        android:layout_height="38.5dp"
+                        android:layout_gravity="center|center_horizontal"
+                        app:srcCompat="@drawable/milestone_check_copy" />
+                </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"
