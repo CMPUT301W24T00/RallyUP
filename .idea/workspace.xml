@@ -15,6 +15,21 @@
           <theme>@style/Theme.RallyUP</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_event_attendees_info.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_eventattendance.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_main_attendee_list.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_main_progress_bar.xml">
         <config>
           <theme>@style/Theme.RallyUP</theme>
@@ -30,6 +45,11 @@
           <theme>@style/Theme.RallyUP</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/attendee_homepage.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
     </layouts>
   </component>
   <component name="AutoImportSettings">
@@ -37,9 +57,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeUpdateActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeUpdateActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_attendeeupdateinfo.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_attendeeupdateinfo.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

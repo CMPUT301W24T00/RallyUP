@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -62,11 +63,9 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
     ImageButton attHomepageBackBtn;
 
     private static String firstNameField = "firstName";
-
     private static String lastNameField = "lastName";
     private static String emailField = "email";
     private static String phoneNumberField = "phoneNumber";
-
     private static String geolocationField = "geolocation";
 
     @Override
@@ -85,9 +84,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
-
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +92,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         // We need to access our database and get the information as needed
         FirestoreController fc = FirestoreController.getInstance();
         LocalStorageController ls = LocalStorageController.getInstance();
-        fc.getUserByID(ls.getUserID(this), this);
+        //fc.getUserByID(ls.getUserID(this), this);
+        fc.getUserByID("0LzfC31jw7FEgF0VXrXZ", this);
 
         // Edit image section
         profilePicture = findViewById(R.id.attendeeUpdateInfoImageViewXML);
@@ -150,10 +147,10 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
 
         // FIREBASE needed here as well? Or is it the local generated username?
         userIDView.setText("@ " + "FIREBASE USERNAME");
-        editFirstName.setText("Firebase data");
-        editLastName.setText("Firebase data here");
-        editEmail.setText("Firebase data again");
-        editPhoneNumber.setText("Firebase data once more");
+        editFirstName.setText(firstName);
+        editLastName.setText(lastName);
+        editEmail.setText(userEmail);
+        editPhoneNumber.setText(userPhoneNumber);
         geolocationCheck.setChecked(false); // False for now but should retrieve true/false from Firebase
 
         // Changing the profile picture
@@ -199,9 +196,9 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 // Comment out once we have access to user's username or firstName
                 // TODO: get the first or the first two letters of a user's username IF there is no
                 //  set user first name/last name
-                String firstLetter = "T"; //This is where we will get either the first name or username
+                //String firstLetter = "T"; //This is where we will get either the first name or username
                 // username[0], or firstName[0]; assuming that they're Strings
-                TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter);
+                //TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter);
 
                 editPhotoButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -306,30 +303,35 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         String firstLetter;
         String secondLetter;
         // Changing the profile picture
-        if (firstName == null && lastName == null){
-            // If both name fields are empty AND no pfp, change profile picture to username
-            // Might need to modify the substring range in order to match the username string spacing
-            firstLetter = userID.substring(0,1);
-            secondLetter = userID.substring(1,2);
-
-        } else if (firstName == null) {
-            // IF they do NOT have their first name but do have their last name
-            firstLetter = lastName.substring(0,1);
-            secondLetter = lastName.substring(1,2);
-
-        } else if (lastName == null) {
-            // IF they do NOT have their last name but have their first name
-            firstLetter = firstName.substring(0,1);
-            secondLetter = firstName.substring(1,2);
+        if (userID == null) {
+            Toast toasty = Toast.makeText(getBaseContext(),"NO USER ID", Toast.LENGTH_SHORT);
+            toasty.show();
         } else {
-            // Here is if they do have both first name and last name
-            firstLetter = firstName.substring(0,1);
-            secondLetter = lastName.substring(0,1);
-        }
+            if (firstName == null && lastName == null) {
+                // If both name fields are empty AND no pfp, change profile picture to username
+                // Might need to modify the substring range in order to match the username string spacing
+                firstLetter = userID.substring(0, 1);
+                secondLetter = userID.substring(1, 2);
 
-        resetProfilePicture(profilePicture,
-                firstLetter.toUpperCase(Locale.getDefault())
-                        + secondLetter.toUpperCase(Locale.getDefault()));
+            } else if (firstName == null) {
+                // IF they do NOT have their first name but do have their last name
+                firstLetter = lastName.substring(0, 1);
+                secondLetter = lastName.substring(1, 2);
+
+            } else if (lastName == null) {
+                // IF they do NOT have their last name but have their first name
+                firstLetter = firstName.substring(0, 1);
+                secondLetter = firstName.substring(1, 2);
+            } else {
+                // Here is if they do have both first name and last name
+                firstLetter = firstName.substring(0, 1);
+                secondLetter = lastName.substring(0, 1);
+            }
+
+            resetProfilePicture(profilePicture,
+                    firstLetter.toUpperCase(Locale.getDefault())
+                            + secondLetter.toUpperCase(Locale.getDefault()));
+        }
     }
 
 }
