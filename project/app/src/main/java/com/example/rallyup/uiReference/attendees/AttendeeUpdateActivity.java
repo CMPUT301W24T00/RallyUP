@@ -227,7 +227,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                     @Override
                     public void onClick(View v) {
                         //profilePicture.setImageDrawable(textDrawable);
-                        resetProfilePicture(profilePicture, "TS");
+                        // setDefaultProfilePicture(profilePicture);
+                        resetProfilePicture(profilePicture, "NU");
                         editPhotoDialog.dismiss();
                     }
                 });
@@ -251,15 +252,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 // If the changes are different than the pre-existing data,
                 // then accept the new changes.
                 // IF the data is still the same as before, then DO NOT CHANGE THE DATA
-
-                // This is assuming we have a user object that I have access to, and has
-                // proper setters and getters for its data
-
-                // "user.firstName" = editFirstName.getText().toString();
-                // "user.lastName" = editLastName.getText().toString();
-                // "user.email" = editEmail.getText().toString();
-                // "user.phoneNumber" = editPhoneNumber.getText().toString();
-                // "user.geolocationOn" = geolocationCheck.isChecked();
 
                 // Call the FirestoreController to update the database for us
                 fc.setUserStringData(userID, firstNameField, editFirstName.getText().toString());
@@ -309,7 +301,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         if (userID == null) {
             Toast toasty = Toast.makeText(getBaseContext(),"NO USER ID", Toast.LENGTH_SHORT);
             toasty.show();
-            resetProfilePicture(profilePicture, "TN");
+            resetProfilePicture(profilePicture, "NU");
         } else {
             if (firstName == null && lastName == null) {
                 // If both name fields are empty AND no pfp, change profile picture to username
