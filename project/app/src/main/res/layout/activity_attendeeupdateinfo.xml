@@ -43,7 +43,6 @@
             android:paddingEnd="6dp"
             android:paddingBottom="6dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/poster1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

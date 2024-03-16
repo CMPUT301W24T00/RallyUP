@@ -22,17 +22,61 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
  * This class is an activity that enables an attendee to update their profile or user details
  */
-public class AttendeeUpdateActivity extends AppCompatActivity {
+public class AttendeeUpdateActivity extends AppCompatActivity implements FirestoreCallbackListener {
+
+    EditText editFirstName;
+    EditText editLastName;
+    String firstName;
+    String lastName;
+    String userEmail;
+    String userPhoneNumber;
+    String userID;
+
+    // Display user profile picture
+    ImageView profilePicture;
+    FloatingActionButton editImageButton;
+
+    // Display user ID
+    TextView userIDView;
+
+    // Edit user info items
+    EditText editEmail;
+    EditText editPhoneNumber;
+    CheckBox geolocationCheck;
+    Button confirmEditButton;
+    ImageButton attHomepageBackBtn;
+
+    private static String firstNameField = "firstName";
+
+    private static String lastNameField = "lastName";
+    private static String emailField = "email";
+    private static String phoneNumberField = "phoneNumber";
+
+    private static String geolocationField = "geolocation";
+
+    @Override
+    public void onGetUser(User user) {
+        //FirestoreCallbackListener.super.onGetUser(user);
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
+        userEmail = user.getEmail();
+        userID = user.getId();
+    }
 
     /**
      * Initializes the attendee updating/editing activity
@@ -41,28 +85,35 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendeeupdateinfo);
 
         // We need to access our database and get the information as needed
+        FirestoreController fc = FirestoreController.getInstance();
+        LocalStorageController ls = LocalStorageController.getInstance();
+        fc.getUserByID(ls.getUserID(this), this);
 
         // Edit image section
-        ImageView profilePicture = findViewById(R.id.attendeeUpdateInfoImageViewXML);
-        FloatingActionButton editImageButton = findViewById(R.id.attendeeUpdateInfoPictureFABXML);
+        profilePicture = findViewById(R.id.attendeeUpdateInfoImageViewXML);
+        editImageButton = findViewById(R.id.attendeeUpdateInfoPictureFABXML);
 
-        // TextView of Username
-        TextView userName = findViewById(R.id.AttendeeUpdateGeneratedUsernameView);
+        // TextView of userID
+        userIDView = findViewById(R.id.AttendeeUpdateGeneratedUsernameView);
 
         // Edit personal info section
-        EditText editFirstName = findViewById(R.id.editFirstNameXML);
-        EditText editLastName = findViewById(R.id.editLastNameXML);
-        EditText editEmail = findViewById(R.id.editEmailAddressXML);
-        EditText editPhoneNumber = findViewById(R.id.editPhoneNumberXML);
-        CheckBox geolocationCheck = findViewById(R.id.checkBoxGeolocXML);
-        Button confirmEditButton = findViewById(R.id.attendeeUpdateInfoConfirmXML);
-        ImageButton attHomepageBackBtn = findViewById(R.id.attendee_update_back_button);
+        editFirstName = findViewById(R.id.editFirstNameXML);
+        editLastName = findViewById(R.id.editLastNameXML);
+        editEmail = findViewById(R.id.editEmailAddressXML);
+        editPhoneNumber = findViewById(R.id.editPhoneNumberXML);
+        geolocationCheck = findViewById(R.id.checkBoxGeolocXML);
+        confirmEditButton = findViewById(R.id.attendeeUpdateInfoConfirmXML);
+        attHomepageBackBtn = findViewById(R.id.attendee_update_back_button);
+
         // All of the following editTexts and checkBox values need to be reflected and update
         // the values from Firebase, once the confirmButton is clicked, it should send the values
         // for Firebase to update.
@@ -98,12 +149,40 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
         );
 
         // FIREBASE needed here as well? Or is it the local generated username?
-        userName.setText("@ " + "FIREBASE USERNAME");
+        userIDView.setText("@ " + "FIREBASE USERNAME");
         editFirstName.setText("Firebase data");
         editLastName.setText("Firebase data here");
         editEmail.setText("Firebase data again");
         editPhoneNumber.setText("Firebase data once more");
         geolocationCheck.setChecked(false); // False for now but should retrieve true/false from Firebase
+
+        // Changing the profile picture
+        //resetProfilePicture(profilePicture, "TS");
+//        if (editFirstName.getText().toString().isEmpty() && editLastName.getText().toString().isEmpty()){
+//            // If both name fields are empty AND no pfp, change profile picture to username
+//            // Might need to modify the substring range in order to match the username string spacing
+//            String firstLetter = userIDView.getText().toString().substring(0,1).toUpperCase(Locale.getDefault());
+//            String secondLetter = userIDView.getText().toString().substring(1,2).toUpperCase(Locale.getDefault());
+//            resetProfilePicture(profilePicture, firstLetter + secondLetter);
+//
+//        } else if (editFirstName.getText().toString().isEmpty()) {
+//            // IF they do NOT have their first name but do have their last name
+//            String firstLetter = editLastName.getText().toString().substring(0,1).toUpperCase(Locale.getDefault());
+//            String secondLetter = editLastName.getText().toString().substring(1,2).toUpperCase(Locale.getDefault());
+//            resetProfilePicture(profilePicture, firstLetter + secondLetter);
+//
+//        } else if (editLastName.getText().toString().isEmpty()) {
+//            // IF they do NOT have their last name but have their first name
+//            String firstLetter = editFirstName.getText().toString().substring(0,1).toUpperCase(Locale.getDefault());
+//            String secondLetter = editFirstName.getText().toString().substring(1,2).toUpperCase(Locale.getDefault());
+//            resetProfilePicture(profilePicture, firstLetter + secondLetter);
+//        } else {
+//            // Here is if they do have both first name and last name
+//            String firstLetter = editFirstName.getText().toString().substring(0,1).toUpperCase(Locale.getDefault());
+//            String secondLetter = editLastName.getText().toString().substring(0,1).toUpperCase(Locale.getDefault());
+//            resetProfilePicture(profilePicture, firstLetter + secondLetter);
+//        }
+        setDefaultProfilePicture(profilePicture);
 
         editImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +197,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
                 Button closeButton = editPhotoView.findViewById(R.id.AttendeeUpdatePhotoCloseButton);
 
                 // Comment out once we have access to user's username or firstName
+                // TODO: get the first or the first two letters of a user's username IF there is no
+                //  set user first name/last name
                 String firstLetter = "T"; //This is where we will get either the first name or username
                 // username[0], or firstName[0]; assuming that they're Strings
                 TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter);
@@ -136,13 +217,17 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
 
                 // Create and Show the dialog
                 AlertDialog editPhotoDialog = pfpBuilder.create();
-                Objects.requireNonNull(editPhotoDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // Just setting the background to be transparent, so it doesn't have
+                // sharp white corners
+                Objects.requireNonNull(editPhotoDialog.getWindow())
+                        .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 editPhotoDialog.show();
 
                 deletePhotoButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        profilePicture.setImageDrawable(textDrawable);
+                        //profilePicture.setImageDrawable(textDrawable);
+                        resetProfilePicture(profilePicture, "TS");
                         editPhotoDialog.dismiss();
                     }
                 });
@@ -176,7 +261,13 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
                 // "user.phoneNumber" = editPhoneNumber.getText().toString();
                 // "user.geolocationOn" = geolocationCheck.isChecked();
 
+                // Call the FirestoreController to update the database for us
+                fc.setUserStringData(userID, firstNameField, editFirstName.getText().toString());
+                fc.setUserStringData(userID, lastNameField, editLastName.getText().toString());
+                fc.setUserStringData(userID, emailField, editEmail.getText().toString());
+                fc.setUserStringData(userID, phoneNumberField, editPhoneNumber.getText().toString());
 
+                fc.setUserBooleanData(userID, geolocationField, geolocationCheck.isChecked());
                 // Since we clicked on confirm, it brings us back to the screen that was there before
                 // In this case, we'll put MainActivity.class as the placeholder
                 Intent intent = new Intent(AttendeeUpdateActivity.this, AttendeeHomepageActivity.class);
@@ -192,6 +283,53 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * Method that changes the profile picture in Attendee Update activity to
+     * a set of string characters
+     * @param imageView The imageView of the profile to be modified
+     * @param nameToDisplay A set of string (expecting 2 characters) to display for the imageView
+     *                      as a TextDrawable object.
+     * @see TextDrawable for more information on how TextDrawables work.
+     */
+    private void resetProfilePicture(ImageView imageView, String nameToDisplay){
+        // firstCharacter = nameToDisplay.substring(0,1);
+        // secondCharacter = nameToDisplay.substring(0,1);
+        if (imageView.getDrawable() == null){
+            TextDrawable textDrawable = new TextDrawable(getBaseContext(), nameToDisplay);
+            imageView.setImageDrawable(textDrawable);
+        }
+    }
+
+    private void setDefaultProfilePicture(ImageView profilePicture){
+        String firstLetter;
+        String secondLetter;
+        // Changing the profile picture
+        if (firstName == null && lastName == null){
+            // If both name fields are empty AND no pfp, change profile picture to username
+            // Might need to modify the substring range in order to match the username string spacing
+            firstLetter = userID.substring(0,1);
+            secondLetter = userID.substring(1,2);
+
+        } else if (firstName == null) {
+            // IF they do NOT have their first name but do have their last name
+            firstLetter = lastName.substring(0,1);
+            secondLetter = lastName.substring(1,2);
+
+        } else if (lastName == null) {
+            // IF they do NOT have their last name but have their first name
+            firstLetter = firstName.substring(0,1);
+            secondLetter = firstName.substring(1,2);
+        } else {
+            // Here is if they do have both first name and last name
+            firstLetter = firstName.substring(0,1);
+            secondLetter = lastName.substring(0,1);
+        }
+
+        resetProfilePicture(profilePicture,
+                firstLetter.toUpperCase(Locale.getDefault())
+                        + secondLetter.toUpperCase(Locale.getDefault()));
     }
 
 }

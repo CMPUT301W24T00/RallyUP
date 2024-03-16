@@ -33,11 +33,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Document;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class represents the firestore controller that contains references to the firebase and important collections
@@ -165,6 +168,133 @@ public class FirestoreController {
 
             callbackListener.onGetUser(user);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
+    }
+
+    /**
+     * Updates the selected user's first name
+     * @param userID string of the user's ID, to get the correct document
+     * @param firstName string of the new data to be updated into Firestore
+     */
+    public void setUserFirstName(String userID, String firstName){
+        // get the proper document from the provided userID
+        DocumentReference docRef = usersRef.document(userID);
+        docRef.update("firstName", firstName)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("FirestoreController", "User First Name field successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FirestoreController", "User First Name field unsuccessfully updated!");
+                    }
+                });
+    }
+
+    /**
+     * Updates the selected user's last name
+     * @param userID string of the user's ID, to get the correct document
+     * @param lastName string of the new data to be updated into Firestore
+     */
+    public void setUserLastName(String userID, String lastName){
+        DocumentReference docRef = usersRef.document(userID);
+        docRef.update("lastName", lastName)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("FirestoreController", "User Last Name field successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FirestoreController", "User Last Name field unsuccessfully updated!");
+                    }
+                });
+    }
+
+    /**
+     * Updates the selected user's email
+     * @param userID string of the user's ID, to get the correct document
+     * @param email string of the new email to be updated into Firestore
+     */
+    public void setUserEmail(String userID, String email){
+        DocumentReference docRef = usersRef.document(userID);
+        docRef.update("email", email)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("FirestoreController", "User email field successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FirestoreController", "User email field unsuccessfully updated!");
+                    }
+                });
+    }
+
+    /**
+     * A flexible method that updates the user's String specific data
+     * @param userID String of the user's ID, to get the correct document
+     * @param fieldToBeUpdated A String of the user's field to be updated
+     * @param data A String object to be the new data stored in the fieldToBeUpdated field
+     *             of the user
+     */
+    public void setUserStringData(String userID, String fieldToBeUpdated, String data){
+        DocumentReference docRef = usersRef.document(userID);
+        docRef.update(fieldToBeUpdated, data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("FirestoreController",
+                                String.format(Locale.getDefault(),
+                                        "User %s field successfully updated!",
+                                        fieldToBeUpdated));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FirestoreController",
+                                String.format(Locale.getDefault(),
+                                        "User %s field unsuccessfully updated!",
+                                        fieldToBeUpdated));
+                    }
+                });
+    }
+
+    /**
+     * A flexible method that updates the user's Boolean specific data
+     * @param userID String of the user's ID, to get the correct document
+     * @param fieldToBeUpdated A String of the user's field to be updated
+     * @param data A boolean object to be the new data stored in the fieldToBeUpdated field
+     *             of the user
+     */
+    public void setUserBooleanData(String userID, String fieldToBeUpdated, Boolean data){
+        DocumentReference docRef = usersRef.document(userID);
+        docRef.update(fieldToBeUpdated, data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("FirestoreController",
+                                String.format(Locale.getDefault(),
+                                        "User %s field successfully updated!",
+                                        fieldToBeUpdated));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FirestoreController",
+                                String.format(Locale.getDefault(),
+                                        "User %s field unsuccessfully updated!",
+                                        fieldToBeUpdated));
+                    }
+                });
     }
 
     /**
