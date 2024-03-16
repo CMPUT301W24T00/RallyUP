@@ -71,10 +71,10 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
     @Override
     public void onGetUser(User user) {
         //FirestoreCallbackListener.super.onGetUser(user);
-        firstName = user.getFirstName();
-        lastName = user.getLastName();
-        userEmail = user.getEmail();
-        userID = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.userEmail = user.getEmail();
+        this.userID = user.getId();
     }
 
     /**
@@ -91,7 +91,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
 
         // We need to access our database and get the information as needed
         FirestoreController fc = FirestoreController.getInstance();
-        LocalStorageController ls = LocalStorageController.getInstance();
+        //LocalStorageController ls = LocalStorageController.getInstance();
+        // Gets the local userID and checks it to the Firestore
         //fc.getUserByID(ls.getUserID(this), this);
         fc.getUserByID("0LzfC31jw7FEgF0VXrXZ", this);
 
@@ -306,6 +307,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         if (userID == null) {
             Toast toasty = Toast.makeText(getBaseContext(),"NO USER ID", Toast.LENGTH_SHORT);
             toasty.show();
+            resetProfilePicture(profilePicture, "TN");
         } else {
             if (firstName == null && lastName == null) {
                 // If both name fields are empty AND no pfp, change profile picture to username
