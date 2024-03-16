@@ -147,7 +147,9 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         );
 
         // FIREBASE needed here as well? Or is it the local generated username?
-        userIDView.setText("@ " + "FIREBASE USERNAME");
+        //userIDView.setText("@ " + "FIREBASE USERNAME");
+        String userIDCombo = "@ " + userID;
+        userIDView.setText(userIDCombo);
         editFirstName.setText(firstName);
         editLastName.setText(lastName);
         editEmail.setText(userEmail);
