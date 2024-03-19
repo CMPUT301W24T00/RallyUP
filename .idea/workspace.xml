@@ -30,6 +30,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$/project">
+          <activation />
+        </task>
         <projects_view />
       </state>
     </system>
@@ -65,7 +68,7 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/reima/AndroidStudioProjects/lab62&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.Tests in 'com.example.rallyup'">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />
       <option name="DEPLOY" value="true" />
@@ -157,7 +160,7 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="attendanceClassTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="eventAdapterClassTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
@@ -170,7 +173,7 @@
           <list>
             <option value=":app:testDebugUnitTest" />
             <option value="--tests" />
-            <option value="&quot;com.example.rallyup.attendanceClassTest&quot;" />
+            <option value="&quot;com.example.rallyup.eventAdapterClassTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -255,11 +258,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.eventAdapterClassTest" />
         <item itemvalue="Gradle.Tests in 'com.example.rallyup'" />
         <item itemvalue="Gradle.userClassUnitTest" />
         <item itemvalue="Gradle.qrClassUnitTest" />
         <item itemvalue="Gradle.eventClassUnitTest" />
-        <item itemvalue="Gradle.attendanceClassTest" />
       </list>
     </recent_temporary>
   </component>
