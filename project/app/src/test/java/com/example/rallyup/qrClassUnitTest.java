@@ -8,7 +8,10 @@ import com.example.rallyup.firestoreObjects.User;
 import com.google.zxing.qrcode.encoder.QRCode;
 
 import org.junit.Test;
-
+/**
+ * This class contains all the unit tests for the QR object
+ * @author Reimark Ronabio
+ */
 public class qrClassUnitTest {
     private QrCode mockQR() {
         QrCode newMock = new QrCode(

@@ -11,6 +11,10 @@ import com.google.zxing.qrcode.encoder.QRCode;
 
 import org.junit.Test;
 
+/**
+ * This class contains all the unit tests for the attendance object
+ * @author Reimark Ronabio
+ */
 public class attendanceClassTest {
     private Attendance mockAttendance() {
         Attendance newMock = new Attendance(

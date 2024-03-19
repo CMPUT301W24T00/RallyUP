@@ -6,6 +6,10 @@ import static org.junit.Assert.assertFalse;
 import com.example.rallyup.firestoreObjects.Event;
 
 import org.junit.Test;
+/**
+ * This class contains all the unit tests for the event object
+ * @author Reimark Ronabio
+ */
 public class eventClassUnitTest {
     private Event mockEvent() {
         Event newMock = new Event(

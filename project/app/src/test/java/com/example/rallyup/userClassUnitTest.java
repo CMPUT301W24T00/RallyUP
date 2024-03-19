@@ -5,7 +5,10 @@ import static org.junit.Assert.assertEquals;
 import com.example.rallyup.firestoreObjects.User;
 
 import org.junit.Test;
-
+/**
+ * This class contains all the unit tests for the user object
+ * @author Reimark Ronabio
+ */
 public class userClassUnitTest {
     private User mockUser() {
         User newMock = new User("test@gmail.com", "bob", "david", "123");
