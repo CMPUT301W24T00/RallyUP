@@ -654,11 +654,11 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                 // Reference: https://firebase.google.com/docs/storage/android/upload-files
                 storage = FirebaseStorage.getInstance();
                 storageRef = storage.getReference();
-                posterRef = storageRef.child("images/Posters/"+ eventName);
+                posterRef = storageRef.child("images/Posters/"+ eventID);
                 posterPath = posterRef.getPath();
-                shareQRRef = storageRef.child("images/ShareQR/"+ eventName);
+                shareQRRef = storageRef.child("images/ShareQR/"+ eventID);
                 shareQRPath = shareQRRef.getPath();
-                checkInQRRef = storageRef.child("images/CheckInQR/"+ eventName);
+                checkInQRRef = storageRef.child("images/CheckInQR/"+ eventID);
                 checkInQRPath = checkInQRRef.getPath();
                 uploadCheckInQR();
                 uploadShareQR();
@@ -678,6 +678,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             eventTimeInput.setText("");
             geoInput.setChecked(false);
             newQRSelect.setChecked(false);
+            reUseQRSelect.setChecked(false);
             attendeeSignUpLimitInput.setChecked(false);
             attendeeLimitPicker.setVisibility(View.GONE);
             posterImage.setImageDrawable(null);

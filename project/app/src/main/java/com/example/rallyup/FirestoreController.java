@@ -38,6 +38,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * This class represents the firestore controller that contains references to the firebase and important collections
@@ -194,16 +196,20 @@ public class FirestoreController {
      * @param callbackListener a listener for the firestore
      */
     public void getEventByQRID(String eventQRID, FirestoreCallbackListener callbackListener) {
+        Log.d("Controller", "getEventByQRID: " +eventQRID);
         Query query = qrRef.whereEqualTo("qrID", eventQRID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                 QrCode thisQR;
                 thisQR = documentSnapshot.toObject(QrCode.class);
+                Log.d("Controller", "getEventByQRID: " + thisQR.getEventID());
+
                 String eventID = thisQR.getEventID();
                 callbackListener.onGetEventID(eventID);
             }
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
+
 
     /**
      * This method gets the event of an attendant based on the id of the event
@@ -251,12 +257,80 @@ public class FirestoreController {
     }
 
     /**
+     * This method queries the firestore to find the eventAttendance instance associated
+     * with the inputted user and the inputted eventID, and update the number of times checked in for that instance, if an instance is not found one is created
+     * @param eventID the event being checked in to
+     * @param userID the user checking in
+     * @param verified an Boolean representing whether or not this user signed up for this event
+     * @param callbackListener a listener for the firestore
+     */
+    public  void updateAttendance(String eventID, String userID, Boolean verified, FirestoreCallbackListener callbackListener){
+        Query query = eventAttendanceRef.whereEqualTo("userID", userID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            if(queryDocumentSnapshots.isEmpty()){ // if the user doesn't have any rows in the eventAttendanceRef table right now we make a new instance for this event
+                Log.d("GETCHECKINS", "getCheckIns: couldn't find anything");
+                Integer checkIns = 1;
+                Attendance checkIn = new Attendance();
+                checkIn.setTimesCheckedIn(checkIns);
+                checkIn.setEventID(eventID);
+                checkIn.setUserID(userID);
+                checkIn.setAttendeeVerified(verified);
+                addAttendance(checkIn);
+            }
+            else {
+                // making a list of all the instances of Attendance found for this userID
+                List<Attendance> userAttendances = new ArrayList<>();
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    Attendance thisAttendance;
+                    thisAttendance = documentSnapshot.toObject(Attendance.class);
+                    userAttendances.add(thisAttendance);
+                    if (thisAttendance.getEventID().equals(eventID) && thisAttendance.isAttendeeVerified() == verified) { // if the specific eventID and verified mode is found
+                        documentSnapshot.getReference().update("timesCheckedIn", thisAttendance.getTimesCheckedIn()+1);
+                    }
+
+                }
+
+                boolean found = false; // creating a boolean that represents whether this specific eventAttendance instance we're looking for is in the list
+                for(Attendance attendance : userAttendances){ // iterating over the full list of all the Attendance instances of this user
+                    if (attendance.getEventID().equals(eventID) && attendance.isAttendeeVerified() == verified) { // if the specific eventID and verified mode is found
+                        found = true;
+                    }
+                }
+                if(!found){ // if we were unable to find it we create a new instance for this event attendance
+                    Integer checkIns = 1;
+                    Attendance checkIn = new Attendance();
+                    checkIn.setTimesCheckedIn(checkIns);
+                    checkIn.setEventID(eventID);
+                    checkIn.setUserID(userID);
+                    checkIn.setAttendeeVerified(verified);
+                    addAttendance(checkIn);
+                }
+            }
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    // just keeping here for now in case it's needed for the organizer view attendee list implementation
+    /*public  void updateCheckIns(String eventID, String userID, Boolean verified, FirestoreCallbackListener callbackListener){
+        Query query = eventAttendanceRef.whereEqualTo("userID", userID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            // making a list of all the instances of Attendance found for this userID
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Attendance attendance;
+                attendance = documentSnapshot.toObject(Attendance.class);
+                if (attendance.getEventID().equals(eventID) && attendance.isAttendeeVerified() == verified) { // if the specific eventID and verified mode is found
+                    Integer checkIns = attendance.getTimesCheckedIn();
+                    documentSnapshot.getReference().update("timesCheckedIn", checkIns+1);
+                }
+            }
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }*/
+
+    /**
      * This method gets an event based on the id of the event
      * @param eventID a string for the identification of the event
      * @param callbackListener a listener for the firestore
      */
     public void getEventByID(String eventID, FirestoreCallbackListener callbackListener) {
-
         DocumentReference docRef = eventsRef.document(eventID);
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             Event thisEvent;
@@ -289,8 +363,18 @@ public class FirestoreController {
         data.put("userID", event.getOwnerID());
         data.put("eventID", event.getEventID());
 
-        // event.getName should be replaced with unique event ID
         eventsRef.document(event.getEventID()).set(data);
+    }
+
+    public void addAttendance(Attendance attendance) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("attendeeVerified", attendance.isAttendeeVerified());
+        data.put("eventID", attendance.getEventID());
+        data.put("timesCheckedIn", attendance.getTimesCheckedIn());
+        data.put("userID", attendance.getUserID());
+        // create a unique attendance ID
+        String attendanceID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        eventAttendanceRef.document(attendanceID).set(data);
     }
 
     /**
