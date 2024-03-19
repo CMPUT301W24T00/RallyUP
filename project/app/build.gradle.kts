@@ -45,7 +45,7 @@ dependencies {
     androidTestImplementation("androidx.test:rules:1.4.0")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.zxing:core:3.4.1")
-//    implementation(files("C:/Users/reima/AppData/Local/Android/Sdk/platforms/android-34/android.jar"))
+    implementation(files("C:/Users/reima/AppData/Local/Android/Sdk/platforms/android-34/android.jar"))
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
 
