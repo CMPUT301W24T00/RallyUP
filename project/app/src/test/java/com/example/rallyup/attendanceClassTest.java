@@ -16,6 +16,10 @@ import org.junit.Test;
  * @author Reimark Ronabio
  */
 public class attendanceClassTest {
+    /**
+     * Creates a mock attendance object for testing
+     * @return newMock an attendance object
+     */
     private Attendance mockAttendance() {
         Attendance newMock = new Attendance(
                 true,
@@ -25,50 +29,70 @@ public class attendanceClassTest {
         return newMock;
     }
 
+    /**
+     * This method tests the isAttendeeVerified method
+     */
     @Test
     public void testGetVerified() {
         Attendance testAtt = mockAttendance();
         assertTrue(testAtt.isAttendeeVerified());
     }
 
+    /**
+     * This method tests the setAttendeeVerified method
+     */
     @Test
     public void testSetVerified() {
         Attendance testAtt = mockAttendance();
         testAtt.setAttendeeVerified(false);
         assertFalse(testAtt.isAttendeeVerified());
     }
+
+    /**
+     * This method tests the getEventID method
+     */
     @Test
     public void testGetEventID () {
         Attendance testAtt = mockAttendance();
         assertEquals("048ACC2B534046668F6BAA2EA43F170C", testAtt.getEventID());
     }
-
+    /**
+     * This method tests the setEventID method
+     */
     @Test
     public void testSetEventID () {
         Attendance testAtt = mockAttendance();
         testAtt.setEventID("139ACC2B534046668F6BAA2EA43F170C");
         assertEquals("139ACC2B534046668F6BAA2EA43F170C", testAtt.getEventID());
     }
-
+    /**
+     * This method tests the getTimesCheckedIn method
+     */
     @Test
     public void testGetCheckIn() {
         Attendance testAtt = mockAttendance();
         assertEquals(5, testAtt.getTimesCheckedIn());
     }
-
+    /**
+     * This method tests the setTimesCheckedIn method
+     */
     @Test
     public void testSetCheckIn() {
         Attendance testAtt = mockAttendance();
         testAtt.setTimesCheckedIn(3);
         assertEquals(3, testAtt.getTimesCheckedIn());
     }
-
+    /**
+     * This method tests the getUserID method
+     */
     @Test
     public void testGetUser() {
         Attendance testAtt = mockAttendance();
         assertEquals("ka19Vl8P4QH9QQ90kWvm", testAtt.getUserID());
     }
-
+    /**
+     * This method tests the setUserID method
+     */
     @Test
     public void testSetUser() {
         Attendance testAtt = mockAttendance();
