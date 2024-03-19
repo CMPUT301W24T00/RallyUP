@@ -79,4 +79,13 @@ public interface FirestoreCallbackListener {
     default void onCreateEvent(Event event) {
 
     }
+
+    /**
+     * Upon the amount of times a user checked in to a specific event
+     * @param timesCheckedIn an Integer that represents how many times the user has checked in to that event
+     */
+    default void onGetCheckIns(Integer timesCheckedIn) {
+
+    }
+
 }

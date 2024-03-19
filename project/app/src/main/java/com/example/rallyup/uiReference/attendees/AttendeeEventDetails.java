@@ -59,7 +59,6 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
 
         Intent intent = getIntent();
         String eventID = intent.getStringExtra("key");
-        checkIn = intent.getBooleanExtra("checkIn", false);
 
         controller.getEventByID(eventID, this);
 

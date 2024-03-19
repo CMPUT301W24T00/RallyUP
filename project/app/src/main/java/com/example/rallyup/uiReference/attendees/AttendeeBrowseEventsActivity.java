@@ -15,6 +15,7 @@ import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.uiReference.EventAdapter;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
 
 
     /**
-     * Upon getting the lsit of events, it will set the necessary adapters
+     * Upon getting the list of events, it will set the necessary adapters
      * @param events a list of event objects
      */
     @Override
@@ -44,7 +45,6 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
         eventAdapter = new EventAdapter(AttendeeBrowseEventsActivity.this, events);
         listView.setAdapter(eventAdapter);
         this.events = events;
-
     }
 
     /**
@@ -100,7 +100,6 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
             String eventID = selectedEvent.getEventID();
             Intent intent = new Intent(AttendeeBrowseEventsActivity.this, AttendeeEventDetails.class);
             intent.putExtra("key", eventID);
-            intent.putExtra("checkIn", false);
             startActivity(intent);
         });
     }
