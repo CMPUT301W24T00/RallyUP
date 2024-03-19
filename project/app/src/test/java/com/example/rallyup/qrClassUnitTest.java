@@ -4,12 +4,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import com.example.rallyup.firestoreObjects.QrCode;
-import com.example.rallyup.firestoreObjects.User;
-import com.google.zxing.qrcode.encoder.QRCode;
 
 import org.junit.Test;
 
+/**
+ * This class contains all the unit tests for the QR object.
+ * It tests various getters and setters of the QrCode class.
+ * @author Reimark Ronabio
+ */
 public class qrClassUnitTest {
+
+    /**
+     * Creates a mock QR object for testing.
+     * @return newMock a QR object
+     */
     private QrCode mockQR() {
         QrCode newMock = new QrCode(
                 "1RD8qkMMqyq5mz5CqRQD",
@@ -19,29 +27,45 @@ public class qrClassUnitTest {
         return newMock;
     }
 
+    /**
+     * Tests the getQrId method.
+     */
     @Test
     public void testGetQrId() {
         QrCode testQR = mockQR();
         assertEquals("1RD8qkMMqyq5mz5CqRQD", testQR.getQrId());
     }
 
+    /**
+     * Tests the isCheckIn method.
+     */
     @Test
     public void testGetCheckIn() {
         QrCode testQR = mockQR();
         assertTrue(testQR.isCheckIn());
     }
 
+    /**
+     * Tests the getEventID method.
+     */
     @Test
     public void testGetEventID() {
         QrCode testQR = mockQR();
         assertEquals("048ACC2B534046668F6BAA2EA43F170C", testQR.getEventID());
     }
 
+    /**
+     * Tests the getImage method.
+     */
     @Test
     public void testGetImage() {
         QrCode testQR = mockQR();
         assertEquals("/images/QR/1RD8qkMMqyq5mz5CqRQD", testQR.getImage());
     }
+
+    /**
+     * Tests the setQrId method.
+     */
     @Test
     public void testSetQrId() {
         QrCode testQR = mockQR();
@@ -49,18 +73,29 @@ public class qrClassUnitTest {
         assertEquals("3AB8qkMMqyq5mz5CqRQD", testQR.getQrId());
     }
 
+    /**
+     * Tests the setCheckIn method.
+     */
     @Test
     public void testSetCheckIn() {
         QrCode testQR = mockQR();
         testQR.setCheckIn(false);
         assertFalse(testQR.isCheckIn());
     }
+
+    /**
+     * Tests the setEventID method.
+     */
     @Test
     public void testSetEventID() {
         QrCode testQR = mockQR();
         testQR.setEventID("139ACC2B534046668F6BAA2EA43F170C");
         assertEquals("139ACC2B534046668F6BAA2EA43F170C", testQR.getEventID());
     }
+
+    /**
+     * Tests the setImage method.
+     */
     @Test
     public void testSetImage() {
         QrCode testQR = mockQR();
