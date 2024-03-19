@@ -373,6 +373,7 @@ public class FirestoreController {
         data.put("timesCheckedIn", attendance.getTimesCheckedIn());
         data.put("userID", attendance.getUserID());
         // create a unique attendance ID
+
         String attendanceID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
         eventAttendanceRef.document(attendanceID).set(data);
     }
