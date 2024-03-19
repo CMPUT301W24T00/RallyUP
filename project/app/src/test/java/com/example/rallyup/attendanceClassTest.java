@@ -13,6 +13,7 @@ import org.junit.Test;
 
 /**
  * This class contains all the unit tests for the attendance object
+ * It tests various getters and setters of the attendance class.
  * @author Reimark Ronabio
  */
 public class attendanceClassTest {
