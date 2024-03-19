@@ -83,12 +83,12 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         eventVerifiedAttendeesView.setText(count + " verified attendees");
     }
 
-    /*
+
     @Override
     public void onGetImage(Bitmap bm) {
         ImageView eventPoster = findViewById(R.id.ProgressBarEventPosterView);
         eventPoster.setImageBitmap(bm);
-    }*/
+    }
 
     /**
      * Initializes the progress bar activity when it is created for the first time
@@ -199,7 +199,7 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         sendAnnouncementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!editAnnouncementBody.getText().toString().equals("") && !editAnnouncementTitle.getText().toString().equals("")){
+                if (!editAnnouncementBody.getText().toString().isEmpty() && !editAnnouncementTitle.getText().toString().isEmpty()){
                     // Create a new notification/announcement in the Firebase
                     // Which then if we go to Attendees side of the activities, they should be able
                     // to detect a new notification create for their specific event

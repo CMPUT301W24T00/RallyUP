@@ -1,12 +1,22 @@
 package com.example.rallyup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+// Need to import the manifest for some reason to be able
+// to do Manifest.permission.POST_NOTIFICATIONS
+import android.Manifest;
 
 import com.example.rallyup.uiReference.attendees.AttendeeUpdateActivity;
 import com.example.rallyup.notification.NotificationObject;
@@ -16,6 +26,7 @@ import com.example.rallyup.progressBar.ProgressBarActivity;
  * This class contains the main activity of the app which will temporarily hold direct access to features
  */
 public class MainActivity extends AppCompatActivity {
+<<<<<<< Updated upstream
     /**
      * Initializes the main activity when it is first created
      * @param savedInstanceState If the activity is being re-initialized after
@@ -23,6 +34,39 @@ public class MainActivity extends AppCompatActivity {
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
+=======
+    // Declare the launcher at the top of your Activity/Fragment:
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // FCM SDK (and your app) can post notifications.
+                } else {
+                    // TODO: Inform user that that your app will not show notifications.
+                    Toast toast = Toast.makeText(getBaseContext(),
+                            "Will not show notifications",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+
+    private void askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                // FCM SDK (and your app) can post notifications.
+            // } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
+    }
+>>>>>>> Stashed changes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        Button attendeeUpdateInfoButton = findViewById(R.id.AttendeeUpdateInfoButton);
 
+        // Ask for permissions to send notifications
+        askNotificationPermission();
 
         progressButton.setOnClickListener(new View.OnClickListener() {
             @Override

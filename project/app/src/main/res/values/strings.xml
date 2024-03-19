@@ -30,7 +30,7 @@
     <string name="announcements_title"><u>ANNOUNCEMENTS</u></string>
     <!-- Notification Edit Box -->
     <string name="notification_edit_title">TITLE OF NOTIFICATION</string>
-    <string name="notification_edit_body">Send message to attendees...</string>
+    <string name="notification_edit_body">Send message to attendees…</string>
 
     <!-- Notification Titles in Notification Popups -->
     <string name="notification_title_milestone">Milestone</string>
