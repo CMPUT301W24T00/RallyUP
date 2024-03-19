@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,6 +16,7 @@ import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.User;
 import com.example.rallyup.uiReference.splashScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,6 +38,12 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     TextView lastNameView;
     TextView usernameView;
     String scannedEvent;
+    String userID;
+    FirestoreController fc = FirestoreController.getInstance();
+    LocalStorageController ls = LocalStorageController.getInstance();
+    Boolean checkIn;
+    Integer timesCheckedIn;
+
 
 
     /**
@@ -44,10 +52,22 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
      */
     @Override
     public void onGetUser(User user) {
-//        Log.d("HomepageActivity", user.getFirstName());
+        Log.d("HomepageActivity", user.getId());
+        userID = user.getId();
         firstNameView.setText(user.getFirstName());
         lastNameView.setText(user.getLastName());
         usernameView.setText(user.getId());
+    }
+
+    /**
+     * Upon getting the event ID, we will use it to perform share or checkIin actions
+     * @param eventID the String variable that contains the unique eventID connected to the QR code scanned by the user
+     */
+    @Override
+    public void onGetEventID(String eventID) {
+        scannedEvent = eventID;
+        Log.d("BACK IN HOMEPAGE", "eventID: " + scannedEvent);
+        switchPage();
     }
 
     // String attFirstName = findViewById(R.id.att_first_name)
@@ -63,30 +83,12 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
                 } else {
                     // function calls for when an id has been scanned go here
                     //Toast.makeText(AttendeeHomepageActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                    FirestoreController controller = new FirestoreController();
-                    FirestoreCallbackListener listener = new FirestoreCallbackListener() {
-                        /**
-                         * @param eventID the unique id of the event
-                         */
-                        @Override
-                        public void onGetEventID(String eventID) {
-                            FirestoreCallbackListener.super.onGetEventID(eventID);
-                            scannedEvent = eventID;
-                        }
-                    };
 
                     String read = result.getContents();
-                    Boolean checkIn = false;
-                    if(read.charAt(0) == 'c'){
-                        checkIn = true;
-                    }
+                    //Log.d("Scanned QR Code", "QR CODE ID: " + read.substring(1));
+                    checkIn = read.charAt(0) == 'c';
                     String qrID = read.substring(1);
-                    controller.getEventByQRID(qrID, listener);
-
-                    Intent intent = new Intent(AttendeeHomepageActivity.this, AttendeeEventDetails.class);
-                    intent.putExtra("key", scannedEvent);
-                    intent.putExtra("checkIn", checkIn);
-                    startActivity(intent);
+                    fc.getEventByQRID(qrID, this);
                 }
             });
 
@@ -102,8 +104,6 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_homepage);
 
-        FirestoreController fc = FirestoreController.getInstance();
-        LocalStorageController ls = LocalStorageController.getInstance();
         fc.getUserByID(ls.getUserID(this), this);
 
         // Text views
@@ -152,5 +152,23 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
             startActivity(intent);
         });
 
+    }
+
+    /**
+     * Upon getting the eventID after scanning the QRCode, this function deals with accessing the firestore controller to create or update a new instance of event attendance
+     * and then displays the appropriate toast message and switches to the correct page depending on what type of QRCode was scanned
+     */
+    public void switchPage() {
+        if(checkIn) {
+            boolean verified = false; // will actually get later when signups are set up
+            fc.updateAttendance(scannedEvent, userID, verified, this);
+            Toast.makeText(this, "Check-In Successful! Enjoy the event!", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Intent intent;
+            intent = new Intent(AttendeeHomepageActivity.this, AttendeeEventDetails.class);
+            intent.putExtra("key", scannedEvent);
+            startActivity(intent);
+        }
     }
 }
