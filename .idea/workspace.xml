@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="" />
+    <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userClassUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userClassUnitTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +64,7 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/reima/AndroidStudioProjects/lab62&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.qrClassUnitTest">
+  <component name="RunManager" selected="Gradle.Tests in 'com.example.rallyup'">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />
       <option name="DEPLOY" value="true" />
@@ -202,30 +204,6 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="eventTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":app:testDebugUnitTest" />
-            <option value="--tests" />
-            <option value="&quot;com.example.rallyup.eventTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
     <configuration name="qrClassUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -250,13 +228,37 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
+    <configuration name="userClassUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;com.example.rallyup.userClassUnitTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'com.example.rallyup'" />
+        <item itemvalue="Gradle.userClassUnitTest" />
         <item itemvalue="Gradle.qrClassUnitTest" />
         <item itemvalue="Gradle.eventClassUnitTest" />
-        <item itemvalue="Gradle.Tests in 'com.example.rallyup'" />
         <item itemvalue="Gradle.attendanceClassTest" />
-        <item itemvalue="Gradle.eventTest" />
       </list>
     </recent_temporary>
   </component>
