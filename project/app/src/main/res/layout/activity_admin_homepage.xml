@@ -66,12 +66,12 @@
                 android:layout_marginVertical="30dp"
                 android:background="@color/lightColor"
                 android:fontFamily="@font/inter_extrabold"
-
                 android:text="Browse Events"
                 android:textAllCaps="true"
                 android:textColor="@color/darkColor"
                 android:textSize="25dp"
-                app:backgroundTint="@null"></Button>
+                app:backgroundTint="@null"
+                android:padding="20dp"></Button>
 
             <Button
                 android:id="@+id/admin_browse_profiles_btn"
@@ -79,13 +79,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="60dp"
                 android:layout_marginVertical="30dp"
-                android:background="@color/accentColorYellow"
+                android:background="@color/accentColorGreen"
                 android:fontFamily="@font/inter_extrabold"
                 android:text="Browse Profiles"
                 android:textAllCaps="true"
                 android:textColor="@color/lightColor"
                 android:textSize="25dp"
-                app:backgroundTint="@null"></Button>
+                app:backgroundTint="@null"
+                android:padding="20dp"></Button>
 
             <Button
                 android:id="@+id/admin_browse_images_btn"
@@ -95,11 +96,12 @@
                 android:layout_marginVertical="30dp"
                 android:background="@color/accentColorRed"
                 android:fontFamily="@font/inter_extrabold"
-                android:text="Browse Events"
+                android:text="Browse Images"
                 android:textAllCaps="true"
                 android:textColor="@color/lightColor"
                 android:textSize="25dp"
-                app:backgroundTint="@null"></Button>
+                app:backgroundTint="@null"
+                android:padding="20dp"></Button>
 
         </LinearLayout>
 

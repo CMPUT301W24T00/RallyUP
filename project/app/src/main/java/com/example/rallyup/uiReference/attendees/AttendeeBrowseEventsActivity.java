@@ -44,7 +44,6 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
         eventAdapter = new EventAdapter(AttendeeBrowseEventsActivity.this, events);
         listView.setAdapter(eventAdapter);
         this.events = events;
-
     }
 
     /**
