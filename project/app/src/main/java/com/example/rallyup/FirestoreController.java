@@ -366,6 +366,10 @@ public class FirestoreController {
         eventsRef.document(event.getEventID()).set(data);
     }
 
+    /**
+     * Adds a new attendance to the attendance collection in firebase
+     * @param attendance an object containing the details of attendance
+     */
     public void addAttendance(Attendance attendance) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("attendeeVerified", attendance.isAttendeeVerified());
