@@ -71,6 +71,17 @@ public class FirestoreController {
     }
 
     /**
+     * This method receives a user object and updates that user in the firebase with the relevant
+     * parameters. Any details in the User object that are not defined will be set as 'null' in
+     * the firebase
+     * @param user an object with the user information
+     * @param callbackListener a listener for the firestore
+     */
+    public void updateUser(User user, FirestoreCallbackListener callbackListener) {
+        usersRef.document(user.getId()).set(user);
+    }
+
+    /**
      * This method takes an event object and allows it to be modified/updated
      * @param event an object containing the details of an event
      * @param callbackListener a listener for the firestore
@@ -78,6 +89,7 @@ public class FirestoreController {
     public void updateEvent(Event event, FirestoreCallbackListener callbackListener) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("ownerID", event.getOwnerID());
+        // TODO
         qrRef.document(event.getEventID()).set(data);
     }
 

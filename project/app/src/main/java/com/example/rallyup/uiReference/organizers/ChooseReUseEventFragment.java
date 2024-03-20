@@ -37,8 +37,9 @@ public class ChooseReUseEventFragment extends DialogFragment {
      * Constructor for the re use event fragment
      * @param events a list of event objects
      */
-    public ChooseReUseEventFragment(List<Event> events) {
+    public ChooseReUseEventFragment(List<Event> events, Context context) {
         this.usersPreviousEvents = events;
+        this.context = context;
     }
 
 
@@ -129,10 +130,11 @@ public class ChooseReUseEventFragment extends DialogFragment {
                 .setItems(seq, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position of the selected event.
-                        eventChosen = seq[which].toString();
-                        String input = getEventID("a");
-                        mOnInputListener.sendInput(input);
+                        // eventChosen = seq[which].toString();
+                        // String input = getEventID("a");
+                        // mOnInputListener.sendInput(input);
 
+                        Event chosenEvent = usersPreviousEvents.get(which);
                     }
                 });
         return builder.create();

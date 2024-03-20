@@ -4,10 +4,12 @@ package com.example.rallyup.firestoreObjects;
  * Represents a user with email, first name, and last name.
  */
 public class User {
-    private String email = "Sample email";
+    private String email = "";
     private String firstName = "";
     private String lastName = "";
     private String id = "";
+    private String phoneNumber = "";
+    private Boolean geolocation = false;
 
     /**
      * Default constructor for User.
@@ -36,6 +38,24 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
+    }
+
+    /**
+     * Constructor mainly used for unit testing
+     * @param id the id of the user
+     * @param email the email of the user
+     * @param firstName the first name of the user
+     * @param lastName the last name of the usr
+     * @param phoneNumber the phone number of the user
+     * @param geolocation whether geolocation is enabled for the user
+     */
+    public User(String id, String email, String firstName, String lastName, String phoneNumber, Boolean geolocation) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.geolocation = geolocation;
     }
 
     /**
@@ -108,5 +128,41 @@ public class User {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * Gets the phone number of the user.
+     *
+     * @return The phone number of the user.
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * Sets the phone number of the user.
+     *
+     * @param phoneNumber The phone number for the user.
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * Gets whether geolocation is enabled for the user.
+     *
+     * @return Whether geolocation is enabled for the user
+     */
+    public Boolean getGeolocation() {
+        return geolocation;
+    }
+
+    /**
+     * Sets whether geolocation is enabled for the user.
+     *
+     * @param geolocation The geolocation setting for the user.
+     */
+    public void setGeolocation(Boolean geolocation) {
+        this.geolocation = geolocation;
     }
 }

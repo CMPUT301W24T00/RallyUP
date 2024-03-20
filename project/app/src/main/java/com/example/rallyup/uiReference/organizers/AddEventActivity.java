@@ -246,7 +246,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 if (isChecked) {
-                    new ChooseReUseEventFragment(usersPreviousEvents).show(getSupportFragmentManager(), "Add/Edit City");
+                    new ChooseReUseEventFragment(usersPreviousEvents, AddEventActivity.this).
+                            show(getSupportFragmentManager(), "Add/Edit City");
                 }
             }
         });

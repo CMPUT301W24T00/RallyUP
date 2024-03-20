@@ -22,9 +22,14 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseAppLifecycleListener;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -32,7 +37,7 @@ import java.util.Objects;
 /**
  * This class is an activity that enables an attendee to update their profile or user details
  */
-public class AttendeeUpdateActivity extends AppCompatActivity {
+public class AttendeeUpdateActivity extends AppCompatActivity implements FirestoreCallbackListener {
 
     /**
      * Initializes the attendee updating/editing activity
@@ -170,12 +175,19 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
                 // This is assuming we have a user object that I have access to, and has
                 // proper setters and getters for its data
 
-                // "user.firstName" = editFirstName.getText().toString();
-                // "user.lastName" = editLastName.getText().toString();
-                // "user.email" = editEmail.getText().toString();
-                // "user.phoneNumber" = editPhoneNumber.getText().toString();
-                // "user.geolocationOn" = geolocationCheck.isChecked();
+                //
 
+                LocalStorageController ls = LocalStorageController.getInstance();
+                String firstName = editFirstName.getText().toString();
+                String lastName = editLastName.getText().toString();
+                String email = editEmail.getText().toString();
+                String phoneNumber = editPhoneNumber.getText().toString();
+                Boolean geolocationOn = geolocationCheck.isChecked();
+                String userID = ls.getUserID(AttendeeUpdateActivity.this);
+
+                User thisUser = new User(userID, email, firstName, lastName, phoneNumber, geolocationOn);
+                FirestoreController fc = FirestoreController.getInstance();
+                fc.updateUser(thisUser, AttendeeUpdateActivity.this);
 
                 // Since we clicked on confirm, it brings us back to the screen that was there before
                 // In this case, we'll put MainActivity.class as the placeholder
