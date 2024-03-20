@@ -199,9 +199,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 // Comment out once we have access to user's username or firstName
                 // TODO: get the first or the first two letters of a user's username IF there is no
                 //  set user first name/last name
-                //String firstLetter = "T"; //This is where we will get either the first name or username
-                // username[0], or firstName[0]; assuming that they're Strings
-                //TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter);
 
                 editPhotoButton.setOnClickListener(new View.OnClickListener() {
                     @Override
