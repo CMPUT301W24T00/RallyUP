@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".RallyUpApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
         android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RallyUP"
         tools:targetApi="31">
+        <activity
+            android:name=".uiReference.admin.AdminBrowseImages"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.admin.AdminBrowseProfiles"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.admin.AdminBrowseEventsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.admin.AdminHomepageActivity"
+            android:exported="false"
+            android:label="@string/title_activity_admin_homepage"
+            android:theme="@style/Theme.RallyUP" />
         <activity
             android:name=".uiReference.organizers.EventAttendeesInfoActivity"
             android:exported="false" />
@@ -48,13 +63,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".progressBar.ProgressBarActivity"/>
-        <activity android:name=".uiReference.organizers.AddEventActivity"/>
-        <activity android:name=".uiReference.attendees.QRBaseActivity"/>
-        <activity android:name=".uiReference.attendees.ScannerActivity"/>
+        <activity android:name=".progressBar.ProgressBarActivity" />
+        <activity android:name=".uiReference.organizers.AddEventActivity" />
+        <activity android:name=".uiReference.attendees.QRBaseActivity" />
+        <activity android:name=".uiReference.attendees.ScannerActivity" />
         <activity android:name=".uiReference.splashScreen" />
-        <activity android:name=".uiReference.attendees.AttendeeUpdateActivity"/>
-    
+        <activity android:name=".uiReference.attendees.AttendeeUpdateActivity" />
     </application>
 
 </manifest>

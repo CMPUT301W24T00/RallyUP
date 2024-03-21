@@ -12,6 +12,8 @@ import com.example.rallyup.uiReference.attendees.AttendeeUpdateActivity;
 import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ProgressBarActivity;
 
+import org.checkerframework.checker.units.qual.A;
+
 /**
  * This class contains the main activity of the app which will temporarily hold direct access to features
  */
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button progressButton = findViewById(R.id.ProgressBarButton);
         Button uiLayoutButton = findViewById(R.id.UILayoutButton);
+        Button adminBtn = findViewById(R.id.AdminPages);
 
 //        Button attendeeUpdateInfoButton = findViewById(R.id.AttendeeUpdateInfoButton);
 
@@ -57,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent =
                         new Intent(com.example.rallyup.MainActivity.this,
                                 com.example.rallyup.uiReference.splashScreen.class);
+                startActivity(intent);
+            }
+        });
+
+        adminBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =
+                        new Intent(com.example.rallyup.MainActivity.this,
+                                com.example.rallyup.uiReference.admin.AdminHomepageActivity.class);
                 startActivity(intent);
             }
         });
