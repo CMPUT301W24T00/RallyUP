@@ -7,7 +7,7 @@
     android:background="@drawable/light_color_card"
     android:orientation="vertical"
     android:padding="30dp">
-    
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -42,5 +42,4 @@
             android:background="@color/accentColorRed"
             android:src="@drawable/delete_item"
             android:layout_gravity="right" />
-        </LinearLayout>
 </LinearLayout>
