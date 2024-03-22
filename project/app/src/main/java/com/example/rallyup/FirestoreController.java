@@ -390,6 +390,31 @@ public class FirestoreController {
                 .load(storageReference)
                 .into(poster);
     }
+
+    /**
+     * This method updates the FCMToken field of the user in respect to userID
+     * WILL FAIL if the FCMToken field is not setup in the user's field
+     * since .update() REQUIRES a pre-existing user field
+     * @param userID The userID of the current user of the app
+     * @param FCMToken The FCMToken to be updated
+     * @see com.example.rallyup.notification.MyFirebaseMessagingService for why this exists
+     */
+    public void updateFCMToken(String userID, String FCMToken){
+        usersRef.document(userID)
+                .update("FCMToken", FCMToken)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("FirestoreController", "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FirestoreController", "Error updating document", e);
+                    }
+                });
+    }
 }
 
 

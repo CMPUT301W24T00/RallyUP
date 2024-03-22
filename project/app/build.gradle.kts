@@ -61,12 +61,12 @@ dependencies {
 
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
-    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    //implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
 
     // For Firebase Cloud Messaging Services
-    implementation("com.google.firebase:firebase-messaging:23.4.1")
+    implementation("com.google.firebase:firebase-messaging")
 
 }
