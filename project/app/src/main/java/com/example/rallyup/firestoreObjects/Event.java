@@ -14,6 +14,7 @@ public class Event {
     private String eventDate;
     private String eventTime;
     private int signUpLimit;
+    private int currentlySignedUp;
     private Boolean signUpLimitBool;
     private Boolean geolocation;
     private Boolean reUseQR;
@@ -23,6 +24,7 @@ public class Event {
     private String checkInQRRef;
     private String ownerID;
     private String eventID;
+
 
 
     /**
@@ -35,8 +37,9 @@ public class Event {
      * @param eventLocation    The location of the event.
      * @param eventDescription The description of the event.
      * @param eventDate        The date of the event.
-     * @param eventTime        The start time of the event
-     * @param signUpLimit      The signup limit of the event
+     * @param eventTime        The start time of the event.
+     * @param signUpLimit      The signup limit of the event.
+     * @param currentlySignedUp The current amount of signUps to the event so far.
      * @param signUpLimitBool  The signup limit permissions of the event.
      * @param geolocation      The geolocation permissions of the event.
      * @param reUseQR          The permissions for reusing QR Codes for the event.
@@ -48,7 +51,7 @@ public class Event {
      * @param eventID          A String that represents the unique event ID.
      */
     public Event(String eventName, String eventLocation, String eventDescription, String eventDate, String eventTime,
-                 int signUpLimit, Boolean signUpLimitBool, Boolean geolocation, Boolean reUseQR, Boolean newQR,
+                 int signUpLimit, int currentlySignedUp, Boolean signUpLimitBool, Boolean geolocation, Boolean reUseQR, Boolean newQR,
                  String posterRef, String shareQRRef, String checkInQRRef, String ownerID, String eventID) {
         this.eventName = eventName;
         this.eventLocation = eventLocation;
@@ -57,6 +60,7 @@ public class Event {
         this.eventTime = eventTime;
         this.signUpLimit = signUpLimit;
         this.signUpLimitBool = signUpLimitBool;
+        this.currentlySignedUp = currentlySignedUp;
         this.geolocation = geolocation;
         this.reUseQR = reUseQR;
         this.newQR = newQR;
@@ -190,6 +194,25 @@ public class Event {
      */
     public void setSignUpLimit(int signUpLimit) {
         this.signUpLimit = signUpLimit;
+    }
+
+
+    /**
+     * Sets the amount of people currently signed up to attend the event.
+     *
+     * @param currentlySignedUp The new amount of people currently signed up to attend this event.
+     */
+    public void setCurrentlySignedUp(int currentlySignedUp) {
+        this.currentlySignedUp = currentlySignedUp;
+    }
+
+    /**
+     * Gets the amount of people currently signed up to the event.
+     *
+     * @return The amount of people currently signed up to the event.
+     */
+    public int getCurrentlySignedUp() {
+        return currentlySignedUp;
     }
 
     /**

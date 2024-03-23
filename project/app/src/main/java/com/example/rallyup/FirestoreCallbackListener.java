@@ -28,6 +28,10 @@ public interface FirestoreCallbackListener {
     default void onGetEventID(String eventID) {
     }
 
+    default void onGetRegistrationInfo(Object[] objects){
+
+    }
+
     /**
      * Upon getting a list of event objects
      * @param eventList a list of event objects

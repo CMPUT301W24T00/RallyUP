@@ -76,7 +76,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
     private String eventDate, eventTime, userID;
-    private Integer signupLimit = 1;
+    private Integer signupLimit = -1;
     private Boolean geolocation, signupLimitInput, reUseQR, newQR;
     private Boolean posterUploaded = false;
     private List<Event> usersPreviousEvents = new ArrayList<>();
@@ -578,8 +578,16 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                     .show();
             return false;
         }
+        // checking to see if the user didn't scroll to select a signup limit or if they selected a sign up limit of 1
+        else if ((attendeeSignUpLimitInput.isChecked() && signupLimit.equals(-1)) || (attendeeSignUpLimitInput.isChecked() && signupLimit.equals(1))) {
+            Toast.makeText(
+                            this,
+                            "Please select a valid sign up limit! It has to be greater than 1!",
+                            Toast.LENGTH_SHORT)
+                    .show();
+            return false;
 
-        else {
+        } else {
             // all the required fields are populated
             return true;
         }
@@ -686,8 +694,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             uploadPosterText.setVisibility(View.VISIBLE);
 
             // send the event values to fb
+            int currentlySignedUp = 0;
             Event newEvent = new Event(eventName, eventLocation, eventDescription,
-                    eventDate, eventTime, signupLimit, signupLimitInput,
+                    eventDate, eventTime, signupLimit, currentlySignedUp, signupLimitInput,
                     geolocation, reUseQR, newQR,
                     posterPath, shareQRPath, checkInQRPath, userID, eventID);
             FirestoreController fc = FirestoreController.getInstance();
