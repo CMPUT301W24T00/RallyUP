@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+        <!-- This line sets the transparency -->
+        <solid android:color="#80FBD4B1"/>
+        <stroke
+            android:width="20dp"
+            android:color="@color/lightColor"/><!-- Adjust the alpha value (80 in this case) to control the transparency -->
+</shape>

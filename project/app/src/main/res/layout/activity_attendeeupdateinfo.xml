@@ -147,7 +147,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:button="@drawable/rounded_border"
             android:text="@string/enable_geolocation_string"
             android:textColor="@color/accentColorGreen"
             android:textSize="15sp" />

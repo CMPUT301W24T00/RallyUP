@@ -7,12 +7,17 @@
         <item name="cornerSizeTopRight">20dp</item>
     </style>
 
-    <style name="roundedIamgeView">
+    <style name="roundedImageView">
         <item name="cornerSizeTopLeft">40dp</item>
         <item name="cornerSizeTopRight">40dp</item>
         <item name="cornerSizeBottomLeft">40dp</item>
         <item name="cornerSizeBottomRight">40dp</item>
     </style>
+
+    <style name="circleShape">
+        <item name="cornerSize">50%</item>
+    </style>
+
 
     <!--Round shaped FAB-->
     <style name="FAB_Shape_Round" parent="ShapeAppearance.MaterialComponents.SmallComponent">
