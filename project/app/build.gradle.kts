@@ -39,6 +39,9 @@ dependencies {
 
     // Heatmap utilities
     implementation("com.google.maps.android:android-maps-utils:3.8.0")
+    // osmdroid-android (map engine)
+    // Up to date stable version 6.1.18 (as of 1 Jan 2024)
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
 
     // implementation("org.testng:testng:6.9.6")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")

@@ -13,6 +13,8 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "RallyUp"
+// Depends on your folder name, RallyUp or RallyUP
+// Need to modify as needed
+rootProject.name = "RallyUP"
 include(":app")
  

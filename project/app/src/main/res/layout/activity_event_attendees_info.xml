@@ -162,10 +162,18 @@
                     android:textColor="@color/darkColor"
                     android:textSize="25dp" />
 
-                <com.google.android.gms.maps.MapView
-                    android:id="@+id/mapView"
+                <FrameLayout
+                    android:id="@+id/mapFrameLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="166dp" />
+                    android:layout_height="200dp">
+
+                    <org.osmdroid.views.MapView
+                        android:id="@+id/osmMap"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" />
+
+                </FrameLayout>
+
             </LinearLayout>
 
         </LinearLayout>

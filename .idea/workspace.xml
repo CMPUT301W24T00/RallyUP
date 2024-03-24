@@ -22,7 +22,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/androidTestResultsUserPreferences.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/androidTestResultsUserPreferences.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/appInsightsSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/appInsightsSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/EventAttendeesInfoActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/EventAttendeesInfoActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/OrganizerEventListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/OrganizerEventListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_event_attendees_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_event_attendees_info.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/project/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +41,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\wuchi\.android\avd\Medium_Phone_API_33.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Chih-Hung\.android\avd\Pixel_5_API_34.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$/project">
       <ProjectState />
@@ -63,6 +72,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 2
@@ -80,7 +92,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "heatmap010801",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/UofA/FALL - WINTER - 2023-2024/WINTER 2024/CMPUT 301/Final Project/RallyUP/project",
     "project.structure.last.edited": "Suggestions",
@@ -96,7 +108,7 @@
       <recent name="C:\UofA\FALL - WINTER - 2023-2024\WINTER 2024\CMPUT 301\Final Project\RallyUP\project\app\src\main" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'com.example.rallyup'">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="RallyUp.app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUp.app.main" />
       <option name="DEPLOY" value="true" />
@@ -299,7 +311,7 @@
       </method>
     </configuration>
     <configuration name="All Tests" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" nameIsGenerated="true">
-      <module name="RallyUp.app.androidTest" />
+      <module name="RallyUP.app.androidTest" />
       <option name="TESTING_TYPE" value="0" />
       <option name="METHOD_NAME" value="" />
       <option name="CLASS_NAME" value="" />

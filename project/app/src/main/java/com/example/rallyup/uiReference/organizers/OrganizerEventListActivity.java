@@ -71,7 +71,6 @@ public class OrganizerEventListActivity extends AppCompatActivity implements Fir
         //ListAdapter listAdapter = new ListAdapter(OrganizerEventListActivity.this, arrayList);
         //listView.setAdapter(listAdapter);
         // real list
-
         LocalStorageController ls = LocalStorageController.getInstance();
         controller = FirestoreController.getInstance();
         controller.getEventsByOwnerID(ls.getUserID(this), this);
