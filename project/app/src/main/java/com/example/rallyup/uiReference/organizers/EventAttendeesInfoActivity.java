@@ -100,6 +100,9 @@ public class EventAttendeesInfoActivity extends AppCompatActivity {
         attlist.setAdapter(attListAdapter);
     }
 
+    // @Override
+    // addOverlay
+    // https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
     @Override
     protected void onResume() {
         super.onResume();
