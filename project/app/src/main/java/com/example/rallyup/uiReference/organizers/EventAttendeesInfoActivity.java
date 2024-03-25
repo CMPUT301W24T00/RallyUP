@@ -37,6 +37,7 @@ public class EventAttendeesInfoActivity extends AppCompatActivity {
     private ListView attlist;      // the view that everything will be shown on
     private AttListArrayAdapter attListAdapter;
 
+    // For osmdroid map view
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;
 

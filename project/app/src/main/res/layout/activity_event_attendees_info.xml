@@ -2,11 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityEventAttendeesInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/activityEventAttendeesInfo"
-    tools:context=".uiReference.organizers.EventAttendeesInfoActivity"
-    android:background="@color/lightColor">
+    android:background="@color/lightColor"
+    android:paddingStart="4sp"
+    android:paddingEnd="4sp"
+    tools:context=".uiReference.organizers.EventAttendeesInfoActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -105,8 +107,7 @@
                     android:layout_height="350dp"
                     android:layout_marginBottom="60dp"
                     android:background="@drawable/attendee_details_list_bottom"
-                    android:paddingHorizontal="10dp"
-                    ></ListView>
+                    android:paddingHorizontal="10dp"></ListView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -153,8 +154,10 @@
                     android:paddingHorizontal="10dp"></ListView>
 
                 <TextView
+                    android:id="@+id/heatMapTitleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/attendee_details_list_top"
                     android:fontFamily="@font/inter_black"
                     android:text="@string/heat_map_of_attendees_fixed"
                     android:textAlignment="center"
@@ -162,17 +165,36 @@
                     android:textColor="@color/darkColor"
                     android:textSize="25dp" />
 
-                <FrameLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/mapFrameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="200dp">
 
+                    <TextView
+                        android:id="@+id/mapCopyRightsTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:text="@string/osmdroid_link"
+                        android:textColorLink="@color/darkColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
                     <org.osmdroid.views.MapView
                         android:id="@+id/osmMap"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent" />
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/attendee_details_list_bottom"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                </FrameLayout>
+                    </org.osmdroid.views.MapView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 

@@ -53,6 +53,12 @@
         Notifications that Organizers get to send out as announcements
     </string>
 
+    <!-- Links String Resources -->
+    <!-- https://www.geeksforgeeks.org/how-to-add-hyperlink-to-textview-in-android/ -->
+    <string name="osmdroid_link">
+        <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>
+    </string>
+
     <string name="qr_hint">SCAN QR CODE</string>
     <string name="qr_hint_2">CHECK INTO EVENT</string>
     <string name="qr_main_button">Scan</string>
