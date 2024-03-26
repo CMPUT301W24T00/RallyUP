@@ -28,11 +28,29 @@ public interface FirestoreCallbackListener {
     default void onGetEventID(String eventID) {
     }
 
+    default void onGetRegistrationInfo(Object[] objects){
+    }
+
+    default void onGetVerified (boolean verified){
+
+    }
+
     /**
      * Upon getting a list of event objects
      * @param eventList a list of event objects
      */
     default void onGetEvents(List<Event> eventList) {
+    }
+
+    default void onGetEventIDs(List<String> eventIDs){
+
+    }
+
+    default void onGetEventsFromIDs(List<Event> events){
+    }
+
+    default void onGetCheckedInUsers(List<User> userList){
+
     }
 
     /**

@@ -16,6 +16,7 @@ import com.example.rallyup.firestoreObjects.Event;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class contains the adapter for an array of events
@@ -119,8 +120,8 @@ public class EventAdapter extends BaseAdapter {
         String year = date.substring(0,4);
         String month;
         Calendar cal=Calendar.getInstance();
-        SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
-        int monthNum=Integer.parseInt(date.substring(4,6));
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.CANADA);
+        int monthNum=(Integer.parseInt(date.substring(4,6))) - 1;
         cal.set(Calendar.MONTH,monthNum);
         month = month_date.format(cal.getTime());
         String day = date.substring(6,8);

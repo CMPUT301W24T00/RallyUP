@@ -7,28 +7,23 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
-
-import androidx.annotation.NonNull;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 
 import com.example.rallyup.firestoreObjects.QrCode;
+import com.example.rallyup.firestoreObjects.Registration;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.example.rallyup.firestoreObjects.User;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -38,7 +33,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -51,6 +45,9 @@ public class FirestoreController {
     private final CollectionReference usersRef;
     private final CollectionReference eventsRef;
     private final CollectionReference eventAttendanceRef;
+
+    private final CollectionReference eventRegistrationRef;
+
     private final CollectionReference qrRef;
 
     /**
@@ -61,6 +58,7 @@ public class FirestoreController {
         usersRef = dbRef.collection("users");
         eventsRef = dbRef.collection("events");
         eventAttendanceRef = dbRef.collection("eventAttendance");
+        eventRegistrationRef = dbRef.collection("eventRegistration");
         qrRef = dbRef.collection("qrCodes");
     }
 
@@ -71,6 +69,7 @@ public class FirestoreController {
     public static FirestoreController getInstance() {
         return instance;
     }
+
 
     /**
      * This method takes an event object and allows it to be modified/updated
@@ -148,7 +147,6 @@ public class FirestoreController {
             callbackListener.onGetEvents(eventList);
 
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
-
     }
 
     /**
@@ -235,26 +233,61 @@ public class FirestoreController {
      * @param callbackListener a listener for the firestore
      */
     public void getEventsByDate(int year, int month, int day, FirestoreCallbackListener callbackListener) {
-        Query query = eventsRef.whereGreaterThan("signUpLimit", -1);
+        Query query = eventsRef.whereGreaterThan("signUpLimit", -2);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<Event> EventList = new ArrayList<>();
-            ArrayList<String> eventIDS = new ArrayList<String>();
             for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                 Event thisEvent;
                 thisEvent = documentSnapshot.toObject(Event.class);
                 String eDate = thisEvent.getEventDate();
                 if(eDate != null){
-                    if((Integer.parseInt(eDate.substring(0, 4)) >= year) &&
-                            (Integer.parseInt(eDate.substring(4, 6)) >= month) &&
-                            (Integer.parseInt(eDate.substring(6, 8)) >= day)) {
-                        EventList.add(thisEvent);
-                        eventIDS.remove(thisEvent.getEventID());
+                    if(Integer.parseInt(eDate.substring(0, 4)) >= year){
+                        if(Integer.parseInt(eDate.substring(4, 6)) >= month){
+                            EventList.add(thisEvent);
+                        }
                     }
                 }
             }
             callbackListener.onGetEvents(EventList);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
+
+    public void getEventsByUserID(String userID, FirestoreCallbackListener callbackListener){
+        Log.d("getevntsbyuserid", "userID: " + userID);
+        List<Event> events = new ArrayList<>();
+        List<String> eventIDs = new ArrayList<>();
+        Query query = eventRegistrationRef.whereEqualTo("userID", userID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            //List<String> eventIDList = new ArrayList<>();
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Registration thisRegistration;
+                thisRegistration = documentSnapshot.toObject(Registration.class);
+                String eventID = thisRegistration.getEventID();
+                if(eventID != null){
+                    eventIDs.add(eventID);
+                }
+            }
+            callbackListener.onGetEventIDs(eventIDs);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    public void getEventListFromEventIDs(List<String> eventIDS, FirestoreCallbackListener callbackListener){
+        List<Event> events = new ArrayList<>();
+        for(String eventID: eventIDS) {
+            Query query = eventsRef.whereEqualTo("eventID", eventID);
+            query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    Event thisEvent;
+                    thisEvent = documentSnapshot.toObject(Event.class);
+                    if(thisEvent.getEventName() != null){
+                        events.add(thisEvent);
+                    }
+                }
+                callbackListener.onGetEventsFromIDs(events);
+            }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+        }
+    }
+
 
     /**
      * This method queries the firestore to find the eventAttendance instance associated
@@ -269,61 +302,30 @@ public class FirestoreController {
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             if(queryDocumentSnapshots.isEmpty()){ // if the user doesn't have any rows in the eventAttendanceRef table right now we make a new instance for this event
                 Log.d("GETCHECKINS", "getCheckIns: couldn't find anything");
-                Integer checkIns = 1;
-                Attendance checkIn = new Attendance();
-                checkIn.setTimesCheckedIn(checkIns);
-                checkIn.setEventID(eventID);
-                checkIn.setUserID(userID);
-                checkIn.setAttendeeVerified(verified);
+                int checkIns = 1;
+                Attendance checkIn = new Attendance(verified, eventID, checkIns, userID);
                 addAttendance(checkIn);
             }
             else {
                 // making a list of all the instances of Attendance found for this userID
-                List<Attendance> userAttendances = new ArrayList<>();
+                boolean found = false; // creating a boolean that represents whether this specific eventAttendance instance we're looking for is in the list
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     Attendance thisAttendance;
                     thisAttendance = documentSnapshot.toObject(Attendance.class);
-                    userAttendances.add(thisAttendance);
                     if (thisAttendance.getEventID().equals(eventID) && thisAttendance.isAttendeeVerified() == verified) { // if the specific eventID and verified mode is found
                         documentSnapshot.getReference().update("timesCheckedIn", thisAttendance.getTimesCheckedIn()+1);
-                    }
-
-                }
-
-                boolean found = false; // creating a boolean that represents whether this specific eventAttendance instance we're looking for is in the list
-                for(Attendance attendance : userAttendances){ // iterating over the full list of all the Attendance instances of this user
-                    if (attendance.getEventID().equals(eventID) && attendance.isAttendeeVerified() == verified) { // if the specific eventID and verified mode is found
                         found = true;
                     }
                 }
+
                 if(!found){ // if we were unable to find it we create a new instance for this event attendance
-                    Integer checkIns = 1;
-                    Attendance checkIn = new Attendance();
-                    checkIn.setTimesCheckedIn(checkIns);
-                    checkIn.setEventID(eventID);
-                    checkIn.setUserID(userID);
-                    checkIn.setAttendeeVerified(verified);
+                    int checkIns = 1;
+                    Attendance checkIn = new Attendance(verified, eventID, checkIns, userID);
                     addAttendance(checkIn);
                 }
             }
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
-
-    // just keeping here for now in case it's needed for the organizer view attendee list implementation
-    /*public  void updateCheckIns(String eventID, String userID, Boolean verified, FirestoreCallbackListener callbackListener){
-        Query query = eventAttendanceRef.whereEqualTo("userID", userID);
-        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
-            // making a list of all the instances of Attendance found for this userID
-            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                Attendance attendance;
-                attendance = documentSnapshot.toObject(Attendance.class);
-                if (attendance.getEventID().equals(eventID) && attendance.isAttendeeVerified() == verified) { // if the specific eventID and verified mode is found
-                    Integer checkIns = attendance.getTimesCheckedIn();
-                    documentSnapshot.getReference().update("timesCheckedIn", checkIns+1);
-                }
-            }
-        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
-    }*/
 
     /**
      * This method gets an event based on the id of the event
@@ -340,6 +342,119 @@ public class FirestoreController {
     }
 
     /**
+     * This method gets the registration information of an an event based on the id of the event
+     * @param eventID a string for the identification of the event
+     * @param callbackListener a listener for the firestore
+     */
+    public void getRegistrationInfo(String eventID, FirestoreCallbackListener callbackListener) {
+        DocumentReference docRef = eventsRef.document(eventID);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            Object[] objects = new Object[3];
+            Event thisEvent;
+            thisEvent = documentSnapshot.toObject(Event.class);
+            assert thisEvent != null;
+            if(thisEvent.getSignUpLimitBool() != null) {
+                objects[0] = thisEvent.getSignUpLimitBool();
+                objects[1] = thisEvent.getSignUpLimit();
+                objects[2] = thisEvent.getCurrentlySignedUp();
+                callbackListener.onGetRegistrationInfo(objects);
+            }
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
+    }
+
+    public void newRegistration(String eventID, String userID, Context context, FirestoreCallbackListener callbackListener) {
+        Query query = eventRegistrationRef.whereEqualTo("userID", userID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            if(queryDocumentSnapshots.isEmpty()){ // if the user doesn't have any rows in the eventRegistration table right now we make a new instance for this event
+                Log.d("NEWREGISTRATION", "getRegistration: couldn't find anything");
+                Registration register = new Registration(eventID, userID);
+                //upload to firebase
+                addRegistration(register);
+                incrementRegistered(eventID);
+                Toast.makeText(context, "Registration Successful!", Toast.LENGTH_LONG).show();
+            }
+            else {
+                boolean found = false; // creating a boolean that represents whether this specific eventRegistration instance we're looking for is in the list
+                // making a list of all the instances of Registration found for this userID
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    Registration aRegistration;
+                    aRegistration = documentSnapshot.toObject(Registration.class);
+                    if (aRegistration.getEventID().equals(eventID)) { // if the specific eventID is found
+                        found = true;
+                        Toast.makeText(context, "You have already registered for this event!", Toast.LENGTH_LONG).show();
+                    }
+                }
+                if(!found){ // if we were unable to find it we create a new instance for this event registration
+                    Registration register = new Registration(eventID, userID);
+                    //upload to firebase
+                    addRegistration(register);
+                    incrementRegistered(eventID);
+                    Toast.makeText(context, "Registration Successful!", Toast.LENGTH_LONG).show();
+                }
+            }
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    public void incrementRegistered(String eventID) {
+        DocumentReference docRef = eventsRef.document(eventID);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            Event thisEvent;
+            thisEvent = documentSnapshot.toObject(Event.class);
+            assert thisEvent != null;
+            int newRegistered = thisEvent.getCurrentlySignedUp() + 1;
+            documentSnapshot.getReference().update("currentlySignedUp", newRegistered);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    public void getVerified(String eventID, String userID, FirestoreCallbackListener callbackListener) {
+        Query query = eventRegistrationRef.whereEqualTo("userID", userID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            boolean verified = false;
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Registration aRegistration;
+                aRegistration = documentSnapshot.toObject(Registration.class);
+                if (aRegistration.getEventID().equals(eventID)) { // if the specific eventID is found
+                    verified = true;
+                }
+            }
+            callbackListener.onGetVerified(verified);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    public void getCheckedInUserIDs(String eventID, FirestoreCallbackListener callbackListener) {
+        Query query = eventRegistrationRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<String> userList = new ArrayList<>();
+            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Registration aRegistration;
+                aRegistration = documentSnapshot.toObject(Registration.class);
+                String aUserID = aRegistration.getUserID();
+                if(aUserID != null){
+                    userList.add(aUserID);
+                }
+            }
+            getCheckedInUsers(userList, callbackListener);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    public void getCheckedInUsers(List<String> userList, FirestoreCallbackListener callbackListener) {
+        List<User> users = new ArrayList<>();
+        for(String userID : userList){
+            Query query = usersRef.whereEqualTo("userID", userID);
+            query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+                for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    User aUser;
+                    aUser = documentSnapshot.toObject(User.class);
+                    if(aUser.getFirstName() != null){
+                        users.add(aUser);
+                    }
+                }
+                callbackListener.onGetCheckedInUsers(users);
+            }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+        }
+    }
+
+    /**
      * Adds a new Event to the event collection in firebase
      *
      * @param event The new event to be added.
@@ -353,6 +468,7 @@ public class FirestoreController {
         data.put("eventDate", event.getEventDate());
         data.put("eventTime", event.getEventTime());
         data.put("signUpLimit", event.getSignUpLimit());
+        data.put("currentlySignedUp", event.getCurrentlySignedUp());
         data.put("signUpLimitBool", event.getSignUpLimitBool());
         data.put("geolocation", event.getGeolocation());
         data.put("reUseQR", event.getReUseQR());
@@ -376,6 +492,15 @@ public class FirestoreController {
 
         String attendanceID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
         eventAttendanceRef.document(attendanceID).set(data);
+    }
+
+    public void addRegistration(Registration registration) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("eventID", registration.getEventID());
+        data.put("userID", registration.getUserID());
+
+        String registrationID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        eventRegistrationRef.document(registrationID).set(data);
     }
 
     /**

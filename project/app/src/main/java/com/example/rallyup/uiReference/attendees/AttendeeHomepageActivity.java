@@ -38,11 +38,10 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     TextView lastNameView;
     TextView usernameView;
     String scannedEvent;
-    String userID;
     FirestoreController fc = FirestoreController.getInstance();
     LocalStorageController ls = LocalStorageController.getInstance();
-    Boolean checkIn;
-    Integer timesCheckedIn;
+    String userID;
+    boolean checkIn, verified = false;
 
 
 
@@ -53,7 +52,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     @Override
     public void onGetUser(User user) {
         Log.d("HomepageActivity", user.getId());
-        userID = user.getId();
+        //userID = user.getId();
         firstNameView.setText(user.getFirstName());
         lastNameView.setText(user.getLastName());
         usernameView.setText(user.getId());
@@ -66,7 +65,12 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     @Override
     public void onGetEventID(String eventID) {
         scannedEvent = eventID;
-        Log.d("BACK IN HOMEPAGE", "eventID: " + scannedEvent);
+        fc.getVerified(scannedEvent, userID, this);
+    }
+
+    @Override
+    public void onGetVerified(boolean verified) {
+        this.verified = verified;
         switchPage();
     }
 
@@ -103,8 +107,9 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_homepage);
+        String userID = ls.getUserID(this);
 
-        fc.getUserByID(ls.getUserID(this), this);
+        fc.getUserByID(userID, this);
 
         // Text views
         firstNameView = findViewById(R.id.att_first_name);
@@ -160,9 +165,9 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
      */
     public void switchPage() {
         if(checkIn) {
-            boolean verified = false; // will actually get later when signups are set up
             fc.updateAttendance(scannedEvent, userID, verified, this);
             Toast.makeText(this, "Check-In Successful! Enjoy the event!", Toast.LENGTH_LONG).show();
+
         }
         else{
             Intent intent;

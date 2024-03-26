@@ -76,7 +76,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
     private String eventDate, eventTime, userID;
-    private Integer signupLimit = 1;
+    private Integer signupLimit = -1;
     private Boolean geolocation, signupLimitInput, reUseQR, newQR;
     private Boolean posterUploaded = false;
     private List<Event> usersPreviousEvents = new ArrayList<>();
@@ -444,7 +444,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * This function is called if the user checks the "Set Sign Up Limit" checkbox
      */
     public void setAttendeeLimit() {
-        attendeeLimitPicker.setVisibility(attendeeLimitPicker.VISIBLE);
+        attendeeLimitPicker.setVisibility(View.VISIBLE);
         attendeeLimitPicker.setMaxValue(1000);
         attendeeLimitPicker.setMinValue(1);
     }
@@ -455,7 +455,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      */
     public void resetAttendeeLimit() {
         attendeeLimitPicker.setValue(1);
-        attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
+        attendeeLimitPicker.setVisibility(View.GONE);
     }
 
     /**
@@ -511,11 +511,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 //        shareDisplayText.setVisibility(View.VISIBLE);
 //    }
 
-    /**
-     * Generates a QR Code that will be used to check users in to the event
-     * This method does not take in any parameters, or return any variables
-     */
-//    private void generateCheckInQR() {
+    //    private void generateCheckInQR() {
 //        // Code sourced and adapted from:
 //        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
 //        // Library: https://github.com/journeyapps/zxing-android-embedded
@@ -558,8 +554,12 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      */
     public Boolean validateInput() {
         // checking to see if any of the required fields were left blank
-        if(eventName.isEmpty() || eventLocation.isEmpty() || (eventTimeInput.getText().toString().isEmpty())
-        || eventDateInput.getText().toString().isEmpty() || (!newQRSelect.isChecked() && !reUseQRSelect.isChecked())
+        if(eventName.isEmpty()
+                || eventLocation.isEmpty()
+                || (eventTimeInput.getText().toString().isEmpty())
+                || (eventDescriptionInput.getText().toString().isEmpty())
+                || eventDateInput.getText().toString().isEmpty()
+                || (!newQRSelect.isChecked() && !reUseQRSelect.isChecked())
                 || !posterUploaded) {
             Toast.makeText(
                             this,
@@ -578,7 +578,38 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                     .show();
             return false;
         }
-
+        // checking to see if the user didn't scroll to select a signup limit or if they selected a sign up limit of 1
+        else if ((attendeeSignUpLimitInput.isChecked() && signupLimit.equals(-1)) || (attendeeSignUpLimitInput.isChecked() && signupLimit.equals(1))) {
+            Toast.makeText(
+                            this,
+                            "Please select a valid sign up limit! It has to be greater than 1!",
+                            Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        } else if (eventName.length() < 5) {
+            Toast.makeText(
+                            this,
+                            "Please make your event title a little longer!",
+                            Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        else if (eventLocation.length() < 5) {
+            Toast.makeText(
+                            this,
+                            "Please enter a valid location!",
+                            Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        else if (eventDescription.length() < 5) {
+            Toast.makeText(
+                            this,
+                            "Please make your event description a little longer!",
+                            Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
         else {
             // all the required fields are populated
             return true;
@@ -686,8 +717,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             uploadPosterText.setVisibility(View.VISIBLE);
 
             // send the event values to fb
+            int currentlySignedUp = 0;
             Event newEvent = new Event(eventName, eventLocation, eventDescription,
-                    eventDate, eventTime, signupLimit, signupLimitInput,
+                    eventDate, eventTime, signupLimit, currentlySignedUp, signupLimitInput,
                     geolocation, reUseQR, newQR,
                     posterPath, shareQRPath, checkInQRPath, userID, eventID);
             FirestoreController fc = FirestoreController.getInstance();

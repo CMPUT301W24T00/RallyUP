@@ -5,17 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.Objects;
 
 /**
  * This class contains the event activity for an attendee when they browse and click on an event
@@ -26,10 +30,13 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
     ImageButton attEventBackButton;
     ImageView poster;
     TextView eventName, eventDate, eventLocation, eventDetails;
+    Button registerButton;
 
-    Boolean checkIn;
+    Boolean registrationLimit;
+    int registrationMax, currentlyRegistered;
 
     Event displayEvent;
+
 
 
     FirestoreController controller = new FirestoreController();
@@ -42,7 +49,18 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
     public void onGetEvent(Event event) {
         displayEvent = event;
         setFields();
+    }
 
+    /**
+     * Upon getting the registration details of an event it will set the proper fields
+     * @param objects a list of 3 objects that contains important details. The first value is a Boolean, the second and third are integers
+     */
+    @Override
+    public void onGetRegistrationInfo(Object[] objects) {
+        registrationLimit = (Boolean) objects[0];
+        registrationMax = (int) objects[1];
+        currentlyRegistered = (int) objects[2];
+        registrationButton();
     }
 
     /**
@@ -56,11 +74,13 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendee_event_details);
+        registerButton = findViewById(R.id.att_register_button);
 
         Intent intent = getIntent();
         String eventID = intent.getStringExtra("key");
 
         controller.getEventByID(eventID, this);
+        controller.getRegistrationInfo(eventID, this);
 
 
         attEventBackButton = findViewById(R.id.attendee_event_back_button);
@@ -71,6 +91,12 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
         eventDetails = findViewById(R.id.att_register_event_details);
 
 
+
+        registerButton.setOnClickListener(view ->{
+            LocalStorageController ls = LocalStorageController.getInstance();
+            String userID = ls.getUserID(this);
+            controller.newRegistration(eventID, userID, this, this);
+        });
 
         attEventBackButton.setOnClickListener(view -> {
             Intent intent1 = new Intent(getBaseContext(), AttendeeBrowseEventsActivity.class);
@@ -103,11 +129,20 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
         String year = date.substring(0,4);
         String month;
         Calendar cal=Calendar.getInstance();
-        SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
-        int monthNum=Integer.parseInt(date.substring(4,6));
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.CANADA);
+        int monthNum=(Integer.parseInt(date.substring(4,6)))-1;
         cal.set(Calendar.MONTH,monthNum);
         month = month_date.format(cal.getTime());
         String day = date.substring(6,8);
         return month + " " + day + ", " + year;
+    }
+
+    /**
+     * This method sets the visibility of the register button depending on whether the registrationLimit has been reached
+     */
+    public void registrationButton(){
+        if(registrationLimit && (registrationMax == currentlyRegistered)){
+            registerButton.setVisibility(View.GONE);
+        }
     }
 }

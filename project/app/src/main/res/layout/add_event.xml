@@ -13,7 +13,7 @@
     <ScrollView
         android:id="@+id/activityOrgEventDetails"
         android:layout_width="417dp"
-        android:layout_height="600dp"
+        android:layout_height="0dp"
         android:layout_marginTop="26dp"
         android:layout_marginEnd="1dp"
         android:background="@color/lightColor"
@@ -47,7 +47,8 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintVertical_bias="1.0"
+                    android:contentDescription="TODO" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/posterUploadButton"
@@ -159,7 +160,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.949"
-                    app:srcCompat="@drawable/rounded_border" />
+                    app:srcCompat="@drawable/rounded_border"
+                    android:contentDescription="TODO" />
 
                 <ImageView
                     android:id="@+id/imageView10"
@@ -171,7 +173,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.67"
-                    app:srcCompat="@drawable/rounded_border" />
+                    app:srcCompat="@drawable/rounded_border"
+                    android:contentDescription="TODO" />
 
                 <ImageView
                     android:id="@+id/imageView11"
@@ -183,7 +186,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.371"
-                    app:srcCompat="@drawable/rounded_border" />
+                    app:srcCompat="@drawable/rounded_border"
+                    android:contentDescription="TODO" />
 
                 <ImageView
                     android:id="@+id/imageView12"
@@ -195,7 +199,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.084"
-                    app:srcCompat="@drawable/rounded_border" />
+                    app:srcCompat="@drawable/rounded_border"
+                    android:contentDescription="TODO" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -211,7 +216,7 @@
                     android:backgroundTint="#EEFFFFFF"
                     android:buttonTint="@color/accentColorGreen"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Set Attendee Sign Up Limit?"
+                    android:text="Set Attendee Registration Limit?"
                     android:textSize="18sp"
                     app:buttonIconTint="@color/accentColorGreen"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -375,12 +380,12 @@
             <ImageView
                 android:id="@+id/checkInQRView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="147dp"
                 android:visibility="gone" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="83dp"
+                android:layout_height="match_parent"
                 android:background="@color/lightColor">
 
                 <Button
@@ -433,7 +438,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="29dp"
         android:background="#00000000"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toStartOf="@+id/newEventText"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
