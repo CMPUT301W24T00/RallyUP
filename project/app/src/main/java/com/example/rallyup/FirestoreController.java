@@ -9,30 +9,21 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.Glide;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.Registration;
-import com.example.rallyup.uiReference.attendees.AttendeeEventDetails;
-import com.example.rallyup.uiReference.attendees.AttendeeMyEventsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.example.rallyup.firestoreObjects.User;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,7 +33,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -429,6 +419,39 @@ public class FirestoreController {
             }
             callbackListener.onGetVerified(verified);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    public void getCheckedInUserIDs(String eventID, FirestoreCallbackListener callbackListener) {
+        Query query = eventRegistrationRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<String> userList = new ArrayList<>();
+            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Registration aRegistration;
+                aRegistration = documentSnapshot.toObject(Registration.class);
+                String aUserID = aRegistration.getUserID();
+                if(aUserID != null){
+                    userList.add(aUserID);
+                }
+            }
+            getCheckedInUsers(userList, callbackListener);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    public void getCheckedInUsers(List<String> userList, FirestoreCallbackListener callbackListener) {
+        List<User> users = new ArrayList<>();
+        for(String userID : userList){
+            Query query = usersRef.whereEqualTo("userID", userID);
+            query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+                for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    User aUser;
+                    aUser = documentSnapshot.toObject(User.class);
+                    if(aUser.getFirstName() != null){
+                        users.add(aUser);
+                    }
+                }
+                callbackListener.onGetCheckedInUsers(users);
+            }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+        }
     }
 
     /**

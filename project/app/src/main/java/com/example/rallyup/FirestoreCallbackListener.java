@@ -49,6 +49,10 @@ public interface FirestoreCallbackListener {
     default void onGetEventsFromIDs(List<Event> events){
     }
 
+    default void onGetCheckedInUsers(List<User> userList){
+
+    }
+
     /**
      * Upon getting an image
      * @param bm a bitmap of the image
