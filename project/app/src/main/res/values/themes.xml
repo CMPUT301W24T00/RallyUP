@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.RallyUP" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">@color/lightColor</item>
-         <item name="colorPrimaryDark">@color/darkColor</item>
-         <item name="background">@color/accentColorGreen</item>
+        <item name="colorPrimary">@color/lightColor</item>
+        <item name="colorPrimaryDark">@color/darkColor</item>
+        <item name="background">@color/accentColorGreen</item>
     </style>
 
     <style name="Theme.RallyUP" parent="Base.Theme.RallyUP" />

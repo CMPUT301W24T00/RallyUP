@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".uiReference.admin.AdminHomepageActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/admin_gradient"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:layout_gravity="center">
+            <ImageButton
+                android:id="@+id/admin_homepage_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/back_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.051"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_black"
+                android:text="Admin Activities"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
+                android:lineHeight="35dp"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textAlignment="textEnd"
+                tools:ignore="RtlCompat"  />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
+
+            <Button
+                android:id="@+id/admin_browse_events_btn"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="60dp"
+                android:layout_marginVertical="30dp"
+                android:background="@color/lightColor"
+                android:fontFamily="@font/inter_extrabold"
+                android:text="Browse Events"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
+                android:textSize="25dp"
+                app:backgroundTint="@null"
+                android:padding="20dp"></Button>
+
+            <Button
+                android:id="@+id/admin_browse_profiles_btn"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="60dp"
+                android:layout_marginVertical="30dp"
+                android:background="@color/accentColorGreen"
+                android:fontFamily="@font/inter_extrabold"
+                android:text="Browse Profiles"
+                android:textAllCaps="true"
+                android:textColor="@color/lightColor"
+                android:textSize="25dp"
+                app:backgroundTint="@null"
+                android:padding="20dp"></Button>
+
+            <Button
+                android:id="@+id/admin_browse_images_btn"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="60dp"
+                android:layout_marginVertical="30dp"
+                android:background="@color/accentColorRed"
+                android:fontFamily="@font/inter_extrabold"
+                android:text="Browse Images"
+                android:textAllCaps="true"
+                android:textColor="@color/lightColor"
+                android:textSize="25dp"
+                app:backgroundTint="@null"
+                android:padding="20dp"></Button>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

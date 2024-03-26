@@ -29,6 +29,16 @@
             android:insetRight="30dp"
             android:text="Current Working App" />
 
+        <Button
+            android:id="@+id/AdminPages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:insetLeft="30dp"
+            android:insetTop="50dp"
+            android:insetRight="30dp"
+            android:text="Admin Pages" />
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
