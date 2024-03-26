@@ -53,7 +53,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
     /**
      * Method (SAME AS FROM FIREBASE.GOOGLE) that retrieves and sets our FCM Token
      */
-    private void retrieveCurrentFCMToken(){
+    private void retrieveCurrentFCMToken() {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -79,9 +79,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
     /**
      * Method that just returns what our current FCM token is, by first calling retrieveCurrentFCMToken
      * This sets our token, which is what this method returns
+     *
      * @return String object of the current FCM Token of this device.
      */
-    public String getCurrentFCMToken(){
+    public String getCurrentFCMToken() {
         retrieveCurrentFCMToken();
         return currentFCMToken;
     }
