@@ -10,7 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/navigation/nav_graph.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseEventsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseEventsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseImages.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseImages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseProfiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseProfiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminHomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminHomepageActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
