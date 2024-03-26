@@ -9,6 +9,8 @@ public class User {
     private String lastName = "";
     private String id = "";
 
+    private String location = "";
+
     /**
      * Default constructor for User.
      */

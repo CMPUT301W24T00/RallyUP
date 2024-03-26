@@ -1,5 +1,6 @@
 package com.example.rallyup.uiReference.attendees;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -33,6 +35,27 @@ import java.util.Objects;
  * This class is an activity that enables an attendee to update their profile or user details
  */
 public class AttendeeUpdateActivity extends AppCompatActivity {
+
+//    ActivityResultLauncher<String[]> locationPermissionRequest =
+//            registerForActivityResult(new ActivityResultContracts
+//                            .RequestMultiplePermissions(), result -> {
+//                        Boolean fineLocationGranted = result.getOrDefault(
+//                                Manifest.permission.ACCESS_FINE_LOCATION, false);
+//                        Boolean coarseLocationGranted = result.getOrDefault(
+//                                Manifest.permission.ACCESS_COARSE_LOCATION,false);
+//                        if (fineLocationGranted != null && fineLocationGranted) {
+//                            // Precise location access granted.
+//                            // Send the data to activity that requires it to the correct activity
+//                            // probably organizer.EventAttendeesInfoActivity
+//                        } else if (coarseLocationGranted != null && coarseLocationGranted) {
+//                            // Only approximate location access granted.
+//                        } else {
+//                            // No location access granted.
+//                        }
+//                    }
+//            );
+
+
 
     /**
      * Initializes the attendee updating/editing activity
@@ -66,6 +89,46 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
         // All of the following editTexts and checkBox values need to be reflected and update
         // the values from Firebase, once the confirmButton is clicked, it should send the values
         // for Firebase to update.
+
+
+        ActivityResultLauncher<String[]> locationPermissionRequest =
+                registerForActivityResult(new ActivityResultContracts
+                                .RequestMultiplePermissions(), result -> {
+                            Boolean fineLocationGranted = result.getOrDefault(
+                                    Manifest.permission.ACCESS_FINE_LOCATION, false);
+                            Boolean coarseLocationGranted = result.getOrDefault(
+                                    Manifest.permission.ACCESS_COARSE_LOCATION,false);
+                            if (fineLocationGranted != null && fineLocationGranted) {
+                                // Precise location access granted.
+                                // Send the data to activity that requires it to the correct activity
+                                // probably organizer.EventAttendeesInfoActivity
+                                // OR send it to the data base here.
+                                // Better idea is to send the data through the database 
+                            } else if (coarseLocationGranted != null && coarseLocationGranted) {
+                                // Only approximate location access granted.
+                                // Send the data to activity that requires it to the correct activity
+                                // probably organizer.EventAttendeesInfoActivity
+
+                            } else {
+                                // No location access granted.
+                                Toast toasty = Toast.makeText(getBaseContext(),
+                                        "Location Permission Denied!",
+                                        Toast.LENGTH_SHORT);
+                                toasty.show();
+                            }
+                        }
+                );
+
+
+        if (geolocationCheck.isChecked()) {
+            // Before you perform the actual permission request, check whether your app
+            // already has the permissions, and whether your app needs to show a permission
+            // rationale dialog. For more details, see Request permissions.
+            locationPermissionRequest.launch(new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            });
+        }
 
         // This whole slob of launchSomeActivity HAS TO BE before the call for it
         // Which is in editPhotoButton.setOnClickListener();

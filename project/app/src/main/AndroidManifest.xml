@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <!-- Permissions required for OSM Android -->
@@ -12,6 +13,7 @@
     <!-- WRITE_EXTERNAL_STORAGE is deprecated (but is asked by the OSMAndroid Wiki),
     not granted, to write to shared storage use 'MediaStore.createWriteRequest' intent -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
     <application
         android:name=".RallyUpApplication"
@@ -64,7 +66,11 @@
         <activity android:name=".uiReference.attendees.ScannerActivity"/>
         <activity android:name=".uiReference.splashScreen" />
         <activity android:name=".uiReference.attendees.AttendeeUpdateActivity"/>
-    
+
+        <service
+            android:name=".uiReference.organizers.EventAttendeesInfoActivity"
+            android:foregroundServiceType="location"
+            />
     </application>
 
 </manifest>

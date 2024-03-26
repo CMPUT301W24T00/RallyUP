@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -18,17 +19,23 @@ import com.example.rallyup.R;
 import com.example.rallyup.uiReference.testingClasses.AttListArrayAdapter;
 import com.example.rallyup.uiReference.testingClasses.AttendeeStatsClass;
 
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBox;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.FolderOverlay;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import firebase.com.protolitewrapper.BuildConfig;
 
 /**
  * This class contains the activity for the attendee's info in an event
  * @author Kaye Maranan
+ * @see org.osmdroid for more information on osmdroid map capabilities
  */
 public class EventAttendeesInfoActivity extends AppCompatActivity {
 
@@ -38,8 +45,33 @@ public class EventAttendeesInfoActivity extends AppCompatActivity {
     private AttListArrayAdapter attListAdapter;
 
     // For osmdroid map view
+    String TAG = "heatmap";
+    DisplayMetrics dm = null;
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;
+
+    // async loading stuff
+    boolean renderJobActive = false;
+    boolean running = true;
+    long lastMovement = 0;
+    boolean needsDataRefresh = true;
+    // end async loading stuff
+
+    /**
+     * the size of the cell in density independent pixels
+     * a higher value = smoother image but higher processing and rendering times
+     */
+    int cellSizeInDp = 20;
+
+    //colors and alpha settings
+    String alpha = "#55";
+    String red = "FF0000";
+    String orange = "FFA500";
+    String yellow = "FFFF00";
+
+    //a pointer to the last render overlay, so that we can remove/replace it with the new one
+    FolderOverlay heatmapOverlay = null;
+
 
     /**
      * Initializes an event's attendees info activity when it is first launched
@@ -153,5 +185,42 @@ public class EventAttendeesInfoActivity extends AppCompatActivity {
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
+    }
+
+    private void generateMap() {
+        renderJobActive = true;
+        dm = getResources().getDisplayMetrics();
+        // Set the center of the map, preferably the location of the organizer
+        // Might need to ask the permission as well when doing this
+        // UNLESS already asked
+        //map.getController().setCenter(new GeoPoint());
+
+
+        int densityDpi = (int) (dm.density * cellSizeInDp);
+
+        IGeoPoint iGeoPoint = map.getProjection().fromPixels(0, 0);
+        IGeoPoint iGeoPoint2 = map.getProjection().fromPixels(densityDpi, densityDpi);
+
+        //delta is the size of our cell in lat,lon
+        //since this is zoom dependent, rerun the calculations on zoom changes
+        double xCellSizeLongitude = Math.abs(iGeoPoint.getLongitude() - iGeoPoint2.getLongitude());
+        double yCellSizeLatitude = Math.abs(iGeoPoint.getLatitude() - iGeoPoint2.getLatitude());
+
+        BoundingBox view = map.getBoundingBox();
+
+        // a set of a GeoPoints representing what we want a heat map of.
+        List<IGeoPoint> pts = loadPoints(view);
+
+    }
+
+    private List<IGeoPoint> loadPoints(BoundingBox view) {
+        List<IGeoPoint> pts = new ArrayList<IGeoPoint>();
+        // Return a list of geopoints that we get from the user's database
+        // Meaning we have to make a FirestoreController
+        // that gets us the user's location with a query
+
+
+
+        return pts;
     }
 }
