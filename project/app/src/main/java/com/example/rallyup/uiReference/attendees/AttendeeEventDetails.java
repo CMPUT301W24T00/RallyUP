@@ -18,6 +18,7 @@ import com.example.rallyup.firestoreObjects.Event;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -128,8 +129,8 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
         String year = date.substring(0,4);
         String month;
         Calendar cal=Calendar.getInstance();
-        SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
-        int monthNum=Integer.parseInt(date.substring(4,6));
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.CANADA);
+        int monthNum=(Integer.parseInt(date.substring(4,6)))-1;
         cal.set(Calendar.MONTH,monthNum);
         month = month_date.format(cal.getTime());
         String day = date.substring(6,8);

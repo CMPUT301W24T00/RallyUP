@@ -444,7 +444,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * This function is called if the user checks the "Set Sign Up Limit" checkbox
      */
     public void setAttendeeLimit() {
-        attendeeLimitPicker.setVisibility(attendeeLimitPicker.VISIBLE);
+        attendeeLimitPicker.setVisibility(View.VISIBLE);
         attendeeLimitPicker.setMaxValue(1000);
         attendeeLimitPicker.setMinValue(1);
     }
@@ -455,7 +455,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      */
     public void resetAttendeeLimit() {
         attendeeLimitPicker.setValue(1);
-        attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
+        attendeeLimitPicker.setVisibility(View.GONE);
     }
 
     /**
@@ -511,11 +511,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 //        shareDisplayText.setVisibility(View.VISIBLE);
 //    }
 
-    /**
-     * Generates a QR Code that will be used to check users in to the event
-     * This method does not take in any parameters, or return any variables
-     */
-//    private void generateCheckInQR() {
+    //    private void generateCheckInQR() {
 //        // Code sourced and adapted from:
 //        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
 //        // Library: https://github.com/journeyapps/zxing-android-embedded
@@ -558,8 +554,12 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      */
     public Boolean validateInput() {
         // checking to see if any of the required fields were left blank
-        if(eventName.isEmpty() || eventLocation.isEmpty() || (eventTimeInput.getText().toString().isEmpty())
-        || eventDateInput.getText().toString().isEmpty() || (!newQRSelect.isChecked() && !reUseQRSelect.isChecked())
+        if(eventName.isEmpty()
+                || eventLocation.isEmpty()
+                || (eventTimeInput.getText().toString().isEmpty())
+                || (eventDescriptionInput.getText().toString().isEmpty())
+                || eventDateInput.getText().toString().isEmpty()
+                || (!newQRSelect.isChecked() && !reUseQRSelect.isChecked())
                 || !posterUploaded) {
             Toast.makeText(
                             this,
@@ -586,8 +586,31 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                             Toast.LENGTH_SHORT)
                     .show();
             return false;
-
-        } else {
+        } else if (eventName.length() < 5) {
+            Toast.makeText(
+                            this,
+                            "Please make your event title a little longer!",
+                            Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        else if (eventLocation.length() < 5) {
+            Toast.makeText(
+                            this,
+                            "Please enter a valid location!",
+                            Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        else if (eventDescription.length() < 5) {
+            Toast.makeText(
+                            this,
+                            "Please make your event description a little longer!",
+                            Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        else {
             // all the required fields are populated
             return true;
         }

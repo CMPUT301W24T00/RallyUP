@@ -29,6 +29,9 @@ public interface FirestoreCallbackListener {
     }
 
     default void onGetRegistrationInfo(Object[] objects){
+    }
+
+    default void onGetVerified (boolean verified){
 
     }
 
@@ -37,6 +40,13 @@ public interface FirestoreCallbackListener {
      * @param eventList a list of event objects
      */
     default void onGetEvents(List<Event> eventList) {
+    }
+
+    default void onGetEventIDs(List<String> eventIDs){
+
+    }
+
+    default void onGetEventsFromIDs(List<Event> events){
     }
 
     /**

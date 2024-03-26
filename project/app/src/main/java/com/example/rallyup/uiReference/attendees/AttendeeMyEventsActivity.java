@@ -37,11 +37,52 @@ import java.util.List;
 public class AttendeeMyEventsActivity extends AppCompatActivity implements FirestoreCallbackListener {
     String scannedEvent;
     FirestoreController fc = FirestoreController.getInstance();
-    Boolean checkIn;
+    boolean checkIn;
+    boolean verified;
+
+    List<String> eventIDs = new ArrayList<>();
+
+    EventAdapter eventAdapter;
+
+    ImageButton attMyEventsBackBtn;
+    FloatingActionButton QRCodeScannerBtn;
+    LocalStorageController ls = LocalStorageController.getInstance();
+    String userID;
+
+
+
+    ListView listView;
+//     ArrayList<Integer> arrayList = new ArrayList<>();
+
+
+
     @Override
     public void onGetEventID(String eventID) {
         scannedEvent = eventID;
+        fc.getVerified(scannedEvent, userID, this);
+    }
+
+    @Override
+    public void onGetVerified(boolean verified) {
+        this.verified = verified;
         switchPage();
+    }
+
+    /**
+     * Upon getting the list of events, it links the necessary adapter
+     * @param events a collection of event objects
+     */
+    @Override
+    public void onGetEventsFromIDs(List<Event> events) {
+        eventAdapter = new EventAdapter(AttendeeMyEventsActivity.this, events);
+        listView.setAdapter(eventAdapter);
+    }
+
+    @Override
+    public void onGetEventIDs(List<String> eventIDS){
+        this.eventIDs = eventIDS;
+        fc.getEventListFromEventIDs(eventIDs, this);
+
     }
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
@@ -55,32 +96,11 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
 
                     String read = result.getContents();
                     //Log.d("Scanned QR Code", "QR CODE ID: " + read.substring(1));
-                    checkIn = false;
-                    if(read.charAt(0) == 'c'){
-                        checkIn = true;
-                    }
+                    checkIn = read.charAt(0) == 'c';
                     String qrID = read.substring(1);
                     fc.getEventByQRID(qrID, this);
                 }
             });
-    ImageButton attMyEventsBackBtn;
-    FloatingActionButton QRCodeScannerBtn;
-
-    FirestoreController controller;
-
-
-    ListView listView;
-//     ArrayList<Integer> arrayList = new ArrayList<>();
-
-    /**
-     * Upon getting the list of events, it links the necessary adapter
-     * @param events a collection of event objects
-     */
-    @Override
-    public void onGetEvents(List<Event> events){
-        EventAdapter eventAdapter = new EventAdapter(AttendeeMyEventsActivity.this, events);
-        listView.setAdapter(eventAdapter);
-    }
 
 
     /**
@@ -95,6 +115,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_my_events);
+        userID = ls.getUserID(this);
 
         attMyEventsBackBtn = findViewById(R.id.browse_events_back_button);
         QRCodeScannerBtn = findViewById(R.id.QRScannerButton);
@@ -102,11 +123,10 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
         listView = findViewById(R.id.att_my_events_list);
 
         FirestoreController fc = FirestoreController.getInstance();
-        LocalStorageController ls = LocalStorageController.getInstance();
-        fc.getEventsByOwnerID(ls.getUserID(this), this);
+        fc.getEventsByUserID(userID, this);
 
-        controller = FirestoreController.getInstance();
-        controller.getEventsByOwnerID(ls.getUserID(this), this);
+        //controller = FirestoreController.getInstance();
+        //controller.getEventsByUserID(ls.getUserID(this), this);
 
         attMyEventsBackBtn.setOnClickListener(view -> {
             Intent intent = new Intent(getBaseContext(), AttendeeHomepageActivity.class);
@@ -123,13 +143,15 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
         });
 
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            //Integer poster = (Integer) adapterView.getItemAtPosition(i);
+            Event selectedEvent = eventAdapter.getItem(i);
 
-            Integer poster = (Integer) adapterView.getItemAtPosition(i);
-
-            Intent appInfo = new Intent(getBaseContext(), AttendeeRegisteredEvent.class);
-//                appInfo.putExtra("poster", poster);
-            startActivity(appInfo);
+            String eventID = selectedEvent.getEventID();
+            Intent intent = new Intent(AttendeeMyEventsActivity.this, AttendeeEventDetails.class);
+            intent.putExtra("key", eventID);
+            startActivity(intent);
         });
+
     }
 
 
@@ -139,9 +161,6 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
      */
     public void switchPage() {
         if(checkIn) {
-            boolean verified = false; // will actually get later when signups are set up
-            LocalStorageController lc = LocalStorageController.getInstance();
-            String userID = lc.getUserID(this);
             fc.updateAttendance(scannedEvent, userID, verified, this);
             Intent intent;
             intent = new Intent(AttendeeMyEventsActivity.this, AttendeeHomepageActivity.class);
