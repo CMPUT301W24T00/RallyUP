@@ -45,7 +45,7 @@ import java.util.UUID;
  * This class represents the firestore controller that contains references to the firebase and important collections
  */
 public class FirestoreController {
-    private static final FirestoreController instance = new FirestoreController();
+//    private static final FirestoreController instance = new FirestoreController();
 
     private final FirebaseFirestore dbRef;
     private final CollectionReference usersRef;
@@ -56,8 +56,22 @@ public class FirestoreController {
     /**
      * This method constructs a firestore controller using references to the firecase and important collections
      */
+//    public FirestoreController() {
+//        dbRef = FirebaseFirestore.getInstance();
+//        usersRef = dbRef.collection("users");
+//        eventsRef = dbRef.collection("events");
+//        eventAttendanceRef = dbRef.collection("eventAttendance");
+//        qrRef = dbRef.collection("qrCodes");
+//    }
     public FirestoreController() {
-        dbRef = FirebaseFirestore.getInstance();
+        this(FirebaseFirestore.getInstance());
+    }
+    /**
+     * pyhn version (temp)
+     * @param firestoreInstance
+     */
+    public FirestoreController(FirebaseFirestore firestoreInstance) {
+        dbRef = firestoreInstance;
         usersRef = dbRef.collection("users");
         eventsRef = dbRef.collection("events");
         eventAttendanceRef = dbRef.collection("eventAttendance");
@@ -69,6 +83,7 @@ public class FirestoreController {
      * @return an instance of the firestore controller
      */
     public static FirestoreController getInstance() {
+        FirestoreController instance = new FirestoreController();
         return instance;
     }
 
