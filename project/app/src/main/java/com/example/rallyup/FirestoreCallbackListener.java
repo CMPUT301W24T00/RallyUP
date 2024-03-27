@@ -22,17 +22,27 @@ public interface FirestoreCallbackListener {
     }
 
     /**
-     * Upon getting the event's ID
+     * Upon getting an event's ID
      * @param eventID the identifying string for an event object
      */
     default void onGetEventID(String eventID) {
     }
 
+    /**
+     * Upon getting the registration information of an event
+     * @param objects a list of objects containing the registration details.
+     *                The first element in the list is a boolean that represents whether or not there is a registration limit set for the event
+     *                The second element in the list is an integer for the registration limit. It is set to -1 if a registration limit is not set
+     *                The third element in the list is an integer representing how many people are currently registered for the event
+     */
     default void onGetRegistrationInfo(Object[] objects){
     }
 
+    /**
+     * Upon getting the registration status of a user for an event
+     * @param verified a boolean value that represents whether or not the user is registered for the event
+     */
     default void onGetVerified (boolean verified){
-
     }
 
     /**
@@ -42,15 +52,12 @@ public interface FirestoreCallbackListener {
     default void onGetEvents(List<Event> eventList) {
     }
 
-    default void onGetEventIDs(List<String> eventIDs){
 
-    }
-
-    default void onGetEventsFromIDs(List<Event> events){
-    }
-
-    default void onGetCheckedInUsers(List<User> userList){
-
+    /**
+     * Upon getting a list of User objects
+     * @param userList a list of user objects
+     */
+    default void onGetUsers(List<User> userList){
     }
 
     /**

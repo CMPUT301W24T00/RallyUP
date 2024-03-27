@@ -40,8 +40,6 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
     boolean checkIn;
     boolean verified;
 
-    List<String> eventIDs = new ArrayList<>();
-
     EventAdapter eventAdapter;
 
     ImageButton attMyEventsBackBtn;
@@ -56,12 +54,21 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
 
 
 
+    /**
+     * Upon getting the event ID of from the scanned QR code, it saves the value and uses that value to get the verification status
+     * of the user for that event
+     * @param eventID the unique ID of the event
+     */
     @Override
     public void onGetEventID(String eventID) {
         scannedEvent = eventID;
         fc.getVerified(scannedEvent, userID, this);
     }
 
+    /**
+     * Upon getting the verification status of the user for this event, we perform the required check-in or share action
+     * @param verified the verification status of the user for this event
+     */
     @Override
     public void onGetVerified(boolean verified) {
         this.verified = verified;
@@ -73,17 +80,11 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
      * @param events a collection of event objects
      */
     @Override
-    public void onGetEventsFromIDs(List<Event> events) {
+    public void onGetEvents(List<Event> events) {
         eventAdapter = new EventAdapter(AttendeeMyEventsActivity.this, events);
         listView.setAdapter(eventAdapter);
     }
 
-    @Override
-    public void onGetEventIDs(List<String> eventIDS){
-        this.eventIDs = eventIDS;
-        fc.getEventListFromEventIDs(eventIDs, this);
-
-    }
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {
