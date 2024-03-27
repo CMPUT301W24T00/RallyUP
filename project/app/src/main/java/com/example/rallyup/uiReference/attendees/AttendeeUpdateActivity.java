@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,8 +23,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -32,7 +37,79 @@ import java.util.Objects;
 /**
  * This class is an activity that enables an attendee to update their profile or user details
  */
-public class AttendeeUpdateActivity extends AppCompatActivity {
+public class AttendeeUpdateActivity extends AppCompatActivity implements FirestoreCallbackListener {
+    private final String USER_FIRST_NAME_TAG = "firstName";
+    private final String USER_LAST_NAME_TAG = "lastName";
+    private final String USER_EMAIL_TAG = "email";
+    private final String USER_PHONE_NUMBER_TAG = "phoneNumber";
+    private final String USER_GEOLOCATION_TAG = "geolocation";
+    private final String USER_GEOPOINT_TAG = "latlong";
+
+    // Get the instances of the different storage controllers
+    FirestoreController fc = FirestoreController.getInstance();
+    LocalStorageController lc = LocalStorageController.getInstance();
+    // TextView of Username
+    TextView userName;
+
+    // Edit personal info section
+    EditText editFirstName;
+    EditText editLastName;
+    EditText editEmail;
+    EditText editPhoneNumber;
+    CheckBox geolocationCheck;
+
+    @Override
+    public void onGetUser(User user) {
+        Log.d("Attendee Update Activity", user.getId());
+        // Set the user's details
+        userName.setText(user.getId());
+        if (user.getFirstName() == null) {
+            editFirstName.setText("");
+        } else {
+            editFirstName.setText(user.getFirstName());
+        }
+        if (user.getLastName() == null) {
+            editLastName.setText("");
+        } else {
+            editLastName.setText(user.getLastName());
+        }
+        if (user.getEmail() == null) {
+            editEmail.setText("");
+        } else {
+            editEmail.setText(user.getEmail());
+        }
+        if (user.getPhoneNumber() == null) {
+            editPhoneNumber.setText("");
+        } else {
+            editPhoneNumber.setText(user.getPhoneNumber());
+        }
+        if (user.getGeolocation() == null) {
+            geolocationCheck.setChecked(false);
+        } else {
+            geolocationCheck.setChecked(user.getGeolocation());
+        }
+//        if (!user.getFirstName().isEmpty() || user.getFirstName() != null){
+//            editFirstName.setText(user.getFirstName());
+//        } else {
+//            editFirstName.setText("");
+//        }
+//        if (!user.getLastName().isEmpty() || user.getLastName() != null){
+//            editLastName.setText(user.getLastName());
+//        } else {
+//            editLastName.setText("");
+//        }
+//        if (!user.getEmail().isEmpty() || user.getEmail() != null){
+//            editEmail.setText(user.getEmail());
+//        } else {
+//            editEmail.setText("");
+//        }
+//        if (!user.getPhoneNumber().isEmpty() || user.getPhoneNumber() != null){
+//            editPhoneNumber.setText(user.getPhoneNumber());
+//        } else {
+//            editPhoneNumber.setText("");
+//        }
+        //geolocationCheck.setChecked(user.getGeolocation());
+    }
 
     /**
      * Initializes the attendee updating/editing activity
@@ -51,16 +128,17 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
         // Edit image section
         ImageView profilePicture = findViewById(R.id.attendeeUpdateInfoImageViewXML);
         FloatingActionButton editImageButton = findViewById(R.id.attendeeUpdateInfoPictureFABXML);
+        // Will we save the image into the Firestore?
 
         // TextView of Username
-        TextView userName = findViewById(R.id.AttendeeUpdateGeneratedUsernameView);
+        userName = findViewById(R.id.AttendeeUpdateGeneratedUsernameView);
 
         // Edit personal info section
-        EditText editFirstName = findViewById(R.id.editFirstNameXML);
-        EditText editLastName = findViewById(R.id.editLastNameXML);
-        EditText editEmail = findViewById(R.id.editEmailAddressXML);
-        EditText editPhoneNumber = findViewById(R.id.editPhoneNumberXML);
-        CheckBox geolocationCheck = findViewById(R.id.checkBoxGeolocXML);
+        editFirstName = findViewById(R.id.editFirstNameXML);
+        editLastName = findViewById(R.id.editLastNameXML);
+        editEmail = findViewById(R.id.editEmailAddressXML);
+        editPhoneNumber = findViewById(R.id.editPhoneNumberXML);
+        geolocationCheck = findViewById(R.id.checkBoxGeolocXML);
         Button confirmEditButton = findViewById(R.id.attendeeUpdateInfoConfirmXML);
         ImageButton attHomepageBackBtn = findViewById(R.id.attendee_update_back_button);
         // All of the following editTexts and checkBox values need to be reflected and update
@@ -97,13 +175,11 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
                 }
         );
 
-        // FIREBASE needed here as well? Or is it the local generated username?
-        userName.setText("@ " + "FIREBASE USERNAME");
-        editFirstName.setText("Firebase data");
-        editLastName.setText("Firebase data here");
-        editEmail.setText("Firebase data again");
-        editPhoneNumber.setText("Firebase data once more");
-        geolocationCheck.setChecked(false); // False for now but should retrieve true/false from Firebase
+        // Use the Local Storage Controller (lc) to get the userID
+        // then from Firestore Controller (fc) to get the details from the Firebase database
+        String userID = lc.getUserID(this);
+        fc.getUserByID(userID,this);
+
 
         editImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,9 +194,12 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
                 Button closeButton = editPhotoView.findViewById(R.id.AttendeeUpdatePhotoCloseButton);
 
                 // Comment out once we have access to user's username or firstName
-                String firstLetter = "T"; //This is where we will get either the first name or username
+                //String firstLetter = "T"; //This is where we will get either the first name or username
                 // username[0], or firstName[0]; assuming that they're Strings
-                TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter);
+                //TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter);
+                String firstLetter = userID.substring(0,1);
+                String secondLetter = userID.substring(1,2);
+                TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
 
                 editPhotoButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -170,12 +249,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
                 // This is assuming we have a user object that I have access to, and has
                 // proper setters and getters for its data
 
-                // "user.firstName" = editFirstName.getText().toString();
-                // "user.lastName" = editLastName.getText().toString();
-                // "user.email" = editEmail.getText().toString();
-                // "user.phoneNumber" = editPhoneNumber.getText().toString();
-                // "user.geolocationOn" = geolocationCheck.isChecked();
-
+                // Where we upload the data to the Firebase
+                updateUserInformation(userID);
 
                 // Since we clicked on confirm, it brings us back to the screen that was there before
                 // In this case, we'll put MainActivity.class as the placeholder
@@ -194,4 +269,15 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method that calls the firestore controller to update all editable user fields.
+     * @param userID String of the userID to be updated
+     */
+    private void updateUserInformation(String userID){
+        fc.updateUserStringFields(userID, USER_FIRST_NAME_TAG, editFirstName.getText().toString(), this);
+        fc.updateUserStringFields(userID, USER_LAST_NAME_TAG, editLastName.getText().toString(), this);
+        fc.updateUserStringFields(userID, USER_EMAIL_TAG, editEmail.getText().toString(), this);
+        fc.updateUserStringFields(userID, USER_PHONE_NUMBER_TAG, editPhoneNumber.getText().toString(), this);
+        fc.updateUserBooleanFields(userID, USER_GEOLOCATION_TAG, geolocationCheck.isChecked(), this);
+    }
 }

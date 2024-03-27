@@ -1,5 +1,7 @@
 package com.example.rallyup.firestoreObjects;
 
+import com.google.firebase.firestore.GeoPoint;
+
 /**
  * Represents a user with email, first name, and last name.
  */
@@ -8,6 +10,9 @@ public class User {
     private String firstName = "";
     private String lastName = "";
     private String id = "";
+    private String phoneNumber = "";
+    private Boolean geolocation = false;
+    private GeoPoint latlong;
 
     /**
      * Default constructor for User.
@@ -108,5 +113,53 @@ public class User {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * Gets the user's phone number String
+     * @return phoneNumber
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * Sets the user's phone number as a string
+     * @param phoneNumber String of the user's phone number
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * Gets the geolocation Boolean of the user
+     * @return geolocation Boolean
+     */
+    public Boolean getGeolocation() {
+        return geolocation;
+    }
+
+    /**
+     * Sets the boolean if the user wants to be tracked or not
+     * @param geolocation Boolean
+     */
+    public void setGeolocation(Boolean geolocation) {
+        this.geolocation = geolocation;
+    }
+
+    /**
+     * Gets the user's GeoPoint latitude longitude
+     * @return latlong GeoPoint
+     */
+    public GeoPoint getLatlong() {
+        return latlong;
+    }
+
+    /**
+     * Sets the user's GeoPoint latitude and longitude
+     * @param latlong GeoPoint to be set
+     */
+    public void setLatlong(GeoPoint latlong) {
+        this.latlong = latlong;
     }
 }
