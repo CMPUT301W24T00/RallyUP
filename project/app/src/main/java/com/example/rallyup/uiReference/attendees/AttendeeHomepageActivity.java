@@ -59,8 +59,9 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     }
 
     /**
-     * Upon getting the event ID, we will use it to perform share or checkIin actions
-     * @param eventID the String variable that contains the unique eventID connected to the QR code scanned by the user
+     * Upon getting the event ID of from the scanned QR code, it saves the value and uses that value to get the verification status
+     * of the user for that event
+     * @param eventID the unique ID of the event
      */
     @Override
     public void onGetEventID(String eventID) {
@@ -68,6 +69,10 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         fc.getVerified(scannedEvent, userID, this);
     }
 
+    /**
+     * Upon getting the verification status of the user for this event, we perform the required check-in or share action
+     * @param verified the verification status of the user for this event
+     */
     @Override
     public void onGetVerified(boolean verified) {
         this.verified = verified;
