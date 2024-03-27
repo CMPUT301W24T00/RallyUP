@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     Button attBrowseEventsBtn;
     FloatingActionButton editProfileBtn;
     ImageButton attHomepageBackBtn;
-
+    ImageView attProfilePicture;
     TextView firstNameView;
     TextView lastNameView;
     TextView usernameView;
@@ -56,6 +57,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         firstNameView.setText(user.getFirstName());
         lastNameView.setText(user.getLastName());
         usernameView.setText(user.getId());
+        //attProfilePicture.setImageDrawable(user.getProfilePicture());
     }
 
     /**
@@ -115,6 +117,17 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         String userID = ls.getUserID(this);
 
         fc.getUserByID(userID, this);
+
+        // Image view for Profile Picture
+        attProfilePicture = findViewById(R.id.att_profile_picture);
+        if (attProfilePicture.getDrawable() == null) {
+            String firstLetter = userID.substring(0,1);
+            String secondLetter = userID.substring(1,2);
+            TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
+            //attProfilePicture.setImageDrawable(textDrawable);
+            attProfilePicture.setForeground(textDrawable);
+
+        }
 
         // Text views
         firstNameView = findViewById(R.id.att_first_name);

@@ -48,7 +48,7 @@ public class TextDrawable extends Drawable {
      */
     @Override
     public void draw(@NonNull Canvas canvas) {
-        canvas.drawText(text, 145,230, paint);
+        canvas.drawText(text, 145,250, paint);
     }
 
     /**

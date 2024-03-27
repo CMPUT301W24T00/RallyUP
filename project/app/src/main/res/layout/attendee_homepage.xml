@@ -56,7 +56,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/attendee_icon_temp"></ImageView>
+                        android:background="@drawable/attendee_icon_temp"
+                        android:foregroundGravity="center"></ImageView>
 
                 </LinearLayout>
 
