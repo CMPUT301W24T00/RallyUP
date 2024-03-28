@@ -1,11 +1,14 @@
 package com.example.rallyup.uiReference.attendees;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,19 +20,25 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.LocalStorageController;
-import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.User;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -45,11 +54,16 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
     private final String USER_GEOLOCATION_TAG = "geolocation";
     private final String USER_GEOPOINT_TAG = "latlong";
 
+    // To get last known location
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private Location location;
     // Get the instances of the different storage controllers
     FirestoreController fc = FirestoreController.getInstance();
     LocalStorageController lc = LocalStorageController.getInstance();
-    // TextView of Username
-    TextView userName;
+
+    ImageView profilePicture;
+    // TextView of user ID
+    TextView userIDView;
 
     // Edit personal info section
     EditText editFirstName;
@@ -58,11 +72,16 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
     EditText editPhoneNumber;
     CheckBox geolocationCheck;
 
+    /**
+     * onGetUser method that tells us what to do once we called onGetUser by the FirestoreController
+     * This is where we set the information that is available on the database into our class
+     * @param user an object containing the details of a user
+     */
     @Override
     public void onGetUser(User user) {
         Log.d("Attendee Update Activity", user.getId());
         // Set the user's details
-        userName.setText(user.getId());
+        userIDView.setText(user.getId());
         if (user.getFirstName() == null) {
             editFirstName.setText("");
         } else {
@@ -88,27 +107,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         } else {
             geolocationCheck.setChecked(user.getGeolocation());
         }
-//        if (!user.getFirstName().isEmpty() || user.getFirstName() != null){
-//            editFirstName.setText(user.getFirstName());
-//        } else {
-//            editFirstName.setText("");
-//        }
-//        if (!user.getLastName().isEmpty() || user.getLastName() != null){
-//            editLastName.setText(user.getLastName());
-//        } else {
-//            editLastName.setText("");
-//        }
-//        if (!user.getEmail().isEmpty() || user.getEmail() != null){
-//            editEmail.setText(user.getEmail());
-//        } else {
-//            editEmail.setText("");
-//        }
-//        if (!user.getPhoneNumber().isEmpty() || user.getPhoneNumber() != null){
-//            editPhoneNumber.setText(user.getPhoneNumber());
-//        } else {
-//            editPhoneNumber.setText("");
-//        }
-        //geolocationCheck.setChecked(user.getGeolocation());
     }
 
     /**
@@ -123,15 +121,16 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendeeupdateinfo);
 
-        // We need to access our database and get the information as needed
+        // Getting the location services
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Edit image section
-        ImageView profilePicture = findViewById(R.id.attendeeUpdateInfoImageViewXML);
+        profilePicture = findViewById(R.id.attendeeUpdateInfoImageViewXML);
         FloatingActionButton editImageButton = findViewById(R.id.attendeeUpdateInfoPictureFABXML);
         // Will we save the image into the Firestore?
 
-        // TextView of Username
-        userName = findViewById(R.id.AttendeeUpdateGeneratedUsernameView);
+        // TextView of userID
+        userIDView = findViewById(R.id.AttendeeUpdateGeneratedUsernameView);
 
         // Edit personal info section
         editFirstName = findViewById(R.id.editFirstNameXML);
@@ -178,13 +177,12 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         // Use the Local Storage Controller (lc) to get the userID
         // then from Firestore Controller (fc) to get the details from the Firebase database
         String userID = lc.getUserID(this);
-        fc.getUserByID(userID,this);
+        fc.getUserByID(userID, this);
 
-
+        // Edit image dialog
         editImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 AlertDialog.Builder pfpBuilder = new AlertDialog.Builder(AttendeeUpdateActivity.this);
                 View editPhotoView = getLayoutInflater().inflate(R.layout.dialog_attendeeupdatepicture, null);
                 pfpBuilder.setView(editPhotoView);
@@ -193,12 +191,9 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 Button deletePhotoButton = editPhotoView.findViewById(R.id.AttendeeUpdatePhotoDeleteButton);
                 Button closeButton = editPhotoView.findViewById(R.id.AttendeeUpdatePhotoCloseButton);
 
-                // Comment out once we have access to user's username or firstName
-                //String firstLetter = "T"; //This is where we will get either the first name or username
-                // username[0], or firstName[0]; assuming that they're Strings
-                //TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter);
-                String firstLetter = userID.substring(0,1);
-                String secondLetter = userID.substring(1,2);
+                // Getting the first two characters of the user name
+                String firstLetter = userID.substring(0, 1);
+                String secondLetter = userID.substring(1, 2);
                 TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
 
                 editPhotoButton.setOnClickListener(new View.OnClickListener() {
@@ -211,7 +206,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                         launchSomeActivity.launch(intent);
                     }
                 });
-
 
                 // Create and Show the dialog
                 AlertDialog editPhotoDialog = pfpBuilder.create();
@@ -231,7 +225,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                         editPhotoDialog.dismiss();
                     }
                 });
-
             }
         });
 
@@ -240,12 +233,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
             public void onClick(View v) {
                 // This is where we change the data into the input inside all the editable views
 
-                // Need to check if they had anything in their data
-                // If there was nothing, then accept the new changes
-                // If the changes are different than the pre-existing data,
-                // then accept the new changes.
-                // IF the data is still the same as before, then DO NOT CHANGE THE DATA
-
                 // This is assuming we have a user object that I have access to, and has
                 // proper setters and getters for its data
 
@@ -253,7 +240,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 updateUserInformation(userID);
 
                 // Since we clicked on confirm, it brings us back to the screen that was there before
-                // In this case, we'll put MainActivity.class as the placeholder
                 Intent intent = new Intent(AttendeeUpdateActivity.this, AttendeeHomepageActivity.class);
                 startActivity(intent);
             }
@@ -273,11 +259,69 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
      * Method that calls the firestore controller to update all editable user fields.
      * @param userID String of the userID to be updated
      */
-    private void updateUserInformation(String userID){
+    private void updateUserInformation(String userID) {
+        // Get the location of the user
+        GeoPoint geoPoint = null;
+        // geoPoint = new GeoPoint(latitude, longitude);
+
+        ActivityResultLauncher<String[]> locationPermissionRequest =
+                registerForActivityResult(new ActivityResultContracts
+                        .RequestMultiplePermissions(), result -> {
+                    Boolean fineLocationGranted = result.getOrDefault(
+                            Manifest.permission.ACCESS_FINE_LOCATION, false);
+                    Boolean coarseLocationGranted = result.getOrDefault(
+                            Manifest.permission.ACCESS_COARSE_LOCATION, false);
+                    if (fineLocationGranted != null && fineLocationGranted) {
+                        // Precise location access granted.
+                        // This is IF we do not have permission - then what do we do?
+                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            ActivityCompat.requestPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, 1);
+                            return;
+                        }
+                        fusedLocationProviderClient.getLastLocation()
+                            } else if (coarseLocationGranted != null && coarseLocationGranted) {
+                                // Only approximate location access granted.
+                            } else {
+                                // No location access granted.
+                                Toast toasty = Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT);
+                                toasty.show();
+                            }
+                        }
+                );
+        // Update the firebase
         fc.updateUserStringFields(userID, USER_FIRST_NAME_TAG, editFirstName.getText().toString(), this);
         fc.updateUserStringFields(userID, USER_LAST_NAME_TAG, editLastName.getText().toString(), this);
         fc.updateUserStringFields(userID, USER_EMAIL_TAG, editEmail.getText().toString(), this);
         fc.updateUserStringFields(userID, USER_PHONE_NUMBER_TAG, editPhoneNumber.getText().toString(), this);
         fc.updateUserBooleanFields(userID, USER_GEOLOCATION_TAG, geolocationCheck.isChecked(), this);
+        // Following AddEventActivity
+        // Might need to change things to upload the image properly
+        // Things to reference:
+        //      https://firebase.google.com/docs/storage/android/upload-files#upload_from_a_local_file
+        //      https://firebase.google.com/docs/storage/android/upload-files#get_a_download_url
+        FirebaseStorage storageRef = FirebaseStorage.getInstance();
+        StorageReference imageRef = storageRef.getReference().child("/images/ProfilePicture" + userID);
+        if (profilePicture.getDrawable() != null) {
+            // Need to somehow make URI stuff with this one
+            fc.uploadImage(profilePicture.getDrawable(), imageRef);
+        }
+        if (geolocationCheck.isChecked()) {
+            locationPermissionRequest.launch(new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            });
+            fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, , this);
+        } else {
+            fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, geoPoint, this);
+        }
     }
 }
