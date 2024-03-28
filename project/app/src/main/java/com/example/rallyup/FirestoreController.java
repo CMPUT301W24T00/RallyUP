@@ -720,6 +720,10 @@ public class FirestoreController {
         });
     }
 
+    public void downloadFile(, StorageReference storageReference){
+
+    }
+
 
     /**
      * This method retrieves the poster of an event
