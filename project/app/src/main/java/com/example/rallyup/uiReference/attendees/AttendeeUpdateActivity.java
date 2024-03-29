@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -35,12 +36,15 @@ import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -78,6 +82,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
     EditText editEmail;
     EditText editPhoneNumber;
     CheckBox geolocationCheck;
+    GeoPoint geoPoint;
 
     /**
      * onGetUser method that tells us what to do once we called onGetUser by the FirestoreController
@@ -92,25 +97,20 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         // User ID: + user.getId()
         // (Must be used with 18dp of space at the bottom to keep it nice)
         userIDView.setText(String.format("User ID: " + user.getId()));
-        if (user.getFirstName() == null && user.getLastName() != null) {
+        if (user.getFirstName() == null) {
             editFirstName.setText("");
-            firstLetter = user.getLastName().substring(0,1);
+            //firstLetter = user.getLastName().substring(0,1);
         } else {
             editFirstName.setText(user.getFirstName());
-            firstLetter = user.getFirstName().substring(0,1);
+            //firstLetter = user.getFirstName().substring(0,1);
         }
-        if (user.getLastName() == null && user.getFirstName() != null) {
+        if (user.getLastName() == null) {
             editLastName.setText("");
-            secondLetter = user.getFirstName().substring(1,2);
+            //secondLetter = user.getFirstName().substring(1,2);
         } else {
             editLastName.setText(user.getLastName());
-            secondLetter = user.getLastName().substring(1,2);
+            //secondLetter = user.getLastName().substring(1,2);
         }
-        if (user.getFirstName() == null && user.getLastName() == null){
-            firstLetter = user.getId().substring(0,1);
-            secondLetter = user.getId().substring(1,2);
-        }
-
         if (user.getEmail() == null) {
             editEmail.setText("");
         } else {
@@ -193,6 +193,54 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 }
         );
 
+        // Might need to look into this:
+        // Definitely need to look into it
+        // https://stackoverflow.com/questions/40142331/how-to-request-location-permission-at-runtime
+        ActivityResultLauncher<String[]> locationPermissionRequest =
+                registerForActivityResult(new ActivityResultContracts
+                                .RequestMultiplePermissions(), result -> {
+                            Boolean fineLocationGranted = result.getOrDefault(
+                                    Manifest.permission.ACCESS_FINE_LOCATION, false);
+                            Boolean coarseLocationGranted = result.getOrDefault(
+                                    Manifest.permission.ACCESS_COARSE_LOCATION, false);
+                            if (fineLocationGranted != null && fineLocationGranted) {
+                                // Precise location access granted.
+                                // This is IF we do not have permission - then what do we do?
+                                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                    // TODO: Consider calling
+                                    //    ActivityCompat#requestPermissions
+                                    // here to request the missing permissions, and then overriding
+                                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                    //                                          int[] grantResults)
+                                    // to handle the case where the user grants the permission. See the documentation
+                                    // for ActivityCompat#requestPermissions for more details.
+                                    ActivityCompat.requestPermissions(this,
+                                            new String[] {Manifest.permission.ACCESS_COARSE_LOCATION,
+                                                    Manifest.permission.ACCESS_FINE_LOCATION},
+                                            1);
+                                    return;
+                                }
+                                fusedLocationProviderClient.getLastLocation()
+                                        .addOnSuccessListener(this, location -> geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude()))
+                                        .addOnFailureListener(this, e -> Log.e("AttendeeUpdateActivity", "Failed to access last location: ", e));
+
+                            } else if (coarseLocationGranted != null && coarseLocationGranted) {
+                                // Only approximate location access granted.
+                                fusedLocationProviderClient.getLastLocation()
+                                        .addOnSuccessListener(this, location -> geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude()))
+                                        .addOnFailureListener(this, e -> Log.e("AttendeeUpdateActivity", "Failed to access last location: ", e));
+
+                            } else {
+                                // No location access granted.
+                                Toast.makeText(this,
+                                                "Permission denied",
+                                                Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        }
+                );
+
         // Use the Local Storage Controller (lc) to get the userID
         // then from Firestore Controller (fc) to get the details from the Firebase database
         userID = lc.getUserID(this);
@@ -201,11 +249,10 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
 
         // editText.getText() keeps returning null for some reason
         // Need to double check on why
-        // Getting the first two characters of the user name
-        //setAutoGeneratedName(userID);
-//        firstLetter = userID.substring(0, 1);
-//        secondLetter = userID.substring(1, 2);
-//
+        // Getting the first two characters of the user ID
+        // Toast.makeText(getBaseContext(), editFirstName.getText().toString(), Toast.LENGTH_SHORT).show();
+        firstLetter = userID.substring(0,1);
+        secondLetter = userID.substring(1,2);
         textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
 
         // Setting up the auto-generated pfp if you didn't have any set up previously
@@ -265,8 +312,22 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 // This is assuming we have a user object that I have access to, and has
                 // proper setters and getters for its data
 
+                // If the geolocation is true then ask for permission
+                if (geolocationCheck.isChecked()) {
+                    locationPermissionRequest.launch(new String[] {
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    });
+                    fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, geoPoint, AttendeeUpdateActivity.this);
+                    Toast.makeText(AttendeeUpdateActivity.this, "GeoPoint updated", Toast.LENGTH_SHORT).show();
+                } else {
+                    fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, geoPoint, AttendeeUpdateActivity.this);
+                    Toast.makeText(AttendeeUpdateActivity.this, "GeoPoint NULL", Toast.LENGTH_SHORT).show();
+                }
+
                 // Where we upload the data to the Firebase
                 updateUserInformation(userID);
+
 
                 // Since we clicked on confirm, it brings us back to the screen that was there before
                 Intent intent = new Intent(AttendeeUpdateActivity.this, AttendeeHomepageActivity.class);
@@ -282,22 +343,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
             }
         });
     }
-//    private void setAutoGeneratedName (String userID){
-//        firstLetter = userID.substring(0,1);
-//        secondLetter = userID.substring(1,2);
-//        if (editFirstName.getText() != null &&
-//                editLastName.getText() == null){
-//            firstLetter = editFirstName.getText().toString().substring(0,1);
-//            secondLetter = editFirstName.getText().toString().substring(1,2);
-//        } else if (editFirstName.getText() == null &&
-//                editLastName.getText() != null){
-//            firstLetter = editLastName.getText().toString().substring(0,1);
-//            secondLetter = editLastName.getText().toString().substring(1,2);
-//        }
-//        Toast.makeText(getBaseContext(), editFirstName.getText().toString(), Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getBaseContext(), editLastName.getText().toString(), Toast.LENGTH_SHORT).show();
-//        textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
-//    }
 
     /**
      * Method that calls the firestore controller to update all editable user fields.
@@ -331,69 +376,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                     Toast.LENGTH_SHORT)
                     .show();
         }
-    }
-
-//    private void setProfilePicture(){
-//        if (data != null && data.getData() != null) {
-//            selectedImageUri = data.getData();
-//            Bitmap selectedImageBitmap;
-//            try {
-//                selectedImageBitmap =
-//                        MediaStore.Images.Media.getBitmap(
-//                                AttendeeUpdateActivity.this.getContentResolver(),
-//                                selectedImageUri);
-//            } catch (IOException error) {
-//                error.printStackTrace();
-//                // Setting to null for now, just to remove the error in
-//                // profileImageView.setImageBitMap(selectedImageBitmap);
-//                selectedImageBitmap = null; // Or have this as the temporary picture place holder
-//                // in case that it returns an error
-//            }
-//            //profileImageView = requireActivity().findViewById(R.id.attendeeUpdateInfoImageViewXML);
-//            profilePicture.setImageBitmap(selectedImageBitmap);
-//        }
-//    }
-
-//    private void getLocation(String userID){
-//        // Get the location of the user
-//        GeoPoint geoPoint = null;
-//        // geoPoint = new GeoPoint(latitude, longitude);
 //
-//        ActivityResultLauncher<String[]> locationPermissionRequest =
-//                registerForActivityResult(new ActivityResultContracts
-//                                .RequestMultiplePermissions(), result -> {
-//                            Boolean fineLocationGranted = result.getOrDefault(
-//                                    Manifest.permission.ACCESS_FINE_LOCATION, false);
-//                            Boolean coarseLocationGranted = result.getOrDefault(
-//                                    Manifest.permission.ACCESS_COARSE_LOCATION, false);
-//                            if (fineLocationGranted != null && fineLocationGranted) {
-//                                // Precise location access granted.
-//                                // This is IF we do not have permission - then what do we do?
-//                                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-//                                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//
-//                                    // TODO: Consider calling
-//                                    //    ActivityCompat#requestPermissions
-//                                    // here to request the missing permissions, and then overriding
-//                                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                                    //                                          int[] grantResults)
-//                                    // to handle the case where the user grants the permission. See the documentation
-//                                    // for ActivityCompat#requestPermissions for more details.
-//                                    ActivityCompat.requestPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, 1);
-//                                    return;
-//                                }
-//                                fusedLocationProviderClient.getLastLocation()
-//                            } else if (coarseLocationGranted != null && coarseLocationGranted) {
-//                                // Only approximate location access granted.
-//                            } else {
-//                                // No location access granted.
-//                                Toast toasty = Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT);
-//                                toasty.show();
-//                            }
-//                        }
-//                );
-//
-//        // If we do have the location
+//        // If the geolocation is true then ask for permission
 //        if (geolocationCheck.isChecked()) {
 //            locationPermissionRequest.launch(new String[] {
 //                    Manifest.permission.ACCESS_FINE_LOCATION,
@@ -403,5 +387,13 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
 //        } else {
 //            fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, geoPoint, this);
 //        }
+
+    }
+
+    // Might need to send the activity result launcher in the onCreate
+//    private void getLocation(String userID){
+//        // Get the location of the user
+//                // If we do have the location
+//
 //    }
 }

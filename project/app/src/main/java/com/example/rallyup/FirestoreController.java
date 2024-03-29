@@ -720,9 +720,9 @@ public class FirestoreController {
         });
     }
 
-    public void downloadFile(, StorageReference storageReference){
-
-    }
+//    public void downloadFile(, StorageReference storageReference){
+//
+//    }
 
 
     /**
