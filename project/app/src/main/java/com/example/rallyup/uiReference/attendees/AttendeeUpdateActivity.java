@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
@@ -59,6 +60,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
     private final String USER_PHONE_NUMBER_TAG = "phoneNumber";
     private final String USER_GEOLOCATION_TAG = "geolocation";
     private final String USER_GEOPOINT_TAG = "latlong";
+    private static final int GEOLOCATION_PERMISSION_REQUEST = 1001;
     private Uri selectedImageUri;
     private TextDrawable textDrawable;
     private String firstLetter;
@@ -222,14 +224,28 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                                     return;
                                 }
                                 fusedLocationProviderClient.getLastLocation()
-                                        .addOnSuccessListener(this, location -> geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude()))
-                                        .addOnFailureListener(this, e -> Log.e("AttendeeUpdateActivity", "Failed to access last location: ", e));
+                                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                                            @Override
+                                            public void onSuccess(Location location) {
+                                                Log.d("AttendeeUpdateActivity", "Last location retrieved!");
+                                                Toast.makeText(getBaseContext(), "Location: " + location, Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(this, new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e("AttendeeUpdateActivity", "Failed to access last location", e);
+                                            }
+                                        });
+                                //fusedLocationProviderClient.getLastLocation()
+                                //        .addOnSuccessListener(this, location -> geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude()))
+                                //        .addOnFailureListener(this, e -> Log.e("AttendeeUpdateActivity", "Failed to access last location: ", e));
 
                             } else if (coarseLocationGranted != null && coarseLocationGranted) {
                                 // Only approximate location access granted.
-                                fusedLocationProviderClient.getLastLocation()
-                                        .addOnSuccessListener(this, location -> geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude()))
-                                        .addOnFailureListener(this, e -> Log.e("AttendeeUpdateActivity", "Failed to access last location: ", e));
+                                //fusedLocationProviderClient.getLastLocation()
+                                //        .addOnSuccessListener(this, location -> geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude()))
+                                //        .addOnFailureListener(this, e -> Log.e("AttendeeUpdateActivity", "Failed to access last location: ", e));
 
                             } else {
                                 // No location access granted.
@@ -304,6 +320,17 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
             }
         });
 
+        geolocationCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationPermissionRequest
+                        .launch(new String[] {Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION});
+                //checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, GEOLOCATION_PERMISSION_REQUEST);
+                //checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION, GEOLOCATION_PERMISSION_REQUEST);
+            }
+        });
+
         confirmEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -314,10 +341,12 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
 
                 // If the geolocation is true then ask for permission
                 if (geolocationCheck.isChecked()) {
-                    locationPermissionRequest.launch(new String[] {
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                    });
+//                    locationPermissionRequest.launch(new String[] {
+//                            Manifest.permission.ACCESS_FINE_LOCATION,
+//                            Manifest.permission.ACCESS_COARSE_LOCATION
+//                    });
+                    //checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, GEOLOCATION_PERMISSION_REQUEST);
+                    //checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION, GEOLOCATION_PERMISSION_REQUEST);
                     fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, geoPoint, AttendeeUpdateActivity.this);
                     Toast.makeText(AttendeeUpdateActivity.this, "GeoPoint updated", Toast.LENGTH_SHORT).show();
                 } else {
@@ -395,5 +424,41 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
 //        // Get the location of the user
 //                // If we do have the location
 //
+//    }
+
+    // Request permission
+    // https://www.geeksforgeeks.org/android-how-to-request-permissions-in-android-application/
+
+    public void checkPermission(String permission, int requestCode){
+        if (ContextCompat.checkSelfPermission(AttendeeUpdateActivity.this, permission)
+                == PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(AttendeeUpdateActivity.this, new String[]{ permission }, requestCode);
+        }
+        else {
+            Toast.makeText(AttendeeUpdateActivity.this,
+                    "Permission already granted!",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode,
+//                                           @NonNull String[] permissions,
+//                                           @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode,
+//                permissions,
+//                grantResults);
+//
+//        if (requestCode == GEOLOCATION_PERMISSION_REQUEST){
+//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                Toast.makeText(AttendeeUpdateActivity.this,
+//                        "Geolocation Permission Granted",
+//                        Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(AttendeeUpdateActivity.this,
+//                        "Geolocation Permission NOT Granted",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        }
 //    }
 }
