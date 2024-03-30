@@ -45,36 +45,26 @@ import java.util.UUID;
  * This class represents the firestore controller that contains references to the firebase and important collections
  */
 public class FirestoreController {
-//    private static final FirestoreController instance = new FirestoreController();
+    private static final FirestoreController instance = new FirestoreController();
 
     private final FirebaseFirestore dbRef;
     private final CollectionReference usersRef;
     private final CollectionReference eventsRef;
     private final CollectionReference eventAttendanceRef;
+
+    private final CollectionReference eventRegistrationRef;
+
     private final CollectionReference qrRef;
 
     /**
      * This method constructs a firestore controller using references to the firecase and important collections
      */
-//    public FirestoreController() {
-//        dbRef = FirebaseFirestore.getInstance();
-//        usersRef = dbRef.collection("users");
-//        eventsRef = dbRef.collection("events");
-//        eventAttendanceRef = dbRef.collection("eventAttendance");
-//        qrRef = dbRef.collection("qrCodes");
-//    }
     public FirestoreController() {
-        this(FirebaseFirestore.getInstance());
-    }
-    /**
-     * pyhn version (temp)
-     * @param firestoreInstance
-     */
-    public FirestoreController(FirebaseFirestore firestoreInstance) {
-        dbRef = firestoreInstance;
+        dbRef = FirebaseFirestore.getInstance();
         usersRef = dbRef.collection("users");
         eventsRef = dbRef.collection("events");
         eventAttendanceRef = dbRef.collection("eventAttendance");
+        eventRegistrationRef = dbRef.collection("eventRegistration");
         qrRef = dbRef.collection("qrCodes");
     }
 
@@ -83,10 +73,9 @@ public class FirestoreController {
      * @return an instance of the firestore controller
      */
     public static FirestoreController getInstance() {
-        FirestoreController instance = new FirestoreController();
         return instance;
     }
-
+    
     /**
      * This method takes an event object and allows it to be modified/updated
      * @param event an object containing the details of an event
