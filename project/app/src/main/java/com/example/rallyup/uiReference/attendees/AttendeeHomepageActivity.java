@@ -38,11 +38,10 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     TextView lastNameView;
     TextView usernameView;
     String scannedEvent;
-    String userID;
     FirestoreController fc = FirestoreController.getInstance();
     LocalStorageController ls = LocalStorageController.getInstance();
-    Boolean checkIn;
-    Integer timesCheckedIn;
+    String userID;
+    boolean checkIn, verified = false;
 
 
 
@@ -53,20 +52,30 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     @Override
     public void onGetUser(User user) {
         Log.d("HomepageActivity", user.getId());
-        userID = user.getId();
+        //userID = user.getId();
         firstNameView.setText(user.getFirstName());
         lastNameView.setText(user.getLastName());
         usernameView.setText(user.getId());
     }
 
     /**
-     * Upon getting the event ID, we will use it to perform share or checkIin actions
-     * @param eventID the String variable that contains the unique eventID connected to the QR code scanned by the user
+     * Upon getting the event ID of from the scanned QR code, it saves the value and uses that value to get the verification status
+     * of the user for that event
+     * @param eventID the unique ID of the event
      */
     @Override
     public void onGetEventID(String eventID) {
         scannedEvent = eventID;
-        Log.d("BACK IN HOMEPAGE", "eventID: " + scannedEvent);
+        fc.getVerified(scannedEvent, userID, this);
+    }
+
+    /**
+     * Upon getting the verification status of the user for this event, we perform the required check-in or share action
+     * @param verified the verification status of the user for this event
+     */
+    @Override
+    public void onGetVerified(boolean verified) {
+        this.verified = verified;
         switchPage();
     }
 
@@ -103,8 +112,9 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_homepage);
+        String userID = ls.getUserID(this);
 
-        fc.getUserByID(ls.getUserID(this), this);
+        fc.getUserByID(userID, this);
 
         // Text views
         firstNameView = findViewById(R.id.att_first_name);
@@ -160,9 +170,9 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
      */
     public void switchPage() {
         if(checkIn) {
-            boolean verified = false; // will actually get later when signups are set up
             fc.updateAttendance(scannedEvent, userID, verified, this);
             Toast.makeText(this, "Check-In Successful! Enjoy the event!", Toast.LENGTH_LONG).show();
+
         }
         else{
             Intent intent;
