@@ -54,13 +54,7 @@ import java.util.Objects;
  */
 public class AttendeeUpdateActivity extends AppCompatActivity implements FirestoreCallbackListener {
     private String userID;
-    private final String USER_FIRST_NAME_TAG = "firstName";
-    private final String USER_LAST_NAME_TAG = "lastName";
-    private final String USER_EMAIL_TAG = "email";
-    private final String USER_PHONE_NUMBER_TAG = "phoneNumber";
-    private final String USER_GEOLOCATION_TAG = "geolocation";
     private final String USER_GEOPOINT_TAG = "latlong";
-    private static final int GEOLOCATION_PERMISSION_REQUEST = 1001;
     private Uri selectedImageUri;
     private TextDrawable textDrawable;
     private String firstLetter;
@@ -81,6 +75,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
     // Edit personal info section
     EditText editFirstName;
     EditText editLastName;
+    String firstName;
+    String lastName;
     EditText editEmail;
     EditText editPhoneNumber;
     CheckBox geolocationCheck;
@@ -104,6 +100,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
             //firstLetter = user.getLastName().substring(0,1);
         } else {
             editFirstName.setText(user.getFirstName());
+            firstName = user.getFirstName();
             //firstLetter = user.getFirstName().substring(0,1);
         }
         if (user.getLastName() == null) {
@@ -111,6 +108,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
             //secondLetter = user.getFirstName().substring(1,2);
         } else {
             editLastName.setText(user.getLastName());
+            lastName = user.getLastName();
             //secondLetter = user.getLastName().substring(1,2);
         }
         if (user.getEmail() == null) {
@@ -267,8 +265,16 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         // Need to double check on why
         // Getting the first two characters of the user ID
         // Toast.makeText(getBaseContext(), editFirstName.getText().toString(), Toast.LENGTH_SHORT).show();
-        firstLetter = userID.substring(0,1);
-        secondLetter = userID.substring(1,2);
+        if (firstName == null && lastName == null) {
+            firstLetter = userID.substring(0,1);
+            secondLetter = userID.substring(1,2);
+        } else if (firstName != null && lastName == null) {
+            firstLetter = firstName.substring(0,1);
+            secondLetter = firstName.substring(1,2);
+        } else if (firstName == null){
+            firstLetter = lastName.substring(0,1);
+            secondLetter = lastName.substring(1,2);
+        }
         textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
 
         // Setting up the auto-generated pfp if you didn't have any set up previously
@@ -371,10 +377,19 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
      */
     private void updateUserInformation(String userID) {
         // Update the firebase
+        String USER_FIRST_NAME_TAG = "firstName";
         fc.updateUserStringFields(userID, USER_FIRST_NAME_TAG, editFirstName.getText().toString(), this);
+
+        String USER_LAST_NAME_TAG = "lastName";
         fc.updateUserStringFields(userID, USER_LAST_NAME_TAG, editLastName.getText().toString(), this);
+
+        String USER_EMAIL_TAG = "email";
         fc.updateUserStringFields(userID, USER_EMAIL_TAG, editEmail.getText().toString(), this);
+
+        String USER_PHONE_NUMBER_TAG = "phoneNumber";
         fc.updateUserStringFields(userID, USER_PHONE_NUMBER_TAG, editPhoneNumber.getText().toString(), this);
+
+        String USER_GEOLOCATION_TAG = "geolocation";
         fc.updateUserBooleanFields(userID, USER_GEOLOCATION_TAG, geolocationCheck.isChecked(), this);
         // Following AddEventActivity
         // Might need to change things to upload the image properly
