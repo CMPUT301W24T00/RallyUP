@@ -195,6 +195,10 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 }
         );
 
+        // Another reference
+        // Request permission
+        // https://www.geeksforgeeks.org/android-how-to-request-permissions-in-android-application/
+
         // Might need to look into this:
         // Definitely need to look into it
         // https://stackoverflow.com/questions/40142331/how-to-request-location-permission-at-runtime
@@ -237,15 +241,11 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                                                 Log.e("AttendeeUpdateActivity", "Failed to access last location", e);
                                             }
                                         });
-                                //fusedLocationProviderClient.getLastLocation()
-                                //        .addOnSuccessListener(this, location -> geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude()))
-                                //        .addOnFailureListener(this, e -> Log.e("AttendeeUpdateActivity", "Failed to access last location: ", e));
-
                             } else if (coarseLocationGranted != null && coarseLocationGranted) {
                                 // Only approximate location access granted.
-                                //fusedLocationProviderClient.getLastLocation()
-                                //        .addOnSuccessListener(this, location -> geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude()))
-                                //        .addOnFailureListener(this, e -> Log.e("AttendeeUpdateActivity", "Failed to access last location: ", e));
+                                fusedLocationProviderClient.getLastLocation()
+                                       .addOnSuccessListener(this, location -> geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude()))
+                                       .addOnFailureListener(this, e -> Log.e("AttendeeUpdateActivity", "Failed to access last location: ", e));
 
                             } else {
                                 // No location access granted.
@@ -326,8 +326,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 locationPermissionRequest
                         .launch(new String[] {Manifest.permission.ACCESS_FINE_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION});
-                //checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, GEOLOCATION_PERMISSION_REQUEST);
-                //checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION, GEOLOCATION_PERMISSION_REQUEST);
+
             }
         });
 
@@ -335,28 +334,21 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
             @Override
             public void onClick(View v) {
                 // This is where we change the data into the input inside all the editable views
-
                 // This is assuming we have a user object that I have access to, and has
                 // proper setters and getters for its data
 
                 // If the geolocation is true then ask for permission
                 if (geolocationCheck.isChecked()) {
-//                    locationPermissionRequest.launch(new String[] {
-//                            Manifest.permission.ACCESS_FINE_LOCATION,
-//                            Manifest.permission.ACCESS_COARSE_LOCATION
-//                    });
-                    //checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, GEOLOCATION_PERMISSION_REQUEST);
-                    //checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION, GEOLOCATION_PERMISSION_REQUEST);
+                    // If the User allows us to geolocate them, then update the geopoint appropriately
                     fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, geoPoint, AttendeeUpdateActivity.this);
                     Toast.makeText(AttendeeUpdateActivity.this, "GeoPoint updated", Toast.LENGTH_SHORT).show();
                 } else {
-                    fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, geoPoint, AttendeeUpdateActivity.this);
+                    // If User DOES NOT allow us to geolocate them, set the GeoPoint to NULL
+                    fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, null, AttendeeUpdateActivity.this);
                     Toast.makeText(AttendeeUpdateActivity.this, "GeoPoint NULL", Toast.LENGTH_SHORT).show();
                 }
-
                 // Where we upload the data to the Firebase
                 updateUserInformation(userID);
-
 
                 // Since we clicked on confirm, it brings us back to the screen that was there before
                 Intent intent = new Intent(AttendeeUpdateActivity.this, AttendeeHomepageActivity.class);
@@ -405,60 +397,5 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                     Toast.LENGTH_SHORT)
                     .show();
         }
-//
-//        // If the geolocation is true then ask for permission
-//        if (geolocationCheck.isChecked()) {
-//            locationPermissionRequest.launch(new String[] {
-//                    Manifest.permission.ACCESS_FINE_LOCATION,
-//                    Manifest.permission.ACCESS_COARSE_LOCATION
-//            });
-//            fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, geoPoint, this);
-//        } else {
-//            fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, geoPoint, this);
-//        }
-
     }
-
-    // Might need to send the activity result launcher in the onCreate
-//    private void getLocation(String userID){
-//        // Get the location of the user
-//                // If we do have the location
-//
-//    }
-
-    // Request permission
-    // https://www.geeksforgeeks.org/android-how-to-request-permissions-in-android-application/
-
-    public void checkPermission(String permission, int requestCode){
-        if (ContextCompat.checkSelfPermission(AttendeeUpdateActivity.this, permission)
-                == PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(AttendeeUpdateActivity.this, new String[]{ permission }, requestCode);
-        }
-        else {
-            Toast.makeText(AttendeeUpdateActivity.this,
-                    "Permission already granted!",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode,
-//                                           @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode,
-//                permissions,
-//                grantResults);
-//
-//        if (requestCode == GEOLOCATION_PERMISSION_REQUEST){
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                Toast.makeText(AttendeeUpdateActivity.this,
-//                        "Geolocation Permission Granted",
-//                        Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(AttendeeUpdateActivity.this,
-//                        "Geolocation Permission NOT Granted",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 }
