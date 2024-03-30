@@ -68,6 +68,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
     FirestoreController fc = FirestoreController.getInstance();
     LocalStorageController lc = LocalStorageController.getInstance();
 
+    TextView profilePictureTextView;
     ImageView profilePicture;
     // TextView of user ID
     TextView userIDView;
@@ -144,6 +145,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Edit image section
+        profilePictureTextView = findViewById(R.id.att_update_profile_picture_textview);
         profilePicture = findViewById(R.id.attendeeUpdateInfoImageViewXML);
         FloatingActionButton editImageButton = findViewById(R.id.attendeeUpdateInfoPictureFABXML);
         // Will we save the image into the Firestore?
@@ -275,11 +277,13 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
             firstLetter = lastName.substring(0,1);
             secondLetter = lastName.substring(1,2);
         }
-        textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
+
+        //textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
 
         // Setting up the auto-generated pfp if you didn't have any set up previously
         if (selectedImageUri == null && profilePicture.getDrawable() == null){
-            profilePicture.setImageDrawable(textDrawable);
+            profilePictureTextView.setText(String.format(firstLetter + secondLetter));
+            //profilePicture.setImageDrawable(textDrawable);
         }
 
         // Edit image dialog
@@ -313,7 +317,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 deletePhotoButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        profilePicture.setImageDrawable(textDrawable);
+                        profilePictureTextView.setText(String.format(firstLetter + secondLetter));
+                        profilePicture.setImageDrawable(null);
                         editPhotoDialog.dismiss();
                     }
                 });
