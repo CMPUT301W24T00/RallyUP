@@ -180,7 +180,8 @@
             android:layout_marginBottom="10dp"
             android:text="@string/enable_geolocation_string"
             android:textColor="@color/accentColorGreen"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            app:buttonIconTint="@color/accentColorGreen" />
 
         <Button
             android:id="@+id/attendeeUpdateInfoConfirmXML"
