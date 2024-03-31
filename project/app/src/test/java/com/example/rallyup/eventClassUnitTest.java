@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertNull;
 import com.example.rallyup.firestoreObjects.Event;
 
 import org.junit.Test;
@@ -38,6 +39,32 @@ public class eventClassUnitTest {
                 "ka19Vl8P4QH9QQ90kWvm",
                 "1222513B4E6D44B19D6A7DFC89CB1F7E");
         return newMock;
+    }
+
+    private Event nullEvent() {
+        Event newMock = new Event();
+        return newMock;
+    };
+
+
+    @Test public void testNullEvent() {
+        Event mockEvent = nullEvent();
+        assertNull(mockEvent.getEventID());
+        assertNull(mockEvent.getEventDate());
+        assertNull(mockEvent.getEventLocation());
+        assertNull(mockEvent.getEventDescription() );
+        assertNull(mockEvent.getEventName() );
+        assertNull(mockEvent.getEventDate() );
+        assertNull(mockEvent.getEventTime() );
+        assertNull(mockEvent.getOwnerID());
+        assertNull(mockEvent.getNewQR());
+        assertNull(mockEvent.getReUseQR());
+        assertNull(mockEvent.getGeolocation());
+        assertNull(mockEvent.getSignUpLimitBool());
+        assertNull(mockEvent.getShareQRRef());
+        assertEquals(0, mockEvent.getSignUpLimit());
+        assertNull(mockEvent.getCheckInQRRef());
+        assertEquals(0, mockEvent.getCurrentlySignedUp());
     }
 
     /**
@@ -321,35 +348,41 @@ public class eventClassUnitTest {
     @Test
     public void testSetCurSignedUp() {
         Event testEvent = mockEvent();
-        testEvent.setCurrentlySignedUp(30);
-        assertEquals(30, testEvent.getCurrentlySignedUp());
+        testEvent.setCurrentlySignedUp(20);
+        assertEquals(20, testEvent.getCurrentlySignedUp());
     }
 
     @Test
     public void testSetEventTimeWithInvalidValue() {
         Event testEvent = mockEvent();
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+
+        IllegalArgumentException intException = assertThrows(IllegalArgumentException.class, () -> {
+            testEvent.setEventTime("lorem ippsum");
+        });
+        assertEquals("Time must be a valid integer value", intException.getMessage());
+
+        IllegalArgumentException posException = assertThrows(IllegalArgumentException.class, () -> {
             testEvent.setEventTime("2500");
         });
-        assertEquals("Time must be between 0 and 2400", exception.getMessage());
+        assertEquals("Time must be between 0 and 2400", posException.getMessage());
+
+        IllegalArgumentException negException = assertThrows(IllegalArgumentException.class, () -> {
+            testEvent.setEventTime("-20");
+        });
+        assertEquals("Time must be between 0 and 2400", negException.getMessage());
     }
 
     @Test
-    public void testSetCurrentlySignedUpWithNegativeValue() {
+    public void testSetCurSignedUpWithInvalidValue() {
         Event testEvent = mockEvent();
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        IllegalArgumentException negException = assertThrows(IllegalArgumentException.class, () -> {
             testEvent.setCurrentlySignedUp(-5);
         });
-        assertEquals("Number of people signed up cannot be negative.", exception.getMessage());
-    }
+        assertEquals("Number of people signed up cannot be negative.", negException.getMessage());
 
-    @Test
-    public void testSetCurrentlySignedUpExceedingLimit() {
-        Event testEvent = mockEvent();
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        IllegalArgumentException posException = assertThrows(IllegalArgumentException.class, () -> {
             testEvent.setCurrentlySignedUp(25);
         });
-        assertEquals("Number of people signed up cannot exceed the sign-up limit.", exception.getMessage());
+        assertEquals("Number of people signed up cannot exceed the sign-up limit.", posException.getMessage());
     }
-
 }
