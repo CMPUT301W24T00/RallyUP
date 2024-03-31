@@ -44,6 +44,26 @@ public class User {
     }
 
     /**
+     * Constructor of a user mainly used for unit testing
+     * @param email the email of the user
+     * @param firstName the first name of the user
+     * @param lastName the last name of the user
+     * @param id the id of the user
+     * @param phoneNumber the phone number of the user
+     * @param geolocation the boolean for geolaction of the user
+     * @param latlong the geo point of the user
+     */
+    public User(String email, String firstName, String lastName, String id, String phoneNumber, Boolean geolocation, GeoPoint latlong) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+        this.geolocation = geolocation;
+        this.latlong = latlong;
+    }
+
+    /**
      * Gets the email of the user.
      *
      * @return The email of the user.
@@ -160,6 +180,22 @@ public class User {
      * @param latlong GeoPoint to be set
      */
     public void setLatlong(GeoPoint latlong) {
+
+        if (latlong != null) {
+            double latitude = latlong.getLatitude();
+            double longitude = latlong.getLongitude();
+
+            // check if latitude is within domain (-90 to 90)
+            if (latitude < -90 || latitude > 90) {
+                throw new IllegalArgumentException("Latitude must be between -90 and 90.");
+            }
+
+            // check if longitude is within domain (-180 to 180)
+            if (longitude < -180 || longitude > 180) {
+                throw new IllegalArgumentException("Longitude must be between -180 and 180.");
+            }
+        }
+
         this.latlong = latlong;
     }
 }

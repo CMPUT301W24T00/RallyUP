@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import com.example.rallyup.firestoreObjects.User;
 
+import com.google.firebase.firestore.GeoPoint;
+
 import org.junit.Test;
 
 /**
@@ -18,8 +20,20 @@ public class userClassUnitTest {
      * @return newMock a User object
      */
     private User mockUser() {
-        User newMock = new User("test@gmail.com", "bob", "david", "123");
+
+        GeoPoint newPoint = new GeoPoint(31.2323, -39.1232);
+        User newMock = new User("test@gmail.com",
+                "bob",
+                "david",
+                "ka19Vl8P4QH9QQ90kWvm",
+                "7801234567",
+                false,
+                newPoint);
         return newMock;
+    }
+
+    private User nullUser() {
+        return new User();
     }
 
     /**
@@ -85,7 +99,7 @@ public class userClassUnitTest {
     @Test
     public void testGetID () {
         User testUser = mockUser();
-        assertEquals("123", testUser.getId());
+        assertEquals("ka19Vl8P4QH9QQ90kWvm", testUser.getId());
     }
 
     /**
@@ -94,7 +108,7 @@ public class userClassUnitTest {
     @Test
     public void testSetID () {
         User testUser = mockUser();
-        testUser.setId("456");
-        assertEquals("456", testUser.getId());
+        testUser.setId("ju31Vl8P4QH9QQ90kWvm");
+        assertEquals("ju31Vl8P4QH9QQ90kWvm", testUser.getId());
     }
 }
