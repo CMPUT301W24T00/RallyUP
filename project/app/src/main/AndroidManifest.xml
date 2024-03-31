@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- We could also ask for background location but that might be too much -->
     <!-- <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> -->
-
     <application
         android:name=".RallyUpApplication"
         android:allowBackup="true"
@@ -81,6 +80,10 @@
             android:name=".RallyUpApplication"
             android:foregroundServiceType="location">
         </service>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}"/>
 
     </application>
 

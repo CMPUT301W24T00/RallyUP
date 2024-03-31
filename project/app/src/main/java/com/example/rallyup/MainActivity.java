@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.example.rallyup.uiReference.attendees.AttendeeUpdateActivity;
 import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ProgressBarActivity;
+import com.example.rallyup.uiReference.organizers.EventAttendeesInfoActivity;
 
 import org.checkerframework.checker.units.qual.A;
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Button progressButton = findViewById(R.id.ProgressBarButton);
         Button uiLayoutButton = findViewById(R.id.UILayoutButton);
         Button adminBtn = findViewById(R.id.AdminPages);
+        Button eventAttList = findViewById(R.id.eventAttList);
 
 //        Button attendeeUpdateInfoButton = findViewById(R.id.AttendeeUpdateInfoButton);
 
@@ -73,7 +75,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-      
+
+        eventAttList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =
+                        new Intent(MainActivity.this, EventAttendeesInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
         /*
         attendeeUpdateInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
