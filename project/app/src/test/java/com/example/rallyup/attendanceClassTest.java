@@ -1,6 +1,8 @@
 package com.example.rallyup;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import com.example.rallyup.firestoreObjects.Attendance;
@@ -28,6 +30,19 @@ public class attendanceClassTest {
                 5,
                 "ka19Vl8P4QH9QQ90kWvm");
         return newMock;
+    }
+
+    private Attendance nullAttendance() {
+        return new Attendance();
+    }
+
+    @Test
+    public void testNullAttendance() {
+        Attendance nullAtt = nullAttendance();
+        assertNull(nullAtt.getEventID());
+        assertNull(nullAtt.getUserID());
+        assertEquals(false, nullAtt.isAttendeeVerified());
+        assertEquals(0, nullAtt.getTimesCheckedIn());
     }
 
     /**
@@ -99,5 +114,14 @@ public class attendanceClassTest {
         Attendance testAtt = mockAttendance();
         testAtt.setUserID("wo39143Vl8P4QH9QQ90kWvm");
         assertEquals("wo39143Vl8P4QH9QQ90kWvm", testAtt.getUserID());
+    }
+
+    @Test
+    public void testSetCheckedInWithInvalidValue(){
+        Attendance testAtt = mockAttendance();
+        IllegalArgumentException negException = assertThrows(IllegalArgumentException.class, () -> {
+            testAtt.setTimesCheckedIn(-5);
+        });
+        assertEquals("Number of times checked in cannot be negative.", negException.getMessage());
     }
 }
