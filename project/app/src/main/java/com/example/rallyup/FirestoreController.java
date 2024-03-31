@@ -9,6 +9,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
@@ -19,9 +21,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.example.rallyup.firestoreObjects.User;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -162,6 +167,15 @@ public class FirestoreController {
             user.setEmail(documentSnapshot.getString("email"));
             user.setFirstName(documentSnapshot.getString("firstName"));
             user.setLastName(documentSnapshot.getString("lastName"));
+            user.setPhoneNumber(documentSnapshot.getString("phoneNumber"));
+            user.setGeolocation(documentSnapshot.getBoolean("geolocation"));
+            // If the user wants to be geolocated, set the GeoPoint
+            // Else, set the GeoPoint var as null
+            if (Boolean.TRUE.equals(documentSnapshot.getBoolean("geolocation"))){
+                user.setLatlong(documentSnapshot.getGeoPoint("latlong"));
+            } else {
+                user.setLatlong(null);
+            }
 
             callbackListener.onGetUser(user);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
@@ -370,6 +384,63 @@ public class FirestoreController {
                 }
             }
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
+     * Method that updates the specified field with a String value for a specific user.
+     * @param userID String of the specified userID
+     * @param userField String of the name of the field to be updated
+     * @param userValue String of the value to be updated into the field
+     * @param callbackListener a listener for firestore
+     */
+    public void updateUserStringFields(String userID, String userField, String userValue, FirestoreCallbackListener callbackListener){
+        // .update needs to be on ACTUAL EXISTING DOCUMENT
+        // otherwise it will throw an error
+        // Another way to do this is to use .set() to recreate ALL existing FIELDS
+        usersRef.document(userID)
+                .update(userField, userValue)
+                .addOnSuccessListener(unused ->
+                        Log.d("FirestoreController",
+                                "User document successfully updated!"))
+                .addOnFailureListener(e ->
+                        Log.w("FirestoreController",
+                                "Error updating User document", e));
+    }
+
+    /**
+     * Method that updates the specified field with a Boolean value for a specific user
+     * @param userID String of the specified userID
+     * @param userField String of the name of the field to be updated
+     * @param userValue Boolean of the value to be updated into the field
+     * @param callbackListener a listener for firestore
+     */
+    public void updateUserBooleanFields(String userID, String userField, Boolean userValue, FirestoreCallbackListener callbackListener){
+        usersRef.document(userID)
+                .update(userField, userValue)
+                .addOnSuccessListener(unused ->
+                        Log.d("FirestoreController",
+                                "User document successfully updated!"))
+                .addOnFailureListener(e ->
+                        Log.w("FirestoreController",
+                                "Error updating User document", e));
+    }
+
+    /**
+     * Method that updates the specified field with a GeoPoint value for a specific user
+     * @param userID String of the specified userID
+     * @param userField String of the name of the field to be updated
+     * @param userGeoPoint GeoPoint of the value to be updated into the field
+     * @param callbackListener a listener for firestore
+     */
+    public void updateUserGeoPointFields(String userID, String userField, GeoPoint userGeoPoint, FirestoreCallbackListener callbackListener){
+        usersRef.document(userID)
+                .update(userField, userGeoPoint)
+                .addOnSuccessListener(unused ->
+                        Log.d("FirestoreController",
+                                "User GeoPoint updated successfully"))
+                .addOnFailureListener(e ->
+                        Log.w("FirestoreController",
+                                "Error updating User GeoPoint", e));
     }
 
     /**
@@ -652,6 +723,10 @@ public class FirestoreController {
             // ...
         });
     }
+
+//    public void downloadFile(, StorageReference storageReference){
+//
+//    }
 
 
     /**
