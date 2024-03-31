@@ -3,6 +3,7 @@ package com.example.rallyup;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import com.example.rallyup.firestoreObjects.Event;
 
 import org.junit.Test;
@@ -25,6 +26,7 @@ public class eventClassUnitTest {
                 "event description",
                 "20240321",
                 "1230",
+                20,
                 20,
                 true,
                 false,
@@ -311,4 +313,43 @@ public class eventClassUnitTest {
         testEvent.setEventID("3245513B4E6D44B19D6A7DFC89CB1F7E");
         assertEquals("3245513B4E6D44B19D6A7DFC89CB1F7E", testEvent.getEventID());
     }
+    @Test
+    public void testGetCurSignedUp() {
+        Event testEvent = mockEvent();
+        assertEquals(20, testEvent.getCurrentlySignedUp());
+    }
+    @Test
+    public void testSetCurSignedUp() {
+        Event testEvent = mockEvent();
+        testEvent.setCurrentlySignedUp(30);
+        assertEquals(30, testEvent.getCurrentlySignedUp());
+    }
+
+    @Test
+    public void testSetEventTimeWithInvalidValue() {
+        Event testEvent = mockEvent();
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            testEvent.setEventTime("2500");
+        });
+        assertEquals("Time must be between 0 and 2400", exception.getMessage());
+    }
+
+    @Test
+    public void testSetCurrentlySignedUpWithNegativeValue() {
+        Event testEvent = mockEvent();
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            testEvent.setCurrentlySignedUp(-5);
+        });
+        assertEquals("Number of people signed up cannot be negative.", exception.getMessage());
+    }
+
+    @Test
+    public void testSetCurrentlySignedUpExceedingLimit() {
+        Event testEvent = mockEvent();
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            testEvent.setCurrentlySignedUp(25);
+        });
+        assertEquals("Number of people signed up cannot exceed the sign-up limit.", exception.getMessage());
+    }
+
 }
