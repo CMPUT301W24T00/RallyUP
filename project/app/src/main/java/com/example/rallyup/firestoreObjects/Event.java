@@ -219,14 +219,12 @@ public class Event {
      * @param currentlySignedUp The new amount of people currently signed up to attend this event.
      */
     public void setCurrentlySignedUp(int currentlySignedUp) {
-
         if (currentlySignedUp < 0) {
             throw new IllegalArgumentException("Number of people signed up cannot be negative.");
         }
         if (currentlySignedUp > signUpLimit) {
             throw new IllegalArgumentException("Number of people signed up cannot exceed the sign-up limit.");
         }
-
         this.currentlySignedUp = currentlySignedUp;
     }
     /**
