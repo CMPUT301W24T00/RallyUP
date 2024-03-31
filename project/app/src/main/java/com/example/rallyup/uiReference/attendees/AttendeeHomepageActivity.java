@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+import java.util.Locale;
+
 /**
  * This class contains the home page activity for attendees
  * @author Kaye Maranan
@@ -33,7 +36,8 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     Button attBrowseEventsBtn;
     FloatingActionButton editProfileBtn;
     ImageButton attHomepageBackBtn;
-
+    TextView attProfilePictureTextView;
+    ImageView attProfilePicture;
     TextView firstNameView;
     TextView lastNameView;
     TextView usernameView;
@@ -56,6 +60,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         firstNameView.setText(user.getFirstName());
         lastNameView.setText(user.getLastName());
         usernameView.setText(user.getId());
+        //attProfilePicture.setImageDrawable(user.getProfilePicture());
     }
 
     /**
@@ -116,10 +121,24 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
 
         fc.getUserByID(userID, this);
 
+
         // Text views
         firstNameView = findViewById(R.id.att_first_name);
         lastNameView = findViewById(R.id.att_last_name);
         usernameView = findViewById(R.id.att_homepage_user);
+
+        // Image view for Profile Picture
+        attProfilePicture = findViewById(R.id.att_profile_picture);
+        attProfilePictureTextView = findViewById(R.id.att_homepage_profile_picture_textview);
+        if (attProfilePicture.getDrawable() == null) {
+            String firstLetter = userID.substring(0,1);
+            String secondLetter = userID.substring(1,2);
+            //TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
+            //attProfilePicture.setImageDrawable(textDrawable);
+            //attProfilePicture.setForeground(textDrawable);
+            attProfilePictureTextView.setText(String.format(firstLetter + secondLetter));
+
+        }
 
         // buttons
         attMyEventsBtn = findViewById(R.id.attendee_my_events_button);
