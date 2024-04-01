@@ -589,6 +589,7 @@ public class FirestoreController {
                 for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     User aUser;
                     aUser = documentSnapshot.toObject(User.class);
+                    aUser.setId(documentSnapshot.getId());
                     if(aUser.getFirstName() != null){
                         users.add(aUser);
                     }

@@ -35,6 +35,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class contains the activity for the attendee's info in an event
@@ -73,6 +74,8 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
 
     // Gradient of the HeatMap
     Gradient gradient = new Gradient(colors, startingPoints);
+    List<String> userIDs = new ArrayList<>();
+    List<User> userList = new ArrayList<>();
 
     @Override
     public void onGetUsers(List<User> userList) {
@@ -80,12 +83,21 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         // Iterate through the list and add the LatLng objects into an array
         for (int i = 0; i < userList.size(); i++){
             if (userList.get(i).getGeolocation() && userList.get(i).getLatlong() != null){
+                //Toast.makeText(getBaseContext(), "user geolocation on", Toast.LENGTH_SHORT).show();
                 double lat = userList.get(i).getLatlong().getLatitude();
                 double lon = userList.get(i).getLatlong().getLongitude();
                 LatLng latLng = new LatLng(lat, lon);
-                latLngs.add(latLng);
+                //Toast.makeText(getBaseContext(), String.format(Locale.getDefault(), "lat: %f", latLng.latitude), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(), String.format(Locale.getDefault(),"lon: %f", latLng.longitude), Toast.LENGTH_SHORT).show();
+                this.latLngs.add(latLng);
+                //Toast.makeText(getBaseContext(), String.format(Locale.getDefault(), "latLngs size: %d", this.latLngs.size()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), String.format("UserID: %s", userList.get(i).getId()), Toast.LENGTH_SHORT).show();
+                this.userList.add(userList.get(i));
             }
+            //this.userList.add(userList.get(i));
+            System.out.println("userList added a user, size now: " + this.userList.size());
         }
+        //this.userList = userList;
     }
 
     /**
@@ -100,14 +112,25 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_attendees_info);
 
-
         // Get the event ID only works IF it has been passed to this activity
         // WHICH should be from OrganizerEventDetailsActivity
         // And that activity receives its eventID from OrganizerEventListActivity
         String eventID = getIntent().getStringExtra("eventID");
         // Then call the FirestoreController to do something
         // (probably to retrieve the lat longs of users)
-        fc.getCheckedInUserIDs(eventID, this);
+        // test event ID: 048ACC2B534046668F6BAA2EA43F170C
+        fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
+        // getCheckedInUserIDs gets a List<String> that then is used within by getCheckedInUsers(current userID)
+        //fc.getCheckedInUsers(userIDs, this);
+
+        //fc.getCheckedInUserIDs(eventID, this);
+
+        // This gets executed BEFORE onGetUsers()
+        if (!userList.isEmpty()) {
+            Toast.makeText(getBaseContext(), "USERS NOT EMPTY", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getBaseContext(), "USERS EMPTY", Toast.LENGTH_SHORT).show();
+        }
 
 //        For future, need to get the LatLngs from User GeoPoints then add it into a JSON?
 //        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
