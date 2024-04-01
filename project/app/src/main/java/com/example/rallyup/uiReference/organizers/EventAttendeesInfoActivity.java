@@ -53,7 +53,7 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
 
     // Data management controllers.
     FirestoreController fc = FirestoreController.getInstance();
-    LocalStorageController lc = LocalStorageController.getInstance();
+    //LocalStorageController lc = LocalStorageController.getInstance();
 
     // Colors to be used for the HeatMap gradient
     int[] colors = {
@@ -68,6 +68,7 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
     };
 
     // LatLngs list for the heatmap
+    // Needs to be test with Firestore
     List<LatLng> latLngs = new ArrayList<>();
 
     // Gradient of the HeatMap
@@ -78,7 +79,7 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         //FirestoreCallbackListener.super.onGetUsers(userList);
         // Iterate through the list and add the LatLng objects into an array
         for (int i = 0; i < userList.size(); i++){
-            if (userList.get(i).getGeolocation()){
+            if (userList.get(i).getGeolocation() && userList.get(i).getLatlong() != null){
                 double lat = userList.get(i).getLatlong().getLatitude();
                 double lon = userList.get(i).getLatlong().getLongitude();
                 LatLng latLng = new LatLng(lat, lon);
@@ -101,20 +102,22 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
 
 
         // Get the event ID only works IF it has been passed to this activity
+        // WHICH should be from OrganizerEventDetailsActivity
+        // And that activity receives its eventID from OrganizerEventListActivity
         String eventID = getIntent().getStringExtra("eventID");
         // Then call the FirestoreController to do something
         // (probably to retrieve the lat longs of users)
         fc.getCheckedInUserIDs(eventID, this);
 
-        // For future, need to get the LatLngs from User GeoPoints then add it into a JSON?
-        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
-        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
-        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
-        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
-        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
-        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
-        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
-        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
+//        For future, need to get the LatLngs from User GeoPoints then add it into a JSON?
+//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
+//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
+//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
+//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
+//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
+//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
+//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
+//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
