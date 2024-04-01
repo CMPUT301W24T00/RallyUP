@@ -156,6 +156,11 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         attlist.setAdapter(attListAdapter);
     }
 
+    /**
+     * Method that adds a Heat Map overlay to a GoogleMaps object
+     * Will show a Toast if there are NO latLngs
+     * @param latLngs A list of LatLng objects for the HeatMap to mark
+     */
     private void addHeatMap(List<LatLng> latLngs){
         if (!latLngs.isEmpty()){
             HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
@@ -168,6 +173,10 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Overrided method that activates the map
+     * @param googleMap The googleMap object that we instantiate
+     */
     // Your tiles MUST BE in the onMapReady, otherwise it will throw a NULL
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
