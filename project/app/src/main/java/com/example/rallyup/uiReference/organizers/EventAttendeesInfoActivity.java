@@ -157,12 +157,15 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
     }
 
     private void addHeatMap(List<LatLng> latLngs){
-        HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
-                .data(latLngs)
-                .gradient(gradient)
-                .build();
-        TileOverlay overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
-
+        if (!latLngs.isEmpty()){
+            HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
+                    .data(latLngs)
+                    .gradient(gradient)
+                    .build();
+            TileOverlay overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
+        } else {
+         Toast.makeText(getBaseContext(), "No data points available", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Your tiles MUST BE in the onMapReady, otherwise it will throw a NULL
