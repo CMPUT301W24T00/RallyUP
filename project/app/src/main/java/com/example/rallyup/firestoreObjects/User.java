@@ -180,22 +180,6 @@ public class User {
      * @param latlong GeoPoint to be set
      */
     public void setLatlong(GeoPoint latlong) {
-
-        if (latlong != null) {
-            double latitude = latlong.getLatitude();
-            double longitude = latlong.getLongitude();
-
-            // check if latitude is within domain (-90 to 90)
-            if (latitude < -90 || latitude > 90) {
-                throw new IllegalArgumentException("Latitude must be between -90 and 90.");
-            }
-
-            // check if longitude is within domain (-180 to 180)
-            if (longitude < -180 || longitude > 180) {
-                throw new IllegalArgumentException("Longitude must be between -180 and 180.");
-            }
-        }
-
         this.latlong = latlong;
     }
 }

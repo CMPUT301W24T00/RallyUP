@@ -1,6 +1,10 @@
 package com.example.rallyup;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import com.example.rallyup.firestoreObjects.User;
 
@@ -27,13 +31,28 @@ public class userClassUnitTest {
                 "david",
                 "ka19Vl8P4QH9QQ90kWvm",
                 "7801234567",
-                false,
+                true,
                 newPoint);
         return newMock;
     }
 
-    private User nullUser() {
+    private User defaultUser() {
         return new User();
+    }
+
+
+    @Test
+    public void testDefaultUser() {
+        User defUser = defaultUser();
+
+        assertEquals("Sample email", defUser.getEmail());
+        assertEquals("", defUser.getFirstName());
+        assertEquals("", defUser.getLastName());
+        assertEquals("", defUser.getId());
+        assertEquals("", defUser.getPhoneNumber());
+        assertNull(defUser.getLatlong());
+        assertFalse(defUser.getGeolocation());
+
     }
 
     /**
@@ -111,4 +130,56 @@ public class userClassUnitTest {
         testUser.setId("ju31Vl8P4QH9QQ90kWvm");
         assertEquals("ju31Vl8P4QH9QQ90kWvm", testUser.getId());
     }
+
+    @Test
+    public void testGetPhoneNum() {
+        User testUser = mockUser();
+        assertEquals("7801234567", testUser.getPhoneNumber());
+    }
+
+    @Test
+    public void testSetPhoneNum() {
+        User testUser = mockUser();
+        testUser.setPhoneNumber("7802224567");
+        assertEquals("7802224567", testUser.getPhoneNumber());
+    }
+
+    @Test
+    public void testGetGeolocation() {
+        User testUser = mockUser();
+        assertTrue(testUser.getGeolocation());
+    }
+
+    @Test
+    public void testSetGeolocation() {
+        User testUser = mockUser();
+        testUser.setGeolocation(false);
+        assertFalse(testUser.getGeolocation());
+    }
+
+    @Test
+    public void testGetLatLong() {
+        GeoPoint expectedLatLong = new GeoPoint(31.2323, -39.1232);
+
+        User testUser = mockUser();
+
+        double delta = 0.000001;
+
+        assertEquals(expectedLatLong.getLatitude(), testUser.getLatlong().getLatitude(), delta);
+        assertEquals(expectedLatLong.getLongitude(), testUser.getLatlong().getLongitude(), delta);
+    }
+
+    @Test
+    public void testSetLatLong() {
+        GeoPoint newLatLong = new GeoPoint(70.2392, -102.1555);
+
+        User testUser = mockUser();
+
+        testUser.setLatlong(newLatLong);
+
+        double delta = 0.000001;
+        assertEquals(newLatLong.getLatitude(), testUser.getLatlong().getLatitude(), delta);
+        assertEquals(newLatLong.getLongitude(), testUser.getLatlong().getLongitude(), delta);
+    }
+
 }
