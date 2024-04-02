@@ -490,17 +490,19 @@ public class FirestoreController {
      * @param callbackListener a listener for the firestore
      */
     public void getCheckedInUserIDs(String eventID, FirestoreCallbackListener callbackListener) {
-        Query query = eventRegistrationRef.whereEqualTo("eventID", eventID);
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<String> userList = new ArrayList<>();
+            List<Attendance> attendeeList = new ArrayList<>();
             for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                Registration aRegistration;
-                aRegistration = documentSnapshot.toObject(Registration.class);
-                String aUserID = aRegistration.getUserID();
+                Attendance aAttendance;
+                aAttendance = documentSnapshot.toObject(Attendance.class);
+                String aUserID = aAttendance.getUserID();
                 if(aUserID != null){
                     userList.add(aUserID);
                 }
             }
+            //callbackListener.onGetAttendants(attendeeList);
             getCheckedInUsers(userList, callbackListener);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
@@ -526,6 +528,49 @@ public class FirestoreController {
             }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
         }
     }
+
+    /**
+     * This method retrieves all userID's of the users checked-in to a specific event
+     * @param eventID the unique ID of the user
+     * @param callbackListener a listener for the firestore
+     */
+    public void getCheckedInAttendees(String eventID, FirestoreCallbackListener callbackListener) {
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<Attendance> userList = new ArrayList<>();
+            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Attendance anAttendance;
+                anAttendance = documentSnapshot.toObject(Attendance.class);
+                Log.d("CONTROLLER", "getCheckedInAttendees: " + anAttendance.getEventID());
+                if(anAttendance.getUserID() != null){
+                    userList.add(anAttendance);
+                }
+            }
+            callbackListener.onGetAttendants(userList);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
+     * This method retrieves all userID's of the users checked-in to a specific event
+     * @param eventID the unique ID of the user
+     * @param callbackListener a listener for the firestore
+     */
+    public void getRegisteredAttendees(String eventID, FirestoreCallbackListener callbackListener) {
+        Query query = eventRegistrationRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<Registration> registeredUsers = new ArrayList<>();
+            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Registration aRegistration;
+                aRegistration = documentSnapshot.toObject(Registration.class);
+                Log.d("CONTROLLER", "getCheckedInAttendees: " + aRegistration.getEventID());
+                if(aRegistration.getUserID() != null){
+                    registeredUsers.add(aRegistration);
+                }
+            }
+            callbackListener.onGetRegisteredAttendants(registeredUsers);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
 
     /**
      * Adds a new Event to the event collection in firebase

@@ -2,11 +2,11 @@ package com.example.rallyup.uiReference.organizers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,7 +23,6 @@ import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ManageMilestoneDialog;
-import com.example.rallyup.progressBar.ProgressBarActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,11 +42,12 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     Button viewCheckInQRCode;
     ImageButton orgEventDetailsBackBtn; // ImageButton to navigate back to the event list
 
-    ImageButton milestoneEditButton;
+    ImageButton milestoneEditButton, shareButton;
     Button sendNotificationButton;
     EditText editNotificationTitle;
     EditText editNotificationBody;
     ProgressBar progressBar;
+    String eventID;
 
 
 
@@ -105,7 +105,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organizer_event_details);
         Intent intent = getIntent();
-        String eventID = intent.getStringExtra("key");
+        eventID = intent.getStringExtra("key");
 
         String notification_channel_ID_milestone =
                 getString(R.string.notification_channel_ID_milestone);
@@ -124,6 +124,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         orgEventDetailsBackBtn = findViewById(R.id.organizer_details_back_button); // Initializing back button
         viewEventAttendeesList = findViewById(R.id.event_attendees_button); // Initializing button to view attendees list
         viewCheckInQRCode = findViewById(R.id.view_qr_code_button);
+        shareButton = findViewById(R.id.shareButton);
 
         milestoneEditButton = findViewById(R.id.imageButton5);
         progressBar = findViewById(R.id.progressBar3);
@@ -151,7 +152,14 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         // Setting onClickListener for the button to view attendees list
         viewEventAttendeesList.setOnClickListener(view -> {
             Intent intent12 = new Intent(getBaseContext(), EventAttendeesInfoActivity.class);
+            intent12.putExtra("key", eventID);
             startActivity(intent12);
+        });
+
+        //@Override
+        // Setting onClickListener for the button to share the event QR code to other apps
+        shareButton.setOnClickListener(view -> {
+            // ideally where the fragment should pop-up
         });
 
         milestoneEditButton.setOnClickListener(v -> {

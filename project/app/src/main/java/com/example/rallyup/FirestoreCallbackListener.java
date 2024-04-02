@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.firestoreObjects.QrCode;
+import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.firestoreObjects.User;
 
 import java.util.List;
@@ -80,6 +81,13 @@ public interface FirestoreCallbackListener {
      * @param attendantList a list of attendance objects
      */
     default void onGetAttendants(List<Attendance> attendantList) {
+    }
+
+    /**
+     * Upon getting a list of attendants currently registered for a specified event
+     * @param registrationList a list of attendance objects
+     */
+    default void onGetRegisteredAttendants(List<Registration> registrationList){
     }
 
     /**
