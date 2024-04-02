@@ -13,6 +13,8 @@ public class User {
     private String phoneNumber = "";
     private Boolean geolocation = false;
     private GeoPoint latlong;
+    private Boolean wantNotifications = false;
+    private String fcmToken = "";
 
     /**
      * Default constructor for User.
@@ -161,5 +163,37 @@ public class User {
      */
     public void setLatlong(GeoPoint latlong) {
         this.latlong = latlong;
+    }
+
+    /**
+     * Gets the Boolean of the user for wantNotifications
+     * @return wantNotifications Boolean
+     */
+    public Boolean getWantNotifications() {
+        return wantNotifications;
+    }
+
+    /**
+     * Sets the Boolean of the user for wantNotifications
+     * @param wantNotifications A Boolean value of whether the user wants notifications or not
+     */
+    public void setWantNotifications(Boolean wantNotifications) {
+        this.wantNotifications = wantNotifications;
+    }
+
+    /**
+     * Gets the FCM token of the user for Notification purposes
+     * @return fcmKey String of the user
+     */
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    /**
+     * Sets the fcmToken variable of the User, which SHOULD be the user's actual FCM Token
+     * @param fcmToken String of the User's FCM Token to be
+     */
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

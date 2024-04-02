@@ -186,6 +186,11 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
             }
         });
 
+        // Change the hardcoded int 30 into a variable of the user milestones
+        // probably like progressBar.getProgress() >= (attendantList.size()/4*attendantList.size()) * 100
+        // progressBar.getProgress() >= attendantList.size()/2
+        // progressBar.getProgress() >= attendantList.size()3/4
+        // progressBar.getProgress() >= attendatList.size()
         if (progressBar.getProgress() >= 30) {
             notificationObject.createNotification(MainActivity.class,
                     notification_channel_ID_milestone,

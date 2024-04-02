@@ -80,10 +80,23 @@
             android:name=".RallyUpApplication"
             android:foregroundServiceType="location">
         </service>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}"/>
+
+        <!-- Notifications from Firebase Cloud Messaging (FCM) -->
+        <service
+            android:name="com.example.rallyup.notification.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <!--<service android:name="com.example.rallyup.notification.MyFirebaseMessagingService" /> -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/notification_channel_ID_announcements"
+            />
 
     </application>
 

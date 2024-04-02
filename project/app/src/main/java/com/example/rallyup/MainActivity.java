@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
                 getString(R.string.notification_channel_description_milestone),
                 getString(R.string.notification_channel_description_milestone),
                 NotificationCompat.PRIORITY_DEFAULT);
+        notificationObject.createNotificationChannel(getString(R.string.notification_channel_ID_announcements),
+                getString(R.string.notification_channel_name_announcements),
+                getString(R.string.notification_channel_description_announcements),
+                NotificationCompat.PRIORITY_DEFAULT);
 
         Button progressButton = findViewById(R.id.ProgressBarButton);
         Button uiLayoutButton = findViewById(R.id.UILayoutButton);

@@ -49,7 +49,7 @@
     <string name="notification_channel_description_milestone">
         Notifications for Organizers when achieved certain milestones
     </string>
-    <string name="notification_description_announcements">
+    <string name="notification_channel_description_announcements">
         Notifications that Organizers get to send out as announcements
     </string>
 
