@@ -83,6 +83,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
     CheckBox geolocationCheck;
     GeoPoint geoPoint;
 
+    // MODIFY ALL YOUR Images/EditTexts etc INSIDE YOUR fc.METHODS
     /**
      * onGetUser method that tells us what to do once we called onGetUser by the FirestoreController
      * This is where we set the information that is available on the database into our class
@@ -95,13 +96,15 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         //userIDView.setText(String.format(user.getId()));
         // User ID: + user.getId()
         // (Must be used with 18dp of space at the bottom to keep it nice)
+        profilePictureTextView = findViewById(R.id.att_update_profile_picture_textview);
         userIDView.setText(String.format("User ID: " + user.getId()));
         if (user.getFirstName() == null) {
             editFirstName.setText("");
             //firstLetter = user.getLastName().substring(0,1);
         } else {
-            editFirstName.setText(user.getFirstName());
             firstName = user.getFirstName();
+            editFirstName.setText(firstName);
+            firstLetter = user.getFirstName().substring(0,1);//user.getFirstName());
             //firstLetter = user.getFirstName().substring(0,1);
         }
         if (user.getLastName() == null) {
@@ -127,6 +130,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         } else {
             geolocationCheck.setChecked(user.getGeolocation());
         }
+        profilePictureTextView.setText(String.format(firstLetter + secondLetter));
     }
 
     /**
@@ -267,17 +271,21 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         // editText.getText() keeps returning null for some reason
         // Need to double check on why
         // Getting the first two characters of the user ID
-        // Toast.makeText(getBaseContext(), editFirstName.getText().toString(), Toast.LENGTH_SHORT).show();
-        if (firstName == null && lastName == null) {
-            firstLetter = userID.substring(0,1);
-            secondLetter = userID.substring(1,2);
-        } else if (firstName != null && lastName == null) {
-            firstLetter = firstName.substring(0,1);
-            secondLetter = firstName.substring(1,2);
-        } else if (firstName == null){
-            firstLetter = lastName.substring(0,1);
-            secondLetter = lastName.substring(1,2);
-        }
+//        // Toast.makeText(getBaseContext(), editFirstName.getText().toString(), Toast.LENGTH_SHORT).show();
+//        if (firstName != null && lastName != null) {
+//            firstLetter = firstName.substring(0,1);
+//            secondLetter = lastName.substring(1,2);
+//
+//        } else if (firstName != null && lastName == null) {
+//            firstLetter = firstName.substring(0,1);
+//            secondLetter = firstName.substring(1,2);
+//        } else if (firstName == null && lastName != null){
+//            firstLetter = lastName.substring(0,1);
+//            secondLetter = lastName.substring(1,2);
+//        } else {
+//            firstLetter = userID.substring(0,1);
+//            secondLetter = userID.substring(1,2);
+//        }
 
         //textDrawable = new TextDrawable(getBaseContext(), firstLetter + secondLetter);
 
