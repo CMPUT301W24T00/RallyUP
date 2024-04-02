@@ -98,22 +98,52 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         // (Must be used with 18dp of space at the bottom to keep it nice)
         profilePictureTextView = findViewById(R.id.att_update_profile_picture_textview);
         userIDView.setText(String.format("User ID: " + user.getId()));
-        if (user.getFirstName() == null) {
-            editFirstName.setText("");
-            //firstLetter = user.getLastName().substring(0,1);
-        } else {
+//        if (user.getFirstName() == null) {
+//            editFirstName.setText("");
+//            //firstLetter = user.getLastName().substring(0,1);
+//        } else {
+//            firstName = user.getFirstName();
+//            editFirstName.setText(firstName);
+//            firstLetter = user.getFirstName().substring(0,1);//user.getFirstName());
+//            //firstLetter = user.getFirstName().substring(0,1);
+//        }
+//        if (user.getLastName() == null) {
+//            editLastName.setText("");
+//            //secondLetter = user.getFirstName().substring(1,2);
+//        } else {
+//            editLastName.setText(user.getLastName());
+//            lastName = user.getLastName();
+//            //secondLetter = user.getLastName().substring(1,2);
+//        }
+        if(user.getFirstName() != null && user.getLastName() != null){
             firstName = user.getFirstName();
-            editFirstName.setText(firstName);
-            firstLetter = user.getFirstName().substring(0,1);//user.getFirstName());
-            //firstLetter = user.getFirstName().substring(0,1);
-        }
-        if (user.getLastName() == null) {
-            editLastName.setText("");
-            //secondLetter = user.getFirstName().substring(1,2);
-        } else {
-            editLastName.setText(user.getLastName());
+            firstLetter = firstName.substring(0,1);
+
             lastName = user.getLastName();
-            //secondLetter = user.getLastName().substring(1,2);
+            secondLetter = lastName.substring(1,2);
+
+            editFirstName.setText(firstName);
+            editLastName.setText(lastName);
+        } else if (user.getFirstName() != null && user.getLastName() == null){
+            firstName = user.getFirstName();
+            firstLetter = firstName.substring(0,1);
+            secondLetter = firstName.substring(1,2);
+
+            lastName = "";
+
+        } else if (user.getFirstName() == null && user.getLastName() != null) {
+            firstName = "";
+
+            lastName = user.getLastName();
+            firstLetter = lastName.substring(0,1);
+            secondLetter = lastName.substring(1,2);
+        } else {
+            // If user.getFirstName() == null && user.getLastName() == null
+            firstName = "";
+            lastName = "";
+
+            firstLetter = user.getId().substring(0,1);
+            secondLetter = user.getId().substring(1,2);
         }
         if (user.getEmail() == null) {
             editEmail.setText("");
@@ -131,6 +161,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
             geolocationCheck.setChecked(user.getGeolocation());
         }
         profilePictureTextView.setText(String.format(firstLetter + secondLetter));
+        editFirstName.setText(firstName);
+        editLastName.setText(lastName);
     }
 
     /**

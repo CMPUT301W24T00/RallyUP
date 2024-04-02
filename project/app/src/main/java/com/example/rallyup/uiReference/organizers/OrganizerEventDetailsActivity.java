@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.MainActivity;
@@ -23,7 +24,6 @@ import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ManageMilestoneDialog;
-import com.example.rallyup.progressBar.ProgressBarActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -114,6 +114,9 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         String notification_channel_description_milestone =
                 getString(R.string.notification_channel_description_milestone);
 
+        // Topic for the Announcements of the current Event
+        String topicAnnouncements = eventID + "_announcements";
+
 
         notificationObject.createNotificationChannel(
                 notification_channel_ID_milestone,
@@ -138,6 +141,8 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         fc.getEventByID(eventID, this);
         fc.getEventAttendantsByEventID(eventID, this);
 
+        // TODO: PUT PROGRESS BAR PROGRESS IN THE onGetAttendants AND PUT
+        //  progressBar.setProgress(attendantList.size());
         // Need to implement firebase to get the proper count of attendees here
         //setProgressOfEvent(progressBar,70, 100);
         progressBar.setProgress(70);
@@ -155,6 +160,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
             startActivity(intent12);
         });
 
+        // Might not need this anymore, delete when not needed anymore
         milestoneEditButton.setOnClickListener(v -> {
             ManageMilestoneDialog manageMilestoneDialog = new ManageMilestoneDialog();
             manageMilestoneDialog.show(getSupportFragmentManager(), "ManageMilestonesDialog");
@@ -163,6 +169,8 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         sendNotificationButton.setOnClickListener(v -> {
             if (!editNotificationBody.getText().toString().equals("") &&
                     !editNotificationTitle.getText().toString().equals("")){
+
+
                 // Create a new notification/announcement in the Firebase
                 // Which then if we go to Attendees side of the activities, they should be able
                 // to detect a new notification create for their specific event
@@ -230,5 +238,9 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         month = month_date.format(cal.getTime());
         String day = date.substring(6,8);
         return month + " " + day + ", " + year;
+    }
+
+    private void messageTest(){
+
     }
 }
