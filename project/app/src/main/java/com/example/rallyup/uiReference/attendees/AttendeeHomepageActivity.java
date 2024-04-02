@@ -61,6 +61,8 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         lastNameView.setText(user.getLastName());
         usernameView.setText(user.getId());
         //attProfilePicture.setImageDrawable(user.getProfilePicture());
+        fc.getPosterByEventID("/images/ProfilePicture/" + user.getId(), this, attProfilePicture);
+        attProfilePictureTextView.setVisibility(View.GONE);
     }
 
     /**
