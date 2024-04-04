@@ -68,36 +68,28 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
             1f
     };
 
-    // LatLngs list for the heatmap
-    // Needs to be test with Firestore
-    List<LatLng> latLngs = new ArrayList<>();
+
 
     // Gradient of the HeatMap
     Gradient gradient = new Gradient(colors, startingPoints);
-    List<String> userIDs = new ArrayList<>();
-    List<User> userList = new ArrayList<>();
 
     @Override
     public void onGetUsers(List<User> userList) {
+        // LatLngs list for the heatmap
+        List<LatLng> latLngs = new ArrayList<>();
+
         //FirestoreCallbackListener.super.onGetUsers(userList);
         // Iterate through the list and add the LatLng objects into an array
-        for (int i = 0; i < userList.size(); i++){
-            if (userList.get(i).getGeolocation() && userList.get(i).getLatlong() != null){
-                //Toast.makeText(getBaseContext(), "user geolocation on", Toast.LENGTH_SHORT).show();
-                double lat = userList.get(i).getLatlong().getLatitude();
-                double lon = userList.get(i).getLatlong().getLongitude();
-                LatLng latLng = new LatLng(lat, lon);
-                //Toast.makeText(getBaseContext(), String.format(Locale.getDefault(), "lat: %f", latLng.latitude), Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getBaseContext(), String.format(Locale.getDefault(),"lon: %f", latLng.longitude), Toast.LENGTH_SHORT).show();
-                this.latLngs.add(latLng);
-                //Toast.makeText(getBaseContext(), String.format(Locale.getDefault(), "latLngs size: %d", this.latLngs.size()), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getBaseContext(), String.format("UserID: %s", userList.get(i).getId()), Toast.LENGTH_SHORT).show();
-                this.userList.add(userList.get(i));
+        for(User user:userList){
+            if (user.getGeolocation()){
+                latLngs.add(new LatLng(user.getLatlong().getLatitude(), user.getLatlong().getLongitude()));
+                //Toast.makeText(getBaseContext(), "User LatLng Added!", Toast.LENGTH_SHORT).show();
             }
-            //this.userList.add(userList.get(i));
-            System.out.println("userList added a user, size now: " + this.userList.size());
+            //System.out.println("userID: " + user.getId());
+            //System.out.println("getGeolocation: " + user.getGeolocation());
         }
-        //this.userList = userList;
+        // Add the HeatMap overlay after we received ALL the
+        addHeatMap(latLngs);
     }
 
     /**
@@ -118,31 +110,12 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         String eventID = getIntent().getStringExtra("eventID");
         // Then call the FirestoreController to do something
         // (probably to retrieve the lat longs of users)
-        // test event ID: 048ACC2B534046668F6BAA2EA43F170C
-        fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
-        // getCheckedInUserIDs gets a List<String> that then is used within by getCheckedInUsers(current userID)
-        //fc.getCheckedInUsers(userIDs, this);
-
         //fc.getCheckedInUserIDs(eventID, this);
 
-        // This gets executed BEFORE onGetUsers()
-        if (!userList.isEmpty()) {
-            Toast.makeText(getBaseContext(), "USERS NOT EMPTY", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getBaseContext(), "USERS EMPTY", Toast.LENGTH_SHORT).show();
-        }
+        // test event ID: 048ACC2B534046668F6BAA2EA43F170C
+        fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
 
-//        For future, need to get the LatLngs from User GeoPoints then add it into a JSON?
-//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
-//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
-//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
-//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-7.0926));
-//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
-//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
-//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
-//        latLngs.add(new com.google.android.gms.maps.model.LatLng(31.7917,-8.0926));
-
-
+        // SupportMapFragment that manages the GoogleMap object
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         assert mapFragment != null;
@@ -200,14 +173,11 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
      * Overrided method that activates the map
      * @param googleMap The googleMap object that we instantiate
      */
-    // Your tiles MUST BE in the onMapReady, otherwise it will throw a NULL
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         if (map != null){
-            addHeatMap(latLngs);
             return;
         }
         map = googleMap;
-        addHeatMap(latLngs);
     }
 }

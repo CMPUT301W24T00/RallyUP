@@ -561,13 +561,16 @@ public class FirestoreController {
      * @param callbackListener a listener for the firestore
      */
     public void getCheckedInUserIDs(String eventID, FirestoreCallbackListener callbackListener) {
-        Query query = eventRegistrationRef.whereEqualTo("eventID", eventID);
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID); //eventRegistrationRef.whereEqualTo("eventID", eventID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<String> userList = new ArrayList<>();
             for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                Registration aRegistration;
-                aRegistration = documentSnapshot.toObject(Registration.class);
-                String aUserID = aRegistration.getUserID();
+                Attendance attendance;
+                attendance = documentSnapshot.toObject(Attendance.class);
+                String aUserID = attendance.getUserID();
+                //Registration aRegistration;
+                //aRegistration = documentSnapshot.toObject(Registration.class);
+                //String aUserID = aRegistration.getUserID();
                 if(aUserID != null){
                     userList.add(aUserID);
                 }
