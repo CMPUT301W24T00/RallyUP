@@ -327,6 +327,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
 //                        profilePicture.setImageDrawable(null);
                         fc.deleteFile("/images/ProfilePicture/" + lc.getUserID(getBaseContext()));
                         profilePicture.setImageDrawable(null);
+                        selectedImageUri = null;
                         profilePictureTextView.setText(String.format(firstLetter + secondLetter));
                         editPhotoDialog.dismiss();
                     }
