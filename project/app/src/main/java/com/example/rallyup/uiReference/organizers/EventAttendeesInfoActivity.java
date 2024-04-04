@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirestoreRegistrar;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
+import com.google.maps.android.heatmaps.WeightedLatLng;
 
 import org.json.JSONException;
 
@@ -67,9 +68,7 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
             0.2f,
             1f
     };
-
-
-
+    
     // Gradient of the HeatMap
     Gradient gradient = new Gradient(colors, startingPoints);
 
@@ -152,6 +151,9 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         attlist.setAdapter(attListAdapter);
     }
 
+    // Great reference from StackOverflow:
+    // https://stackoverflow.com/questions/49465240/weighted-heat-maps-in-android
+
     /**
      * Method that adds a Heat Map overlay to a GoogleMaps object
      * Will show a Toast if there are NO latLngs
@@ -166,6 +168,23 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
             TileOverlay overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
         } else {
          Toast.makeText(getBaseContext(), "No data points available", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Method that adds a Weighted Heat Map overlay to a GoogleMaps object
+     * Will show a Toast if there are NO latLngs
+     * @param latLngs A list of WeightedLatLng objects for the HeatMap to mark
+     */
+    private void addHeatMapWeighted(List<WeightedLatLng> latLngs){
+        if (!latLngs.isEmpty()){
+            HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
+                    .weightedData(latLngs)
+                    .gradient(gradient)
+                    .build();
+            TileOverlay overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
+        } else {
+            Toast.makeText(getBaseContext(), "No data points available", Toast.LENGTH_SHORT).show();
         }
     }
 
