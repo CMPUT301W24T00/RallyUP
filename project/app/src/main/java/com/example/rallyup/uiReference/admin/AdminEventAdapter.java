@@ -13,7 +13,10 @@ import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class AdminEventAdapter extends BaseAdapter {
         private Context context;
@@ -87,9 +90,32 @@ public class AdminEventAdapter extends BaseAdapter {
 
             // Set event details to respective TextViews
             TextView nameTextView = convertView.findViewById(R.id.admin_event_title);
-            nameTextView.setText(event.getEventName());
+            ImageView posterview = convertView.findViewById(R.id.admin_events_poster);
+            TextView locationTextView = convertView.findViewById(R.id.admin_event_location);
+            TextView dateTextView = convertView.findViewById(R.id.admin_event_date);
 
+            String unformattedDate = event.getEventDate();
+            String formattedDate = getProperDateFormatting(unformattedDate);
+            String unformattedTime = event.getEventTime();
+            String formattedTime = unformattedTime.substring(0,2) + ":" + unformattedTime.substring(2,4);
+            String completeDateTime = formattedDate + " At " + formattedTime;
+            dateTextView.setText(completeDateTime);
+            locationTextView.setText(event.getEventLocation());
+            nameTextView.setText(event.getEventName());
+            fController.getPosterByEventID(event.getPosterRef(), context, posterview);
             return convertView;
 
+    }
+
+    public String getProperDateFormatting(String date) {
+        String year = date.substring(0,4);
+        String month;
+        Calendar cal=Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.CANADA);
+        int monthNum=(Integer.parseInt(date.substring(4,6))) - 1;
+        cal.set(Calendar.MONTH,monthNum);
+        month = month_date.format(cal.getTime());
+        String day = date.substring(6,8);
+        return month + " " + day + ", " + year;
     }
 }

@@ -87,7 +87,8 @@ public class AdminProfilesAdapter extends BaseAdapter {
 
         // Set event details to respective TextViews
         TextView nameTextView = convertView.findViewById(R.id.username_id);
-        nameTextView.setText(user.getId());
+        String temp = "UserID: " + user.getId();
+        nameTextView.setText(temp);
 
         return convertView;
 
