@@ -732,6 +732,21 @@ public class FirestoreController {
                 .load(storageReference)
                 .into(poster);
     }
+
+    public void deleteFile(String filePath){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePath);
+        storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                // File deleted successfully
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // OH NO ERROR!
+            }
+        });
+    }
 }
 
 
