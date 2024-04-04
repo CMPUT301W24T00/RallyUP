@@ -110,10 +110,10 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         String eventID = getIntent().getStringExtra("eventID");
         // Then call the FirestoreController to do something
         // (probably to retrieve the lat longs of users)
-        //fc.getCheckedInUserIDs(eventID, this);
+        fc.getCheckedInUserIDs(eventID, this);
 
         // test event ID: 048ACC2B534046668F6BAA2EA43F170C
-        fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
+        //fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
 
         // SupportMapFragment that manages the GoogleMap object
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
