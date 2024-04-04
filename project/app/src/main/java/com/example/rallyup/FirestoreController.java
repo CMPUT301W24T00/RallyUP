@@ -75,6 +75,16 @@ public class FirestoreController {
         return instance;
     }
 
+    /**
+     * This method deletes an attendant based on the id of the user
+     * @param userID a string for the identification of a user
+     * @param callbackListener a listener for the firestore
+     */
+    public void deleteUserByUserID(String userID, FirestoreCallbackListener callbackListener) {
+        DocumentReference docRef = usersRef.document(userID);
+        // Delete the document
+        docRef.delete().addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
 
     /**
      * This method takes an event object and allows it to be modified/updated
