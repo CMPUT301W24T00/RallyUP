@@ -326,7 +326,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
 //                        profilePictureTextView.setText(String.format(firstLetter + secondLetter));
 //                        profilePicture.setImageDrawable(null);
                         fc.deleteFile("/images/ProfilePicture/" + lc.getUserID(getBaseContext()));
-                        profilePicture.setImageDrawable(null);
+                        profilePicture.setImageBitmap(null);
                         selectedImageUri = null;
                         profilePictureTextView.setText(String.format(firstLetter + secondLetter));
                         editPhotoDialog.dismiss();
@@ -366,7 +366,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 } else {
                     // If User DOES NOT allow us to geolocate them, set the GeoPoint to NULL
                     fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, null, AttendeeUpdateActivity.this);
-                    Toast.makeText(AttendeeUpdateActivity.this, "GeoPoint NULL", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AttendeeUpdateActivity.this, "GeoPoint NULL", Toast.LENGTH_SHORT).show();
                 }
                 // Where we upload the data to the Firebase
                 updateUserInformation(userID);
