@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
@@ -18,7 +20,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AdminEventAdapter extends BaseAdapter {
+public class AdminEventAdapter extends BaseAdapter implements FirestoreCallbackListener {
         private Context context;
         private List<Event> eventList;
         private LayoutInflater inflater;
@@ -93,6 +95,20 @@ public class AdminEventAdapter extends BaseAdapter {
             ImageView posterview = convertView.findViewById(R.id.admin_events_poster);
             TextView locationTextView = convertView.findViewById(R.id.admin_event_location);
             TextView dateTextView = convertView.findViewById(R.id.admin_event_date);
+            ImageButton deleteView = convertView.findViewById(R.id.delete_button);
+
+            // Set delete button behavior
+            deleteView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    eventList.remove(position);
+                    notifyDataSetChanged();
+                    FirestoreController fc = FirestoreController.getInstance();
+                    fc.deleteEventByEventID(event.getEventID(), AdminEventAdapter.this);
+                    // Log.d("DeleteButton", event.getEventName());
+                }
+            });
+
 
             String unformattedDate = event.getEventDate();
             String formattedDate = getProperDateFormatting(unformattedDate);
@@ -103,8 +119,8 @@ public class AdminEventAdapter extends BaseAdapter {
             locationTextView.setText(event.getEventLocation());
             nameTextView.setText(event.getEventName());
             fController.getPosterByEventID(event.getPosterRef(), context, posterview);
-            return convertView;
 
+            return convertView;
     }
 
     public String getProperDateFormatting(String date) {

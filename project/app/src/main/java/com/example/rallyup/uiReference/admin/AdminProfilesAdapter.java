@@ -6,16 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.User;
 
 import java.util.List;
 
-public class AdminProfilesAdapter extends BaseAdapter {
+public class AdminProfilesAdapter extends BaseAdapter implements FirestoreCallbackListener {
     private Context context;
     private List<User> userList;
     private LayoutInflater inflater;
@@ -89,6 +91,17 @@ public class AdminProfilesAdapter extends BaseAdapter {
         TextView nameTextView = convertView.findViewById(R.id.username_id);
         String temp = "UserID: " + user.getId();
         nameTextView.setText(temp);
+        ImageButton deleteView = convertView.findViewById(R.id.delete_button);
+        // Set delete button behavior
+        deleteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userList.remove(position);
+                notifyDataSetChanged();
+                FirestoreController fc = FirestoreController.getInstance();
+                fc.deleteUserByUserID(user.getId(), AdminProfilesAdapter.this);
+            }
+        });
 
         return convertView;
 
