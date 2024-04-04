@@ -88,6 +88,17 @@ public class FirestoreController {
     }
 
     /**
+     * This method deletes the event of an attendant based on the id of the event
+     * @param eventID a string for the identification of an event
+     * @param callbackListener a listener for the firestore
+     */
+    public void deleteEventByEventID(String eventID, FirestoreCallbackListener callbackListener) {
+        DocumentReference docRef = eventsRef.document(eventID);
+        // Delete the document
+        docRef.delete().addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
      * This method creates a new event and sets a unique ID for it
      * @param callbackListener a listener for the firestore
      */
