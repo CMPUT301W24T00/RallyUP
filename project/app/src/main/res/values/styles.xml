@@ -14,6 +14,10 @@
         <item name="cornerSizeBottomRight">40dp</item>
     </style>
 
+    <style name="circleStyle">
+        <item name="cornerSize">50%</item>
+    </style>
+
     <!--Round shaped FAB-->
     <style name="FAB_Shape_Round" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">50%</item>
