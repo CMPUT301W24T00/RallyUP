@@ -294,9 +294,8 @@ public class FirestoreController {
             for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                 User thisUser;
                 thisUser = documentSnapshot.toObject(User.class);
-                if(thisUser.getFirstName() != null){
-                    userList.add(thisUser);
-                }
+                thisUser.setId(documentSnapshot.getId());
+                userList.add(thisUser);
             }
             callbackListener.onGetUsers(userList);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
