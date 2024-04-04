@@ -18,13 +18,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.rallyup.R;
-import com.example.rallyup.notification.MyFirebaseMessagingService;
+//import com.example.rallyup.notification.MyFirebaseMessagingService;
 import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
 import com.example.rallyup.uiReference.organizers.OrganizerEventListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
+//import com.google.firebase.messaging.FirebaseMessaging;
 
 /**
  * This class contains the activity for the main menu splash screen
