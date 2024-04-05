@@ -5,28 +5,46 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.User;
 
-/**
- * This class contains an activity that allows an admin to browse user profiles to be modified
- */
-public class AdminBrowseProfiles extends AppCompatActivity {
+import java.util.List;
 
+public class AdminBrowseProfiles extends AppCompatActivity implements FirestoreCallbackListener {
+    ListView listView;
     ImageButton backBtn;
 
+    FirestoreController controller;
+    List<User> users;
+
+    AdminProfilesAdapter adminProfilesAdapter;
+
     /**
-     * Initializes the browse profiles activity when it is launched
-     * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
-     *
+     * Upon getting the list of events, it will set the necessary adapters
+     * @param users a list of event objects
      */
+    public void onGetUsers(List<User> users){
+        adminProfilesAdapter = new AdminProfilesAdapter(AdminBrowseProfiles.this, users);
+        listView.setAdapter(adminProfilesAdapter);
+        this.users = users;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_browse_profiles);
+        listView = findViewById(R.id.user_profiles_list);
 
+        // real list
+        controller = FirestoreController.getInstance();
+        controller.getAdminProfiles(this);
+
+        // back button
         backBtn = findViewById(R.id.admin_profiles_back_button);
 
         backBtn.setOnClickListener(view -> {
@@ -34,4 +52,5 @@ public class AdminBrowseProfiles extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
 }

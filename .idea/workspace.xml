@@ -4,12 +4,34 @@
     <shared>
       <config />
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_organizer_event_list.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="" />
+    <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminEventAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminProfilesAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/app/src/main/res/drawable/admin_trash.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/app/src/main/res/values/refs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseEventsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseEventsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseProfiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseProfiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeBrowseEventsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeBrowseEventsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_browse_events.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_browse_events.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_browse_profiles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_browse_profiles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/admin_events_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/admin_events_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/admin_profiles_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/admin_profiles_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userClassUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userClassUnitTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,18 +76,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;docTesting&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/reima/School/Cmput 301/Labs/ListyStore&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "Merging docTesting",
+    "last_opened_file_path": "C:/Users/reima/School/Cmput 301/Labs/ListyStore"
   }
-}</component>
-  <component name="RunManager" selected="Gradle.userClassUnitTest">
+}]]></component>
+  <component name="RunManager" selected="Android Instrumented Tests.Tests in 'com.example.rallyup'">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />
       <option name="DEPLOY" value="true" />
@@ -293,11 +315,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Android Instrumented Tests.Tests in 'com.example.rallyup'" />
         <item itemvalue="Gradle.userClassUnitTest" />
         <item itemvalue="Gradle.attendanceClassTest" />
         <item itemvalue="Gradle.eventClassUnitTest" />
         <item itemvalue="Gradle.firestoreControllerClassUnitTest" />
-        <item itemvalue="Android Instrumented Tests.Tests in 'com.example.rallyup'" />
       </list>
     </recent_temporary>
   </component>
