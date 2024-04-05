@@ -1,7 +1,5 @@
 package com.example.rallyup.uiReference.organizers;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,28 +12,18 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
-import com.example.rallyup.RallyUpApplication;
 import com.example.rallyup.firestoreObjects.Event;
-import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
-
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,7 +83,7 @@ public class shareFragment extends DialogFragment implements FirestoreCallbackLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_share2, container,
+        return inflater.inflate(R.layout.fragment_share, container,
                 false);
 
     }
