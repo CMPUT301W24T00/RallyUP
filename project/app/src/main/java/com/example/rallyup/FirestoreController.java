@@ -78,6 +78,25 @@ public class FirestoreController {
     }
 
     /**
+     * This method gets the bitmap associated with a QrCode object
+     * @param qrCode a QrCode object to get the bitmap of
+     * @param callbackListener a listener for the firestore
+     */
+    public void getBitmapByQRCode(QrCode qrCode, FirestoreCallbackListener callbackListener) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference(qrImageStorageLocation + qrCode.getQrId());
+        storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        // Convert the bytes to a Bitmap
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        // Use the Bitmap
+                        callbackListener.onGetBitmap(bitmap);
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
      * This method gets the share qrCode related to the event
      * @param jobId the string identification of a job
      * @param eventID a string for the identification of an event
