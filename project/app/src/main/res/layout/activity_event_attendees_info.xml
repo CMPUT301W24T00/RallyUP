@@ -155,12 +155,26 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/attendee_details_list_top"
                     android:fontFamily="@font/inter_black"
+                    android:paddingStart="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="5dp"
                     android:text="@string/heat_map_of_attendees_fixed"
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="@color/darkColor"
                     android:textSize="25dp" />
+
+                <!-- GOOGLE MAPS -->
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    tools:context="com.example.rallyup.uiReference.organizers.EventAttendeesInfoActivity" />
+
             </LinearLayout>
 
         </LinearLayout>

@@ -63,7 +63,7 @@
     <string name="username_fixed">Username</string>
     <string name="num_of_times_checked_in_fixed"># of Times Checked In</string>
     <string name="verified_check_ins_fixed">Verified Check Ins</string>
-    <string name="heat_map_of_attendees_fixed">Heat Map of Attendees</string>
+    <string name="heat_map_of_attendees_fixed">HeatMap of Attendees</string>
     <string name="event_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</string>
     <string name="announcements_fixed">ANNOUNCEMENTS</string>
     <string name="event_location">LOCATION</string>

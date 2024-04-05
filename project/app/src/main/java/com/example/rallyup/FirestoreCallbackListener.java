@@ -120,5 +120,4 @@ public interface FirestoreCallbackListener {
     default void onGetCheckIns(Integer timesCheckedIn) {
 
     }
-
 }

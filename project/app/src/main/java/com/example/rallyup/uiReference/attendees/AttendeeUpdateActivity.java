@@ -232,6 +232,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                                             @Override
                                             public void onSuccess(Location location) {
                                                 Log.d("AttendeeUpdateActivity", "Last location retrieved!");
+                                                geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
                                                 Toast.makeText(getBaseContext(), "Location: " + location, Toast.LENGTH_SHORT).show();
                                             }
                                         })

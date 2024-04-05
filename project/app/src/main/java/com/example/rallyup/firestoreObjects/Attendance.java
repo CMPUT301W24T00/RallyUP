@@ -102,6 +102,9 @@ public class Attendance {
      * @param timesCheckedIn The number of times the attendee has checked in.
      */
     public void setTimesCheckedIn(int timesCheckedIn) {
+        if (timesCheckedIn < 0) {
+            throw new IllegalArgumentException("Number of times checked in cannot be negative.");
+        }
         this.timesCheckedIn = timesCheckedIn;
     }
 
