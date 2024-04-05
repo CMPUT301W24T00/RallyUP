@@ -16,6 +16,7 @@ import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.firestoreObjects.User;
 import com.example.rallyup.uiReference.testingClasses.AttListArrayAdapter;
 import com.example.rallyup.uiReference.testingClasses.AttendeeStatsClass;
@@ -91,6 +92,14 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         addHeatMap(latLngs);
     }
 
+    @Override
+    public void onGetEvent(Event event) {
+        // If the Event's geolocation is true, then do the map.
+        if (event.getGeolocation()){
+            fc.getCheckedInUserIDs(event.getEventID(), this);
+        }
+    }
+
     /**
      * Initializes an event's attendees info activity when it is first launched
      * @param savedInstanceState If the activity is being re-initialized after
@@ -109,8 +118,7 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         String eventID = getIntent().getStringExtra("eventID");
         // Then call the FirestoreController to do something
         // (probably to retrieve the lat longs of users)
-        fc.getCheckedInUserIDs(eventID, this);
-
+        fc.getEventByID(eventID, this);
         // test event ID: 048ACC2B534046668F6BAA2EA43F170C
         //fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
 
@@ -130,18 +138,18 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         });
 
         // array of strings?
-        String[] users = {
-                "Edmonton", "Vancouver", "Toronto"
-        };
-        Integer[] countedCheckIns = {
-                2, 5, 8
-        };
-
-        dataList = new ArrayList<>();
-        // creating a new array list with objects of City
-        for (int i = 0; i < users.length; i++) {
-            dataList.add(new AttendeeStatsClass(users[i], countedCheckIns[i]));
-        }
+//        String[] users = {
+//                "Edmonton", "Vancouver", "Toronto"
+//        };
+//        Integer[] countedCheckIns = {
+//                2, 5, 8
+//        };
+//
+//        dataList = new ArrayList<>();
+//        // creating a new array list with objects of City
+//        for (int i = 0; i < users.length; i++) {
+//            dataList.add(new AttendeeStatsClass(users[i], countedCheckIns[i]));
+//        }
 
         // add adapter for the attendees list
         attlist = findViewById(R.id.attnCheckInList);        // the view that displays all the books
