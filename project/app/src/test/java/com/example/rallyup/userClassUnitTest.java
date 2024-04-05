@@ -14,16 +14,17 @@ import org.junit.Test;
 /**
  * This class contains all the unit tests for the user object.
  * It tests various getters and setters of the User class.
+ *
  * @author Reimark Ronabio
  */
 public class userClassUnitTest {
 
     /**
      * Creates a mock User object for testing.
-     * @return newMock a User object
+     *
+     * @return a User object with mock data
      */
     private User mockUser() {
-
         GeoPoint newPoint = new GeoPoint(31.2323, -39.1232);
         User newMock = new User("test@gmail.com",
                 "bob",
@@ -35,11 +36,18 @@ public class userClassUnitTest {
         return newMock;
     }
 
+    /**
+     * Creates a default User object.
+     *
+     * @return a default User object
+     */
     private User defaultUser() {
         return new User();
     }
 
-
+    /**
+     * This method tests if the default constructor initializes the user object correctly.
+     */
     @Test
     public void testDefaultUser() {
         User defUser = defaultUser();
@@ -130,12 +138,18 @@ public class userClassUnitTest {
         assertEquals("ju31Vl8P4QH9QQ90kWvm", testUser.getId());
     }
 
+    /**
+     * Tests the getPhoneNumber method.
+     */
     @Test
     public void testGetPhoneNum() {
         User testUser = mockUser();
         assertEquals("7801234567", testUser.getPhoneNumber());
     }
 
+    /**
+     * Tests the setPhoneNumber method.
+     */
     @Test
     public void testSetPhoneNum() {
         User testUser = mockUser();
@@ -143,12 +157,18 @@ public class userClassUnitTest {
         assertEquals("7802224567", testUser.getPhoneNumber());
     }
 
+    /**
+     * Tests the getGeolocation method.
+     */
     @Test
     public void testGetGeolocation() {
         User testUser = mockUser();
         assertTrue(testUser.getGeolocation());
     }
 
+    /**
+     * Tests the setGeolocation method.
+     */
     @Test
     public void testSetGeolocation() {
         User testUser = mockUser();
@@ -156,6 +176,9 @@ public class userClassUnitTest {
         assertFalse(testUser.getGeolocation());
     }
 
+    /**
+     * Tests the getLatLong method.
+     */
     @Test
     public void testGetLatLong() {
         GeoPoint expectedLatLong = new GeoPoint(31.2323, -39.1232);
@@ -168,6 +191,9 @@ public class userClassUnitTest {
         assertEquals(expectedLatLong.getLongitude(), testUser.getLatlong().getLongitude(), delta);
     }
 
+    /**
+     * Tests the setLatLong method.
+     */
     @Test
     public void testSetLatLong() {
         GeoPoint newLatLong = new GeoPoint(70.2392, -102.1555);

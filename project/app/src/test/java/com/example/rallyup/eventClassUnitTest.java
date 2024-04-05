@@ -41,12 +41,18 @@ public class eventClassUnitTest {
         return newMock;
     }
 
+    /**
+     * Creates a null mock event for null testing
+     * @return
+     */
     private Event nullEvent() {
         Event newMock = new Event();
         return newMock;
     };
 
-
+    /**
+     * This method tests if the null constructor initializes the event object correctly
+     */
     @Test public void testNullEvent() {
         Event mockEvent = nullEvent();
         assertNull(mockEvent.getEventID());
@@ -352,6 +358,9 @@ public class eventClassUnitTest {
         assertEquals(20, testEvent.getCurrentlySignedUp());
     }
 
+    /**
+     * This method tests invalid inputs when setting the event time
+     */
     @Test
     public void testSetEventTimeWithInvalidValue() {
         Event testEvent = mockEvent();
@@ -372,6 +381,10 @@ public class eventClassUnitTest {
         assertEquals("Time must be between 0 and 2400", negException.getMessage());
     }
 
+
+    /**
+     * This method tests invalid inputs when setting the amount currently signed up
+     */
     @Test
     public void testSetCurSignedUpWithInvalidValue() {
         Event testEvent = mockEvent();

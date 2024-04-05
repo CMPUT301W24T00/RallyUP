@@ -32,10 +32,17 @@ public class attendanceClassTest {
         return newMock;
     }
 
+    /**
+     * Creates a null mock attendance object for null testing
+     * @return null attendance object
+     */
     private Attendance nullAttendance() {
         return new Attendance();
     }
 
+    /**
+     * This method tests if the null constructor initializes the attendance object correctly
+     */
     @Test
     public void testNullAttendance() {
         Attendance nullAtt = nullAttendance();
@@ -116,6 +123,10 @@ public class attendanceClassTest {
         assertEquals("wo39143Vl8P4QH9QQ90kWvm", testAtt.getUserID());
     }
 
+
+    /**
+     * This method tests invalid inputs when setting the times checked in
+     */
     @Test
     public void testSetCheckedInWithInvalidValue(){
         Attendance testAtt = mockAttendance();

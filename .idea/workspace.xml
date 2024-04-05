@@ -18,6 +18,10 @@
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/attendanceClassTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/attendanceClassTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/eventClassUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/eventClassUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/registrationClassUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/registrationClassUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userClassUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userClassUnitTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +78,7 @@
     "last_opened_file_path": "C:/Users/reima/School/Cmput 301/Labs/ListyStore"
   }
 }]]></component>
-  <component name="RunManager" selected="Gradle.Tests in 'com.example.rallyup'">
+  <component name="RunManager" selected="Gradle.userClassUnitTest">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />
       <option name="DEPLOY" value="true" />
@@ -252,7 +256,7 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="eventClassUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="registrationClassUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
@@ -265,7 +269,7 @@
           <list>
             <option value=":app:testDebugUnitTest" />
             <option value="--tests" />
-            <option value="&quot;com.example.rallyup.eventClassUnitTest&quot;" />
+            <option value="&quot;com.example.rallyup.registrationClassUnitTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -302,11 +306,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.userClassUnitTest" />
+        <item itemvalue="Gradle.registrationClassUnitTest" />
         <item itemvalue="Gradle.Tests in 'com.example.rallyup'" />
         <item itemvalue="Android Instrumented Tests.Tests in 'com.example.rallyup'" />
-        <item itemvalue="Gradle.userClassUnitTest" />
         <item itemvalue="Gradle.attendanceClassTest" />
-        <item itemvalue="Gradle.eventClassUnitTest" />
       </list>
     </recent_temporary>
   </component>
