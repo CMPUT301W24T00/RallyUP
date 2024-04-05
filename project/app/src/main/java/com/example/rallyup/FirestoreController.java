@@ -12,11 +12,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.Registration;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.example.rallyup.firestoreObjects.User;
@@ -126,7 +128,6 @@ public class FirestoreController {
      * @param callbackListener a listener for the firestore
      */
     public void createQRCode(String jobId, FirestoreCallbackListener callbackListener) {
-
         QrCode newQr = new QrCode();
         qrRef.add(newQr).addOnSuccessListener(documentReference -> {
             newQr.setQrId(documentReference.getId());
@@ -359,7 +360,6 @@ public class FirestoreController {
         Query query = eventAttendanceRef.whereEqualTo("userID", userID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             if(queryDocumentSnapshots.isEmpty()){ // if the user doesn't have any rows in the eventAttendanceRef table right now we make a new instance for this event
-                Log.d("GETCHECKINS", "getCheckIns: couldn't find anything");
                 int checkIns = 1;
                 Attendance checkIn = new Attendance(verified, eventID, checkIns, userID);
                 addAttendance(checkIn);
