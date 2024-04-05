@@ -13,6 +13,9 @@ import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
 import com.example.rallyup.uiReference.organizers.OrganizerEventListActivity;
 import com.example.rallyup.uiReference.splashScreen;
 
+/**
+ * This class contains the home page activity for the admin that allows them to choose between different administrative options
+ */
 public class AdminHomepageActivity extends AppCompatActivity {
 
     Button eventsBtn;
@@ -21,6 +24,14 @@ public class AdminHomepageActivity extends AppCompatActivity {
     Button imagesBtn;
 
     ImageButton backBtn;
+
+    /**
+     * Initializes the admin home page activity when it is launched
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

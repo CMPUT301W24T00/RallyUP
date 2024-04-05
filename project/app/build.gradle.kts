@@ -63,13 +63,16 @@ dependencies {
     implementation("com.google.maps.android:android-maps-utils:3.8.0")
 
     // implementation("org.testng:testng:6.9.6")
+
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:3.12.4")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test:rules:1.4.0")
+
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.zxing:core:3.4.1")
 //    implementation(files("C:/Users/reima/AppData/Local/Android/Sdk/platforms/android-34/android.jar"))

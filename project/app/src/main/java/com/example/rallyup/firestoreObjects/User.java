@@ -47,6 +47,26 @@ public class User {
     }
 
     /**
+     * Constructor of a user mainly used for unit testing
+     * @param email the email of the user
+     * @param firstName the first name of the user
+     * @param lastName the last name of the user
+     * @param id the id of the user
+     * @param phoneNumber the phone number of the user
+     * @param geolocation the boolean for geolaction of the user
+     * @param latlong the geo point of the user
+     */
+    public User(String email, String firstName, String lastName, String id, String phoneNumber, Boolean geolocation, GeoPoint latlong) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+        this.geolocation = geolocation;
+        this.latlong = latlong;
+    }
+
+    /**
      * Gets the email of the user.
      *
      * @return The email of the user.

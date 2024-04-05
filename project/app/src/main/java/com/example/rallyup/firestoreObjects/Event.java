@@ -175,6 +175,22 @@ public class Event {
      * @param eventTime The new time of the event.
      */
     public void setEventTime(String eventTime) {
+
+        // check if the time is a valid integer
+        int timeValue;
+
+        // turn string into integer to validate
+        try {
+            timeValue = Integer.parseInt(eventTime);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Time must be a valid integer value");
+        }
+
+        // check if the time is within the valid range (0 - 2400)
+        if (timeValue < 0 || timeValue > 2400) {
+            throw new IllegalArgumentException("Time must be between 0 and 2400");
+        }
+
         this.eventTime = eventTime;
     }
 
@@ -203,9 +219,14 @@ public class Event {
      * @param currentlySignedUp The new amount of people currently signed up to attend this event.
      */
     public void setCurrentlySignedUp(int currentlySignedUp) {
+        if (currentlySignedUp < 0) {
+            throw new IllegalArgumentException("Number of people signed up cannot be negative.");
+        }
+        if (currentlySignedUp > signUpLimit) {
+            throw new IllegalArgumentException("Number of people signed up cannot exceed the sign-up limit.");
+        }
         this.currentlySignedUp = currentlySignedUp;
     }
-
     /**
      * Gets the amount of people currently signed up to the event.
      *
