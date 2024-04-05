@@ -42,11 +42,13 @@ public class splashScreen extends AppCompatActivity{
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     // FCM SDK (and your app) can post notifications.
+                    // set the wantNotifications of the user to true
                 } else {
                     // TODO: Inform user that that your app will not show notifications.
                     Toast.makeText(getBaseContext(),
                             "Notifications denied!",
                             Toast.LENGTH_SHORT).show();
+                    // Set the wantNotifications of the user to false
                 }
             });
 
@@ -56,6 +58,9 @@ public class splashScreen extends AppCompatActivity{
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
                     PackageManager.PERMISSION_GRANTED) {
                 // FCM SDK (and your app) can post notifications.
+                // set the wantNotifications of the user to true
+                // (just in case if they allowed notifications in the settings
+                // and not from the notification permission dialog)
             } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                 // TODO: display an educational UI explaining to the user the features that will be enabled
                 //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
@@ -113,12 +118,12 @@ public class splashScreen extends AppCompatActivity{
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 if (!task.isSuccessful()){
-                    Log.w("FirebaseMessaging - Splash", "Fetching FCM Token Failed!", task.getException());
+                    Log.w("FirebaseMessaging - SplashScreen", "Fetching FCM Token Failed!", task.getException());
                     return;
                 }
                 String token = task.getResult();
                 String msg = String.format("Token retrieved: " + token);
-                Log.d("FirebaseMessaging - Splash", msg);
+                Log.d("FirebaseMessaging - SplashScreen", msg);
                 //Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });

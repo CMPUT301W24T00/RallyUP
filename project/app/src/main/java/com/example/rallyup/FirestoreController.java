@@ -12,11 +12,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.Registration;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.example.rallyup.firestoreObjects.User;
@@ -728,8 +730,13 @@ public class FirestoreController {
      */
     public void getPosterByEventID(String posterPath, Context context, ImageView poster) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(posterPath);
+//        Glide.with(context)
+//                .load(storageReference)
+//                .into(poster);
         Glide.with(context)
                 .load(storageReference)
+                .diskCacheStrategy(DiskCacheStrategy.NONE) // <= ADDED
+                .skipMemoryCache(true) // <= ADDED
                 .into(poster);
     }
 
@@ -739,11 +746,13 @@ public class FirestoreController {
             @Override
             public void onSuccess(Void unused) {
                 // File deleted successfully
+                Log.w("FirestoreController", "File deleted from " + filePath);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // OH NO ERROR!
+                Log.e("FirestoreController", "File unable to be deleted: ", e);
             }
         });
     }
