@@ -17,20 +17,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminEventAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminProfilesAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/app/src/main/res/drawable/admin_trash.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/app/src/main/res/values/refs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseEventsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseEventsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseProfiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseProfiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeBrowseEventsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/attendees/AttendeeBrowseEventsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_browse_events.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_browse_events.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_browse_profiles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_browse_profiles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/admin_events_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/admin_events_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/main/res/layout/admin_profiles_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/res/layout/admin_profiles_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userClassUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/userClassUnitTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,11 +70,11 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "Merging docTesting",
+    "git-widget-placeholder": "docTesting",
     "last_opened_file_path": "C:/Users/reima/School/Cmput 301/Labs/ListyStore"
   }
 }]]></component>
-  <component name="RunManager" selected="Android Instrumented Tests.Tests in 'com.example.rallyup'">
+  <component name="RunManager" selected="Gradle.Tests in 'com.example.rallyup'">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />
       <option name="DEPLOY" value="true" />
@@ -217,6 +204,30 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tests in 'com.example.rallyup'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;com.example.rallyup.*&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration name="attendanceClassTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -265,30 +276,6 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="firestoreControllerClassUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":app:testDebugUnitTest" />
-            <option value="--tests" />
-            <option value="&quot;com.example.rallyup.firestoreControllerClassUnitTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
     <configuration name="userClassUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -315,11 +302,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'com.example.rallyup'" />
         <item itemvalue="Android Instrumented Tests.Tests in 'com.example.rallyup'" />
         <item itemvalue="Gradle.userClassUnitTest" />
         <item itemvalue="Gradle.attendanceClassTest" />
         <item itemvalue="Gradle.eventClassUnitTest" />
-        <item itemvalue="Gradle.firestoreControllerClassUnitTest" />
       </list>
     </recent_temporary>
   </component>
