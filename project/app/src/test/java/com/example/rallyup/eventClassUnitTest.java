@@ -143,7 +143,7 @@ public class eventClassUnitTest {
     @Test
     public void testGetEventShareQRRef () {
         Event testEvent = mockEvent();
-        assertEquals("/images/ShareQR/048ACC2B534046668F6BAA2EA43F170C", testEvent.getShareQRRef());
+        assertEquals("/images/ShareQR/048ACC2B534046668F6BAA2EA43F170C", testEvent.getShareQRId());
     }
 
     /**
@@ -152,7 +152,7 @@ public class eventClassUnitTest {
     @Test
     public void testGetEventCheckInQRRef() {
         Event testEvent = mockEvent();
-        assertEquals("/images/CheckInQR/048ACC2B534046668F6BAA2EA43F170C", testEvent.getCheckInQRRef());
+        assertEquals("/images/CheckInQR/048ACC2B534046668F6BAA2EA43F170C", testEvent.getCheckInQRId());
     }
 
     /**
@@ -279,8 +279,8 @@ public class eventClassUnitTest {
     @Test
     public void testSetShareQRRef() {
         Event testEvent = mockEvent();
-        testEvent.setShareQRRef("/images/ShareQR/139ACC2B534046668F6BAA2EA43F170C");
-        assertEquals("/images/ShareQR/139ACC2B534046668F6BAA2EA43F170C", testEvent.getShareQRRef());
+        testEvent.setShareQRId("/images/ShareQR/139ACC2B534046668F6BAA2EA43F170C");
+        assertEquals("/images/ShareQR/139ACC2B534046668F6BAA2EA43F170C", testEvent.getShareQRId());
     }
 
     /**
@@ -289,8 +289,8 @@ public class eventClassUnitTest {
     @Test
     public void testSetCheckInQRRef() {
         Event testEvent = mockEvent();
-        testEvent.setCheckInQRRef("/images/CheckInQR/139ACC2B534046668F6BAA2EA43F170C");
-        assertEquals("/images/CheckInQR/139ACC2B534046668F6BAA2EA43F170C", testEvent.getCheckInQRRef());
+        testEvent.setCheckInQRId("/images/CheckInQR/139ACC2B534046668F6BAA2EA43F170C");
+        assertEquals("/images/CheckInQR/139ACC2B534046668F6BAA2EA43F170C", testEvent.getCheckInQRId());
     }
 
     // This method is commented out since it's private and not accessible for testing.

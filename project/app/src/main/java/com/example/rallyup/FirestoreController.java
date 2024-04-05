@@ -682,8 +682,8 @@ public class FirestoreController {
         data.put("reUseQR", event.getReUseQR());
         data.put("newQR", event.getNewQR());
         data.put("posterRef", event.getPosterRef());
-        data.put("shareQRRef", event.getShareQRRef());
-        data.put("checkInQRRef", event.getCheckInQRRef());
+        data.put("shareQRRef", event.getShareQRId());
+        data.put("checkInQRRef", event.getCheckInQRId());
         data.put("userID", event.getOwnerID());
         data.put("eventID", event.getEventID());
 
