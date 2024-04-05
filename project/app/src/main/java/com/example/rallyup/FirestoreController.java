@@ -168,9 +168,11 @@ public class FirestoreController {
 
             List<Event> eventList = new ArrayList<>();
             for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                Event thisEvent;
-                thisEvent = documentSnapshot.toObject(Event.class);
-                eventList.add(thisEvent);
+                if(documentSnapshot.exists()){
+                    Event thisEvent;
+                    thisEvent = documentSnapshot.toObject(Event.class);
+                    eventList.add(thisEvent);
+                }
             }
             callbackListener.onGetEvents(eventList);
 
@@ -271,15 +273,25 @@ public class FirestoreController {
             List<Event> EventList = new ArrayList<>();
             for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                 Event thisEvent;
-                thisEvent = documentSnapshot.toObject(Event.class);
-                String eDate = thisEvent.getEventDate();
-                if(eDate != null){
-                    if(Integer.parseInt(eDate.substring(0, 4)) >= year){
-                        if(Integer.parseInt(eDate.substring(4, 6)) >= month){
+                String eventName = documentSnapshot.getString("eventName");
+                if(eventName != null) {
+                    thisEvent = documentSnapshot.toObject(Event.class);
+                    String eDate = thisEvent.getEventDate();
+                    if (Integer.parseInt(eDate.substring(0, 4)) >= year) {
+                        if (Integer.parseInt(eDate.substring(4, 6)) >= month) {
                             EventList.add(thisEvent);
                         }
                     }
                 }
+                //thisEvent = documentSnapshot.toObject(Event.class);
+                //String eDate = thisEvent.getEventDate();
+                //if(eDate != null){
+                    //if(Integer.parseInt(eDate.substring(0, 4)) >= year){
+                        //if(Integer.parseInt(eDate.substring(4, 6)) >= month){
+                            //EventList.add(thisEvent);
+                        //}
+                    //}
+                //}
             }
             callbackListener.onGetEvents(EventList);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
