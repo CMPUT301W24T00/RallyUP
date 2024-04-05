@@ -581,13 +581,16 @@ public class FirestoreController {
      * @param callbackListener a listener for the firestore
      */
     public void getCheckedInUserIDs(String eventID, FirestoreCallbackListener callbackListener) {
-        Query query = eventRegistrationRef.whereEqualTo("eventID", eventID);
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID); //eventRegistrationRef.whereEqualTo("eventID", eventID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<String> userList = new ArrayList<>();
             for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                Registration aRegistration;
-                aRegistration = documentSnapshot.toObject(Registration.class);
-                String aUserID = aRegistration.getUserID();
+                Attendance attendance;
+                attendance = documentSnapshot.toObject(Attendance.class);
+                String aUserID = attendance.getUserID();
+                //Registration aRegistration;
+                //aRegistration = documentSnapshot.toObject(Registration.class);
+                //String aUserID = aRegistration.getUserID();
                 if(aUserID != null){
                     userList.add(aUserID);
                 }
@@ -609,6 +612,7 @@ public class FirestoreController {
                 for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     User aUser;
                     aUser = documentSnapshot.toObject(User.class);
+                    aUser.setId(documentSnapshot.getId());
                     if(aUser.getFirstName() != null){
                         users.add(aUser);
                     }
@@ -743,11 +747,6 @@ public class FirestoreController {
             // ...
         });
     }
-
-//    public void downloadFile(, StorageReference storageReference){
-//
-//    }
-
 
     /**
      * This method retrieves the poster of an event

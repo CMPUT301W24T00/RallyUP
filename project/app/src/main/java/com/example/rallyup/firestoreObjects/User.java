@@ -36,11 +36,14 @@ public class User {
      * @param lastName the last name of the usr
      * @param id the id of the user
      */
-    public User(String email, String firstName, String lastName, String id) {
+    public User(String email, String firstName, String lastName, String id, String phoneNumber, Boolean geolocation, GeoPoint geoPoint) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
+        this.phoneNumber = phoneNumber;
+        this.geolocation = geolocation;
+        this.latlong = geoPoint;
     }
 
     /**

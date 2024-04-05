@@ -151,6 +151,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         // Setting onClickListener for the button to view attendees list
         viewEventAttendeesList.setOnClickListener(view -> {
             Intent intent12 = new Intent(getBaseContext(), EventAttendeesInfoActivity.class);
+            intent12.putExtra("eventID", eventID);
             startActivity(intent12);
         });
 
