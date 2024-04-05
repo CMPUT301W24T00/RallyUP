@@ -163,7 +163,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
     public void switchPage() {
         if(checkIn) {
             if(verified){
-                fc.updateAttendance(scannedEvent, userID, true, this);
+                fc.updateAttendance(scannedEvent, userID,  this);
                 Intent intent;
                 intent = new Intent(AttendeeMyEventsActivity.this, AttendeeHomepageActivity.class);
                 startActivity(intent);

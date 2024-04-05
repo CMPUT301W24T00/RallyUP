@@ -373,16 +373,15 @@ public class FirestoreController {
      * if an instance is not found one is created
      * @param eventID the event being checked in to
      * @param userID the user checking in
-     * @param verified an Boolean representing whether or not this user signed up for this event
      * @param callbackListener a listener for the firestore
      */
-    public  void updateAttendance(String eventID, String userID, Boolean verified, FirestoreCallbackListener callbackListener){
+    public  void updateAttendance(String eventID, String userID, FirestoreCallbackListener callbackListener){
         Query query = eventAttendanceRef.whereEqualTo("userID", userID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             if(queryDocumentSnapshots.isEmpty()){ // if the user doesn't have any rows in the eventAttendanceRef table right now we make a new instance for this event
                 Log.d("GETCHECKINS", "getCheckIns: couldn't find anything");
                 int checkIns = 1;
-                Attendance checkIn = new Attendance(verified, eventID, checkIns, userID);
+                Attendance checkIn = new Attendance(eventID, checkIns, userID);
                 addAttendance(checkIn);
             }
             else {
@@ -391,7 +390,7 @@ public class FirestoreController {
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     Attendance thisAttendance;
                     thisAttendance = documentSnapshot.toObject(Attendance.class);
-                    if (thisAttendance.getEventID().equals(eventID) && thisAttendance.isAttendeeVerified() == verified) { // if the specific eventID and verified mode is found
+                    if (thisAttendance.getEventID().equals(eventID)) { // if the specific eventID is found
                         documentSnapshot.getReference().update("timesCheckedIn", thisAttendance.getTimesCheckedIn()+1);
                         found = true;
                     }
@@ -399,7 +398,7 @@ public class FirestoreController {
 
                 if(!found){ // if we were unable to find it we create a new instance for this event attendance
                     int checkIns = 1;
-                    Attendance checkIn = new Attendance(verified, eventID, checkIns, userID);
+                    Attendance checkIn = new Attendance(eventID, checkIns, userID);
                     addAttendance(checkIn);
                 }
             }
@@ -509,7 +508,6 @@ public class FirestoreController {
         Query query = eventRegistrationRef.whereEqualTo("userID", userID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             if(queryDocumentSnapshots.isEmpty()){ // if the user doesn't have any rows in the eventRegistration table right now we make a new instance for this event
-                Log.d("NEWREGISTRATION", "getRegistration: couldn't find anything");
                 Registration register = new Registration(eventID, userID);
                 //upload to firebase
                 addRegistration(register);
@@ -590,9 +588,6 @@ public class FirestoreController {
                 Attendance attendance;
                 attendance = documentSnapshot.toObject(Attendance.class);
                 String aUserID = attendance.getUserID();
-                //Registration aRegistration;
-                //aRegistration = documentSnapshot.toObject(Registration.class);
-                //String aUserID = aRegistration.getUserID();
                 if(aUserID != null){
                     userList.add(aUserID);
                 }
@@ -702,7 +697,6 @@ public class FirestoreController {
      */
     public void addAttendance(Attendance attendance) {
         HashMap<String, Object> data = new HashMap<>();
-        data.put("attendeeVerified", attendance.isAttendeeVerified());
         data.put("eventID", attendance.getEventID());
         data.put("timesCheckedIn", attendance.getTimesCheckedIn());
         data.put("userID", attendance.getUserID());
@@ -742,6 +736,7 @@ public class FirestoreController {
 
         reference.putFile(image)
                 .addOnFailureListener(exception -> {
+                    Log.e("FirestoreController", "Error uploading image: " + exception);
                     // Handle unsuccessful uploads
                 })
                 .addOnSuccessListener(taskSnapshot -> {
@@ -768,6 +763,7 @@ public class FirestoreController {
         UploadTask uploadTask = sReference.putBytes(data);
         uploadTask.addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
+            Log.e("FirestoreController", "Error uploading image: " + exception);
         }).addOnSuccessListener(taskSnapshot -> {
             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
             // ...
@@ -788,6 +784,7 @@ public class FirestoreController {
         UploadTask uploadTask = sReference.putBytes(data);
         uploadTask.addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
+            Log.e("FirestoreController", "Error uploading image: " + exception);
         }).addOnSuccessListener(taskSnapshot -> {
             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
             // ...
@@ -804,6 +801,9 @@ public class FirestoreController {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(posterPath);
         Glide.with(context)
                 .load(storageReference)
+                .diskCacheStrategy(DiskCacheStrategy.NONE) // <= ADDED
+                .skipMemoryCache(true) // <= ADDED
+                .error(R.drawable.ic_launcher_foreground)
                 .into(poster);
     }
 }

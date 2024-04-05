@@ -22,6 +22,7 @@ import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ManageMilestoneDialog;
 
@@ -79,16 +80,22 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
 
     @Override
     public void onGetAttendants(List<Attendance> attendantList) {
-        TextView eventVerifiedAttendeesView = findViewById(R.id.verifed_attendees);
+        //TextView eventVerifiedAttendeesView = findViewById(R.id.verifed_attendees);
         TextView eventTotalAttendees = findViewById(R.id.total_attendees);
 
-        eventTotalAttendees.setText(attendantList.size() + " total attendees");
+        eventTotalAttendees.setText(attendantList.size() + " checked-in attendees");
 
-        int count = 0;
-        for (Attendance attendance : attendantList) {
-            if (attendance.isAttendeeVerified()) count++;
-        }
-        eventVerifiedAttendeesView.setText(count + " verified attendees");
+//        int count = 0;
+//        for (Attendance attendance : attendantList) {
+//            if (attendance.isAttendeeVerified()) count++;
+//        }
+//        eventVerifiedAttendeesView.setText(count + " verified attendees");
+    }
+
+    @Override
+    public void onGetRegisteredAttendants(List<Registration> registrationList){
+        TextView eventVerifiedAttendeesView = findViewById(R.id.verifed_attendees);
+        eventVerifiedAttendeesView.setText(registrationList.size() + " registered attendees");
     }
 
     @Override
@@ -141,6 +148,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         FirestoreController fc = FirestoreController.getInstance();
         fc.getEventByID(eventID, this);
         fc.getEventAttendantsByEventID(eventID, this);
+        fc.getRegisteredAttendees(eventID, this);
 
         // Need to implement firebase to get the proper count of attendees here
         //setProgressOfEvent(progressBar,70, 100);

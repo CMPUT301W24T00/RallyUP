@@ -189,7 +189,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     public void switchPage() {
         if(checkIn) {
             if(verified){
-                fc.updateAttendance(scannedEvent, userID, true, this);
+                fc.updateAttendance(scannedEvent, userID, this);
                 Toast.makeText(this, "Check-In Successful! Enjoy the event!", Toast.LENGTH_LONG).show();
             }
 

@@ -17,6 +17,7 @@ import com.example.rallyup.FirestoreController;
 import com.example.rallyup.MainActivity;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.notification.NotificationObject;
 
 import androidx.annotation.Nullable;
@@ -71,16 +72,22 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
      */
     @Override
     public void onGetAttendants(List<Attendance> attendantList) {
-        TextView eventVerifiedAttendeesView = findViewById(R.id.ProgressBarEventAttendeesNumberView);
+        //TextView eventVerifiedAttendeesView = findViewById(R.id.ProgressBarEventAttendeesNumberView);
         TextView eventTotalAttendees = findViewById(R.id.ProgressBarEventTotalAttendeesView);
 
         eventTotalAttendees.setText(attendantList.size() + " total attendees");
 
-        int count = 0;
-        for (Attendance attendance : attendantList) {
-            if (attendance.isAttendeeVerified()) count++;
-        }
-        eventVerifiedAttendeesView.setText(count + " verified attendees");
+//        int count = 0;
+//        for (Attendance attendance : attendantList) {
+//            if (attendance.isAttendeeVerified()) count++;
+//        }
+//        eventVerifiedAttendeesView.setText(count + " verified attendees");
+    }
+
+    @Override
+    public void onGetRegisteredAttendants(List<Registration> registrationList){
+        TextView eventVerifiedAttendeesView = findViewById(R.id.verifed_attendees);
+        eventVerifiedAttendeesView.setText(registrationList.size() + " registered attendees");
     }
 
     /*
@@ -138,6 +145,8 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         FirestoreController fc = FirestoreController.getInstance();
         fc.getEventByID("Actual last test before pushing lol", this);
         fc.getEventAttendantsByEventID("Actual last test before pushing lol", this);
+        fc.getRegisteredAttendees("Actual last test before pushing lol", this);
+
 
         eventViewAttendees.setOnClickListener(new View.OnClickListener() {
             @Override

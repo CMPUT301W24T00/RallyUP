@@ -140,7 +140,6 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         // Get the event ID only works IF it has been passed to this activity
         // WHICH should be from OrganizerEventDetailsActivity
         // And that activity receives its eventID from OrganizerEventListActivity
-        String eventID = getIntent().getStringExtra("eventID");
         // Then call the FirestoreController to do something
         // (probably to retrieve the lat longs of users)
         fc.getEventByID(eventID, this);
@@ -163,6 +162,7 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), OrganizerEventDetailsActivity.class);
+                intent.putExtra("key", eventID);
                 startActivity(intent);
             }
         });
