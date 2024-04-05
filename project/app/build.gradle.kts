@@ -38,6 +38,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     // Getting Google SDK services for maps
     implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation("com.google.maps.android:android-maps-utils:3.8.0")
 
     // implementation("org.testng:testng:6.9.6")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
@@ -62,6 +63,10 @@ dependencies {
 
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
+    val fragmentVersion = "1.6.2"
+
+    // Java language implementation
+    implementation("androidx.fragment:fragment:$fragmentVersion")
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")

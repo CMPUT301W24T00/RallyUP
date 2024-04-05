@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
@@ -116,7 +117,6 @@ public class FirestoreController {
 
         data.put("image", qrImgRef.getPath());
         data.put("checkIn", qrCode.isCheckIn());
-        data.put("qrID", qrCode.getQrId());
         qrRef.document(qrCode.getQrId()).set(data);
     }
 
@@ -130,6 +130,7 @@ public class FirestoreController {
         QrCode newQr = new QrCode();
         qrRef.add(newQr).addOnSuccessListener(documentReference -> {
             newQr.setQrId(documentReference.getId());
+
             callbackListener.onGetQrCode(newQr, jobId);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
@@ -208,14 +209,11 @@ public class FirestoreController {
      * @param callbackListener a listener for the firestore
      */
     public void getEventByQRID(String eventQRID, FirestoreCallbackListener callbackListener) {
-        Log.d("Controller", "getEventByQRID: " +eventQRID);
-        Query query = qrRef.whereEqualTo("qrID", eventQRID);
-        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+        qrRef.document(eventQRID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
                 QrCode thisQR;
                 thisQR = documentSnapshot.toObject(QrCode.class);
-                Log.d("Controller", "getEventByQRID: " + thisQR.getEventID());
-
                 String eventID = thisQR.getEventID();
                 callbackListener.onGetEventID(eventID);
             }
@@ -316,6 +314,7 @@ public class FirestoreController {
                 Registration thisRegistration;
                 thisRegistration = documentSnapshot.toObject(Registration.class);
                 String eventID = thisRegistration.getEventID();
+                // might need input validation here to make sure the event still exists ****
                 if(eventID != null){
                     eventIDs.add(eventID);
                 }
@@ -504,7 +503,8 @@ public class FirestoreController {
                     aRegistration = documentSnapshot.toObject(Registration.class);
                     if (aRegistration.getEventID().equals(eventID)) { // if the specific eventID is found
                         found = true;
-                        Toast.makeText(context, "You have already registered for this event!", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, "You have already registered for this event!", Toast.LENGTH_LONG).show();
+                        // need to go through and fix messages after databases have been cleaned up
                     }
                 }
                 if(!found){ // if we were unable to find it we create a new instance for this event registration
@@ -633,7 +633,7 @@ public class FirestoreController {
             for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                 Registration aRegistration;
                 aRegistration = documentSnapshot.toObject(Registration.class);
-                Log.d("CONTROLLER", "getCheckedInAttendees: " + aRegistration.getEventID());
+                //Log.d("CONTROLLER", "getCheckedInAttendees: " + aRegistration.getEventID());
                 if(aRegistration.getUserID() != null){
                     registeredUsers.add(aRegistration);
                 }
@@ -765,9 +765,6 @@ public class FirestoreController {
         });
     }
 
-//    public void downloadFile(, StorageReference storageReference){
-//
-//    }
 
 
     /**

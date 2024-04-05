@@ -3,6 +3,7 @@ package com.example.rallyup.uiReference.organizers;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -48,11 +49,13 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     EditText editNotificationBody;
     ProgressBar progressBar;
     String eventID;
+    Event event;
 
 
 
     @Override
     public void onGetEvent(Event event) {
+        this.event = event;
         TextView eventView = findViewById(R.id.org_event_details_name);
         TextView eventTime = findViewById(R.id.org_event_details_date);
         TextView eventLocation = findViewById(R.id.org_event_details_location);
@@ -160,6 +163,8 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         // Setting onClickListener for the button to share the event QR code to other apps
         shareButton.setOnClickListener(view -> {
             // ideally where the fragment should pop-up
+            new shareFragment();
+            shareFragment.newInstance(eventID).show(getSupportFragmentManager(), "Add/Edit City");
         });
 
         milestoneEditButton.setOnClickListener(v -> {

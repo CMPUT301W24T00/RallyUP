@@ -127,8 +127,6 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         } else {
             geolocationCheck.setChecked(user.getGeolocation());
         }
-        fc.getPosterByEventID("/images/ProfilePicture/" + user.getId(), this, profilePicture);
-        profilePictureTextView.setVisibility(View.GONE);
     }
 
     /**

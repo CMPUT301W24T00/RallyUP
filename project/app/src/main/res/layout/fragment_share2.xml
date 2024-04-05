@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".uiReference.organizers.shareFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/CheckInTextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="69dp"
+                android:layout_marginEnd="52dp"
+                android:src="@android:drawable/sym_action_chat"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/CheckInEmailButton"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/shareEventInfoQRCode"
+                android:layout_width="176dp"
+                android:layout_height="146dp"
+                android:layout_marginStart="126dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="127dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.611"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/shareEventInfoText" />
+
+            <ImageButton
+                android:id="@+id/shareEventInfoEmailButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="32dp"
+                android:src="@android:drawable/ic_dialog_email"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintStart_toEndOf="@+id/shareEventInfoTextButton"
+                app:layout_constraintTop_toBottomOf="@+id/shareEventInfoQRCode" />
+
+            <ImageButton
+                android:id="@+id/shareEventInfoTextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="69dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="52dp"
+                android:layout_marginBottom="32dp"
+                android:src="@android:drawable/sym_action_chat"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintEnd_toStartOf="@+id/shareEventInfoEmailButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/shareEventInfoQRCode" />
+
+            <ImageButton
+                android:id="@+id/shareEventInfoDownloadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="49dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="74dp"
+                android:layout_marginBottom="32dp"
+                android:src="@android:drawable/ic_menu_save"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/shareEventInfoEmailButton"
+                app:layout_constraintTop_toBottomOf="@+id/shareEventInfoQRCode" />
+
+            <TextView
+                android:id="@+id/shareEventInfoText"
+                android:layout_width="209dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="101dp"
+                android:layout_marginTop="74dp"
+                android:layout_marginEnd="101dp"
+                android:layout_marginBottom="11dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Share QR Code"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/shareEventInfoQRCode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="217dp"
+                android:layout_height="39dp"
+                android:layout_marginStart="97dp"
+                android:layout_marginEnd="97dp"
+                android:layout_marginBottom="14dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Check-In QR Code"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/imageView7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="172dp"
+                android:layout_height="138dp"
+                android:layout_marginStart="119dp"
+                android:layout_marginEnd="120dp"
+                android:layout_marginBottom="23dp"
+                app:layout_constraintBottom_toTopOf="@+id/CheckInTextButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageButton
+                android:id="@+id/CheckInEmailButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:layout_marginEnd="49dp"
+                android:src="@android:drawable/ic_dialog_email"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/checkInDownloadButton"
+                app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+
+            <ImageButton
+                android:id="@+id/checkInDownloadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:layout_marginEnd="73dp"
+                android:src="@android:drawable/ic_menu_save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
