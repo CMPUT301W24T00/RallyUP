@@ -18,7 +18,7 @@ public class userClassUnitTest {
      * @return newMock a User object
      */
     private User mockUser() {
-        User newMock = new User("test@gmail.com", "bob", "david", "123");
+        User newMock = new User("test@gmail.com", "bob", "david", "123", "0129873456", true, null);
         return newMock;
     }
 
