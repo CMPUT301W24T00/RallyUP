@@ -199,6 +199,9 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         // Request permission
         // https://www.geeksforgeeks.org/android-how-to-request-permissions-in-android-application/
 
+
+
+        // MODIFY AND MOVE TO QR CHECK IN
         // Might need to look into this:
         // Definitely need to look into it
         // https://stackoverflow.com/questions/40142331/how-to-request-location-permission-at-runtime
@@ -349,6 +352,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                 // This is assuming we have a user object that I have access to, and has
                 // proper setters and getters for its data
 
+
+                // PROBABLY REMOVE THIS!!!
                 // If the geolocation is true then ask for permission
                 if (geolocationCheck.isChecked()) {
                     // If the User allows us to geolocate them, then update the geopoint appropriately
@@ -359,6 +364,8 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
                     fc.updateUserGeoPointFields(userID, USER_GEOPOINT_TAG, null, AttendeeUpdateActivity.this);
                     Toast.makeText(AttendeeUpdateActivity.this, "GeoPoint NULL", Toast.LENGTH_SHORT).show();
                 }
+
+
                 // Where we upload the data to the Firebase
                 updateUserInformation(userID);
 

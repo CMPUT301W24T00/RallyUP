@@ -179,6 +179,7 @@ public class Event {
         // check if the time is a valid integer
         int timeValue;
 
+
         // turn string into integer to validate
         try {
             timeValue = Integer.parseInt(eventTime);
