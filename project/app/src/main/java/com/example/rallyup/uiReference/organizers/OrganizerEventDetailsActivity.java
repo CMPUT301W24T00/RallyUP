@@ -6,6 +6,7 @@ import androidx.core.app.NotificationCompat;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,13 +23,22 @@ import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.User;
 import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ManageMilestoneDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 
 /**
@@ -79,6 +89,9 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         TextView eventVerifiedAttendeesView = findViewById(R.id.verifed_attendees);
         TextView eventTotalAttendees = findViewById(R.id.total_attendees);
 
+        editNotificationTitle = findViewById(R.id.notification_title);
+        editNotificationBody = findViewById(R.id.notification_details);
+
         eventTotalAttendees.setText(attendantList.size() + " total attendees");
 
         int count = 0;
@@ -86,6 +99,31 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
             if (attendance.isAttendeeVerified()) count++;
         }
         eventVerifiedAttendeesView.setText(count + " verified attendees");
+
+
+//        FirestoreController fc = FirestoreController.getInstance();
+//        if (!editNotificationTitle.getText().toString().isEmpty() && !editNotificationBody.getText().toString().isEmpty()){
+//            fc.getCheckedInUserIDs(attendantList.get(0).getEventID(), this);
+//        }
+    }
+
+    @Override
+    public void onGetUsers(List<User> userList) {
+
+        editNotificationTitle = findViewById(R.id.notification_title);
+        editNotificationBody = findViewById(R.id.notification_details);
+
+        String notificationTitle = editNotificationTitle.getText().toString();
+        String notificationBody = editNotificationBody.getText().toString();
+
+        Intent intent = getIntent();
+        String eventID = intent.getStringExtra("key");
+
+        for (User user : userList){
+            if (user.getWantNotifications()){
+                sendAnnouncement(user.getFcmToken(), notificationTitle, notificationBody, eventID);
+            }
+        }
     }
 
     @Override
@@ -107,21 +145,22 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         Intent intent = getIntent();
         String eventID = intent.getStringExtra("key");
 
-        String notification_channel_ID_milestone =
-                getString(R.string.notification_channel_ID_milestone);
-        String notification_channel_name_milestone =
-                getString(R.string.notification_channel_name_milestone);
-        String notification_channel_description_milestone =
-                getString(R.string.notification_channel_description_milestone);
+        String notification_channel_ID =
+                getString(R.string.notification_channel_ID_default);
+        String notification_channel_name =
+                getString(R.string.notification_channel_name_default);
+        String notification_channel_description=
+                getString(R.string.notification_channel_description_default);
 
-        // Topic for the Announcements of the current Event
-        String topicAnnouncements = eventID + "_announcements";
-
-
+//        notificationObject.createNotificationChannel(
+//                notification_channel_ID_milestone,
+//                notification_channel_name_milestone,
+//                notification_channel_description_milestone,
+//                NotificationCompat.PRIORITY_DEFAULT);
         notificationObject.createNotificationChannel(
-                notification_channel_ID_milestone,
-                notification_channel_name_milestone,
-                notification_channel_description_milestone,
+                notification_channel_ID,
+                notification_channel_name,
+                notification_channel_description,
                 NotificationCompat.PRIORITY_DEFAULT);
 
         orgEventDetailsBackBtn = findViewById(R.id.organizer_details_back_button); // Initializing back button
@@ -167,26 +206,26 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         });
 
         sendNotificationButton.setOnClickListener(v -> {
-            if (!editNotificationBody.getText().toString().equals("") &&
-                    !editNotificationTitle.getText().toString().equals("")){
-
+            if (!editNotificationBody.getText().toString().isEmpty() &&
+                    !editNotificationTitle.getText().toString().isEmpty()){
 
                 // Create a new notification/announcement in the Firebase
                 // Which then if we go to Attendees side of the activities, they should be able
                 // to detect a new notification create for their specific event
                 // Test notification
-                notificationObject.createNotification(
-                        MainActivity.class,
-                        notification_channel_ID_milestone,
-                        editNotificationTitle.getText().toString(),
-                        editNotificationBody.getText().toString(),
-                        (R.drawable.poster1),
-                        0,
-                        NotificationCompat.VISIBILITY_PUBLIC,
-                        NotificationCompat.PRIORITY_DEFAULT,
-                        true,
-                        true,
-                        null);
+//                notificationObject.createNotification(
+//                        MainActivity.class,
+//                        notification_channel_ID_milestone,
+//                        editNotificationTitle.getText().toString(),
+//                        editNotificationBody.getText().toString(),
+//                        (R.drawable.poster1),
+//                        0,
+//                        NotificationCompat.VISIBILITY_PUBLIC,
+//                        NotificationCompat.PRIORITY_DEFAULT,
+//                        true,
+//                        true,
+//                        null);
+                fc.getCheckedInUserIDs(eventID, OrganizerEventDetailsActivity.this);
             } else {
                 Toast toasty = Toast.makeText(OrganizerEventDetailsActivity.this,
                         "Missing title and/or body text.", Toast.LENGTH_SHORT);
@@ -198,19 +237,19 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         // probably like progressBar.getProgress() >= (attendantList.size()/4*attendantList.size()) * 100
         // progressBar.getProgress() >= attendantList.size()/2
         // progressBar.getProgress() >= attendantList.size()3/4
-        // progressBar.getProgress() >= attendatList.size()
+        // progressBar.getProgress() >= attendantList.size()
         if (progressBar.getProgress() >= 30) {
-            notificationObject.createNotification(MainActivity.class,
-                    notification_channel_ID_milestone,
-                    "Milestone Achieved",
-                    String.format(Locale.getDefault(), "We have %d participants!", progressBar.getProgress()),
-                    (R.drawable.poster1),
-                    0,
-                    NotificationCompat.VISIBILITY_PUBLIC,
-                    NotificationCompat.PRIORITY_DEFAULT,
-                    true,
-                    true,
-                    null);
+//            notificationObject.createNotification(MainActivity.class,
+//                    notification_channel_ID_milestone,
+//                    "Milestone Achieved",
+//                    String.format(Locale.getDefault(), "We have %d participants!", progressBar.getProgress()),
+//                    (R.drawable.poster1),
+//                    0,
+//                    NotificationCompat.VISIBILITY_PUBLIC,
+//                    NotificationCompat.PRIORITY_DEFAULT,
+//                    true,
+//                    true,
+//                    null);
         }
     }
 
@@ -240,7 +279,39 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         return month + " " + day + ", " + year;
     }
 
-    private void messageTest(){
+    // TODO:
+    //  1 - Make connection to FCM server that is HTTP V1 compliant
+    //  2 - Make JSON object that follows the proper HTTP V1 format
+
+    private void callAPI(JSONObject jsonObject){
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+        // String url2 follows the legacy/deprecated HTTP format
+        //String url2 = "https://fcm.googleapis.com/v1/projects/cmput301-rallyup/messages:send";
+        String authorization = "Bearer AAAA40qEz7M:APA91bEctcvtfKy3BZ8nW-xISEtyx0EKKEyjsXLlhgH4v_6x2Qu8dgYA2BuHGenmRCrtzV4lPc_AawyGrKcRS5ovXZYHF2dCWGHKVY2jeRpQMICg6DFRf3NCiXXMjkF6x-R9ovq0kU-T";
+        RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .header("Authorization", authorization)
+                .build();
+        client.newCall(request);
+    }
+
+    private void sendAnnouncement(String userFCMTokens, String notificationTitle, String notificationBody, String eventID){
+        try {
+            JSONObject notification =
+                    notificationObject.androidNotificationJSONTest(
+                            userFCMTokens,
+                            notificationTitle,
+                            notificationBody,
+                            eventID,
+                            NotificationObject.ANNOUNCEMENTS);
+            callAPI(notification);
+        } catch (JSONException e){
+            Log.e("OrganizerEventDetailsActivity", "notification JSON object error: ", e);
+        }
 
     }
 }

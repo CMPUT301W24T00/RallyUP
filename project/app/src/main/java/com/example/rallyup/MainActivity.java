@@ -34,13 +34,18 @@ public class MainActivity extends AppCompatActivity {
         // Create your notification channels AS SOON as the App begins
         // Doesn't hurt if you keep recreating new ones
         NotificationObject notificationObject = new NotificationObject(this);
-        notificationObject.createNotificationChannel(getString(R.string.notification_channel_ID_milestone),
-                getString(R.string.notification_channel_description_milestone),
-                getString(R.string.notification_channel_description_milestone),
-                NotificationCompat.PRIORITY_DEFAULT);
-        notificationObject.createNotificationChannel(getString(R.string.notification_channel_ID_announcements),
-                getString(R.string.notification_channel_name_announcements),
-                getString(R.string.notification_channel_description_announcements),
+
+        String notification_channel_ID =
+                getString(R.string.notification_channel_ID_default);
+        String notification_channel_name =
+                getString(R.string.notification_channel_name_default);
+        String notification_channel_description=
+                getString(R.string.notification_channel_description_default);
+
+        notificationObject.createNotificationChannel(
+                notification_channel_ID,
+                notification_channel_name,
+                notification_channel_description,
                 NotificationCompat.PRIORITY_DEFAULT);
 
         Button progressButton = findViewById(R.id.ProgressBarButton);

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
@@ -22,6 +23,8 @@ import org.json.JSONObject;
 public class NotificationObject{
 
     private Context context;
+    public static final String ANNOUNCEMENTS = "announcements";
+    public static final String MILESTONES = "milestones";
 
     /**
      * Constructor of NotificationObject
@@ -227,8 +230,54 @@ public class NotificationObject{
         notificationJSON.put("body", notifBody);
         notificationJSON.put("icon", "res/drawable/rally_up_title_screen.png");
 
-
         return notificationJSON;
+    }
+
+    public JSONObject androidNotificationJSONTest(String token, String notificationTitle, String notificationBody, String eventID, String typeOfNotification) throws JSONException {
+//        {
+//          "message":{
+//              "token":"bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+//              "notification":{
+//                  "title":"FCM Message",
+//                  "body":"This is an FCM notification message!"
+//              }
+//          }
+//        }
+        JSONObject jsonMessage = new JSONObject();
+        JSONObject jsonMessageContents = getJsonObject(token, notificationTitle, notificationBody, eventID, typeOfNotification);
+
+        // {"message": {"token":"token...", "notification":{"title":"notificationTitle", "body":notificationBody"}}}
+        jsonMessage.put("message", jsonMessageContents);
+
+        return jsonMessage;
+    }
+
+    @NonNull
+    private static JSONObject getJsonObject(String token, String notificationTitle, String notificationBody, String eventID, String typeOfNotification) throws JSONException {
+        JSONObject jsonMessageContents = new JSONObject();
+        JSONObject jsonNotification = new JSONObject();
+        JSONObject jsonEventID = new JSONObject();
+        // token is the FCM token of the user that we want to target
+        // {
+        // "title":"notificationTitle",
+        // "body":"notificationBody"
+        // }
+        jsonNotification.put("title", notificationTitle);
+        jsonNotification.put("body", notificationBody);
+
+        // {
+        // "token":"token(from arg)",
+        // "notification":{"title":"notificationTitle", "body":"notificationBody"},
+        // "data":{"eventID":"eventID..."}
+        // }
+        jsonMessageContents.put("token", token);
+        jsonMessageContents.put("notification", jsonNotification);
+        // Custom data key:value pair, which we will use our eventID and string to determine type of notification
+        jsonEventID.put("eventID", eventID);
+        jsonEventID.put("typeOfNotification", typeOfNotification);
+        jsonMessageContents.put("data", jsonEventID);
+
+        return jsonMessageContents;
     }
 
 }

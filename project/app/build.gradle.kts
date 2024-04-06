@@ -64,6 +64,9 @@ dependencies {
 
     // Google FCM Notification
     implementation("com.google.firebase:firebase-messaging")
+    // OkHTTP for talking to Firebase servers for Notifications
+    // Version 4.12.0 is most recent
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
 
     // implementation("org.testng:testng:6.9.6")

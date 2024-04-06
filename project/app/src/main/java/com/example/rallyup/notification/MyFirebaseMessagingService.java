@@ -11,6 +11,7 @@ import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.uiReference.attendees.AttendeeEventDetails;
+import com.example.rallyup.uiReference.organizers.OrganizerEventDetailsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -61,10 +62,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         if (!message.getData().isEmpty()){
             Log.d(TAG, "Message data payload: " + message.getData());
             // If the data "topic" "eventID" == "eventID_announcements" then bring the user
-            if(Objects.equals(message.getData().get("topic"), message.getData().get("eventID") + "_announcements")){
+            if(Objects.equals("announcements", message.getData().get("typeOfNotification"))){
                 Intent intent = new Intent(getBaseContext(), AttendeeEventDetails.class);
                 intent.putExtra("key", message.getData().get("eventID"));
                 startActivity(intent);
+
+            } else if (Objects.equals("milestones", message.getData().get("typeOfNotification"))) {
+                Intent intent = new Intent(getBaseContext(), OrganizerEventDetailsActivity.class);
+                intent.putExtra("key", message.getData().get("eventID"));
+                startActivity(intent);
+
+            } else {
+                Log.w(TAG, "Message did not have valid typeOfNotification value!");
+                Toast.makeText(getBaseContext(), "Invalid type of notification", Toast.LENGTH_SHORT).show();
             }
 
         }

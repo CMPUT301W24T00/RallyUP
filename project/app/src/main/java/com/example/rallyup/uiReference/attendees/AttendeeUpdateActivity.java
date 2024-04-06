@@ -303,7 +303,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         fc.getUserByID(userID, this);
 
         //Toast.makeText(getBaseContext(), userID, Toast.LENGTH_SHORT).show();
-        
+
         // Edit image dialog
         editImageButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.rallyup.R;
-//import com.example.rallyup.notification.MyFirebaseMessagingService;
 import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
 import com.example.rallyup.uiReference.organizers.OrganizerEventListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -72,6 +71,8 @@ public class splashScreen extends AppCompatActivity{
             }
         }
     }
+
+    // TODO: For 6 April 2024 - If notificationPermissions allowed -> user.setWantNotifications(true);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

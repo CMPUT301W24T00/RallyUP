@@ -657,6 +657,8 @@ public class FirestoreController {
     public void createUserID(final OnCompleteListener<DocumentReference> onCompleteListener) {
         usersRef.add(new User())
                 .addOnCompleteListener(onCompleteListener);
+
+        // Should we initialize the user ID as well here?
     }
 
     /**

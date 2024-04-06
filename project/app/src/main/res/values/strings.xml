@@ -42,9 +42,13 @@
     <string name="notification_channel_ID_announcements">
         notification_channel_ID_announcements
     </string>
+    <string name="notification_channel_ID_default">
+        notification_channel_ID_default
+    </string>
     <!-- Notification Name in Settings that's User Visible-->
     <string name="notification_channel_name_milestone">Milestone Notifications</string>
     <string name="notification_channel_name_announcements">Announcements Notifications</string>
+    <string name="notification_channel_name_default">Notifications in General</string>
     <!-- Notification Description in Settings that's User Visible-->
     <string name="notification_channel_description_milestone">
         Notifications for Organizers when achieved certain milestones
@@ -52,7 +56,9 @@
     <string name="notification_channel_description_announcements">
         Notifications that Organizers get to send out as announcements
     </string>
-
+    <string name="notification_channel_description_default">
+        Notifications from this app may come from Organizers or Events.
+    </string>
     <string name="qr_hint">SCAN QR CODE</string>
     <string name="qr_hint_2">CHECK INTO EVENT</string>
     <string name="qr_main_button">Scan</string>

@@ -95,7 +95,7 @@
         <!--<service android:name="com.example.rallyup.notification.MyFirebaseMessagingService" /> -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/notification_channel_ID_announcements"
+            android:value="@string/notification_channel_ID_default"
             />
 
     </application>
