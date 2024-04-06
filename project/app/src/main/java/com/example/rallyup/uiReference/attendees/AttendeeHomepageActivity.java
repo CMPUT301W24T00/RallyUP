@@ -1,8 +1,9 @@
 package com.example.rallyup.uiReference.attendees;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -74,6 +75,33 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         fc.getVerified(scannedEvent, userID, this);
     }
 
+
+    private void requestLocationPermissions() {
+        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                    Boolean fineLocationGranted = result.getOrDefault(
+                            Manifest.permission.ACCESS_FINE_LOCATION, false);
+                    Boolean coarseLocationGranted = result.getOrDefault(
+                            Manifest.permission.ACCESS_COARSE_LOCATION, false);
+
+                    if (fineLocationGranted != null && fineLocationGranted) {
+                        // Fine location permission granted
+                        Log.d("AttendeeUpdateActivity", "Fine location permission granted");
+                    } else if (coarseLocationGranted != null && coarseLocationGranted) {
+                        // Coarse location permission granted
+                        Log.d("AttendeeUpdateActivity", "Coarse location permission granted");
+                    } else {
+                        // No location access granted.
+                        Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // Request location permissions
+        locationPermissionRequest.launch(
+                new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION});
+    }
+
+
     /**
      * Upon getting the verification status of the user for this event, we perform the required check-in or share action
      * @param verified the verification status of the user for this event
@@ -100,6 +128,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
 
                     String read = result.getContents();
                     //Log.d("Scanned QR Code", "QR CODE ID: " + read.substring(1));
+
                     checkIn = read.charAt(0) == 'c';
                     String qrID = read.substring(1);
                     fc.getEventByQRID(qrID, this);
