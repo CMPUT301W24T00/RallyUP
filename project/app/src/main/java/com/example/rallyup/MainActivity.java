@@ -8,12 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.rallyup.uiReference.attendees.AttendeeUpdateActivity;
 import com.example.rallyup.notification.NotificationObject;
-import com.example.rallyup.progressBar.ProgressBarActivity;
 import com.example.rallyup.uiReference.organizers.EventAttendeesInfoActivity;
-
-import org.checkerframework.checker.units.qual.A;
 
 /**
  * This class contains the main activity of the app which will temporarily hold direct access to features
@@ -46,16 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        Button attendeeUpdateInfoButton = findViewById(R.id.AttendeeUpdateInfoButton);
 
-
-        progressButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =
-                        new Intent(com.example.rallyup.MainActivity.this,
-                                ProgressBarActivity.class);
-                startActivity(intent);
-            }
-        });
         uiLayoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

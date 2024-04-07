@@ -219,14 +219,37 @@
 
                 </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/progressBar3"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="237dp"
-                    android:layout_height="38.5dp"
-                    android:max="100"
-                    android:maxWidth="48dip"
-                    android:progressDrawable="@drawable/progressbar_progressable" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/progressBarConstraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar3"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="237dp"
+                        android:layout_height="38dp"
+                        android:max="100"
+                        android:maxWidth="48dip"
+                        android:progressDrawable="@drawable/progressbar_progressable"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/progressBarOverlay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/milestone_check_overlay"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteX="87dp"
+                        tools:layout_editor_absoluteY="-46dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -244,7 +267,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/accentColorGreen"
-                            android:text="SEND"
+                            android:text="@string/send"
                             android:textColor="@color/lightColor"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -259,7 +282,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:gravity="start|top"
-                            android:hint="Send Message to Attendees..."
+                            android:hint="@string/notification_edit_body"
                             android:inputType="textMultiLine"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -274,7 +297,7 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:inputType="text"
-                            android:text="@string/title_of_notification"
+                            android:hint="@string/title_of_notification"
                             app:layout_constraintBottom_toTopOf="@+id/notification_details"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.132"
