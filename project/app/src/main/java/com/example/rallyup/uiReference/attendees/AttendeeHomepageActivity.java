@@ -14,6 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.GeoPoint;
+
+
 import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.LocalStorageController;
@@ -48,7 +56,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     String userID;
     boolean checkIn, verified = false;
 
-
+    
 
     /**
      * Upon getting a user, we will initialize the views using the details of the user
@@ -76,30 +84,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     }
 
 
-    private void requestLocationPermissions() {
-        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(
-                new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-                    Boolean fineLocationGranted = result.getOrDefault(
-                            Manifest.permission.ACCESS_FINE_LOCATION, false);
-                    Boolean coarseLocationGranted = result.getOrDefault(
-                            Manifest.permission.ACCESS_COARSE_LOCATION, false);
 
-                    if (fineLocationGranted != null && fineLocationGranted) {
-                        // Fine location permission granted
-                        Log.d("AttendeeUpdateActivity", "Fine location permission granted");
-                    } else if (coarseLocationGranted != null && coarseLocationGranted) {
-                        // Coarse location permission granted
-                        Log.d("AttendeeUpdateActivity", "Coarse location permission granted");
-                    } else {
-                        // No location access granted.
-                        Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        // Request location permissions
-        locationPermissionRequest.launch(
-                new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION});
-    }
 
 
     /**
