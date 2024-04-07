@@ -371,7 +371,10 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
 
                 // Where we upload the data to the Firebase
                 updateUserInformation(userID);
-                // Since we clicked on confirm, it brings us back to the screen that was there before
+                Intent intent = new Intent(AttendeeUpdateActivity.this, AttendeeHomepageActivity.class);
+                startActivity(intent);
+
+            } // Since we clicked on confirm, it brings us back to the screen that was there before
         });
 
         attHomepageBackBtn.setOnClickListener(new View.OnClickListener() {
@@ -428,3 +431,4 @@ public class AttendeeUpdateActivity extends AppCompatActivity implements Firesto
         }
     }
 }
+
