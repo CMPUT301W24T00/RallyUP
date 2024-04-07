@@ -28,7 +28,7 @@
                 android:layout_marginBottom="17dp"
                 app:layout_constraintBottom_toTopOf="@+id/eventDetailsQRShareButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.833"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/shareEventInfoText"
                 app:layout_constraintVertical_bias="1.0" />
@@ -91,7 +91,7 @@
                 android:layout_marginBottom="11dp"
                 app:layout_constraintBottom_toTopOf="@+id/checkInQRShareButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
