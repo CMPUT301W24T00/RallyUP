@@ -16,6 +16,13 @@ import java.util.List;
 public interface FirestoreCallbackListener {
 
     /**
+     * Upon getting a bitmap
+     * @param bitmap an object containing the image bitmap
+     */
+    default void onGetBitmap(Bitmap bitmap) {
+    }
+
+    /**
      * Upon getting an event
      * @param event an object containing the events details
      */
