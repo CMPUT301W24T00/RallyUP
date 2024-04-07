@@ -20,21 +20,12 @@ public class qrClassUnitTest {
      */
     private QrCode mockQR() {
         QrCode newMock = new QrCode(
-                "1RD8qkMMqyq5mz5CqRQD",
                 true,
                 "048ACC2B534046668F6BAA2EA43F170C",
                 "/images/QR/1RD8qkMMqyq5mz5CqRQD");
         return newMock;
     }
 
-    /**
-     * Tests the getQrId method.
-     */
-    @Test
-    public void testGetQrId() {
-        QrCode testQR = mockQR();
-        assertEquals("1RD8qkMMqyq5mz5CqRQD", testQR.getQrId());
-    }
 
     /**
      * Tests the isCheckIn method.
@@ -61,16 +52,6 @@ public class qrClassUnitTest {
     public void testGetImage() {
         QrCode testQR = mockQR();
         assertEquals("/images/QR/1RD8qkMMqyq5mz5CqRQD", testQR.getImage());
-    }
-
-    /**
-     * Tests the setQrId method.
-     */
-    @Test
-    public void testSetQrId() {
-        QrCode testQR = mockQR();
-        testQR.setQrId("3AB8qkMMqyq5mz5CqRQD");
-        assertEquals("3AB8qkMMqyq5mz5CqRQD", testQR.getQrId());
     }
 
     /**

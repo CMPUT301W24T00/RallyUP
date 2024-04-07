@@ -3,12 +3,16 @@ package com.example.rallyup.uiReference.organizers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,6 +29,7 @@ import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.firestoreObjects.User;
+import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ManageMilestoneDialog;
 
@@ -58,11 +63,13 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     Button viewCheckInQRCode;
     ImageButton orgEventDetailsBackBtn; // ImageButton to navigate back to the event list
 
-    ImageButton milestoneEditButton;
+    ImageButton milestoneEditButton, shareButton;
     Button sendNotificationButton;
     EditText editNotificationTitle;
     EditText editNotificationBody;
     ProgressBar progressBar;
+    String eventID;
+    Event event;
 
 
 
@@ -70,6 +77,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
 
     @Override
     public void onGetEvent(Event event) {
+        this.event = event;
         TextView eventView = findViewById(R.id.org_event_details_name);
         TextView eventTime = findViewById(R.id.org_event_details_date);
         TextView eventLocation = findViewById(R.id.org_event_details_location);
@@ -93,11 +101,9 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
 
     @Override
     public void onGetAttendants(List<Attendance> attendantList) {
-
         FirestoreController fc = FirestoreController.getInstance();
 
         TextView eventView = findViewById(R.id.org_event_details_name);
-        TextView eventVerifiedAttendeesView = findViewById(R.id.verifed_attendees);
         TextView eventTotalAttendees = findViewById(R.id.total_attendees);
         progressBar = findViewById(R.id.progressBar3);
 
@@ -107,14 +113,9 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         editNotificationTitle = findViewById(R.id.notification_title);
         editNotificationBody = findViewById(R.id.notification_details);
 
-        eventTotalAttendees.setText(String.format(Locale.getDefault(),attendantList.size() + " total attendees"));
-
-        int count = 0;
-        for (Attendance attendance : attendantList) {
-            if (attendance.isAttendeeVerified()) count++;
-        }
-        eventVerifiedAttendeesView.setText(String.format(Locale.getDefault(), count + " verified attendees"));
-        progressBar.setProgress(count);
+        eventTotalAttendees.setText(String.format(Locale.getDefault(),attendantList.size() + " checked-in attendees"));
+        
+        progressBar.setProgress(attendantList.size());
 
         String notification_channel_ID =
                 getString(R.string.notification_channel_ID_milestone);
@@ -153,6 +154,13 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     }
 
     @Override
+    public void onGetRegisteredAttendants(List<Registration> registrationList){
+        TextView eventVerifiedAttendeesView = findViewById(R.id.verifed_attendees);
+        eventVerifiedAttendeesView.setText(registrationList.size() + " registered attendees");
+
+    }
+
+    @Override
     public void onGetImage(Bitmap bm) {
         // The UI XML doesn't have an image thing yet, will need to get the proper ID for it once set
         //ImageView eventPoster = findViewById(R.id.ProgressBarEventPosterView);
@@ -169,7 +177,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organizer_event_details);
         Intent intent = getIntent();
-        String eventID = intent.getStringExtra("key");
+        eventID = intent.getStringExtra("key");
 
         String notification_channel_ID =
                 getString(R.string.notification_channel_ID_milestone);
@@ -187,6 +195,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         orgEventDetailsBackBtn = findViewById(R.id.organizer_details_back_button); // Initializing back button
         viewEventAttendeesList = findViewById(R.id.event_attendees_button); // Initializing button to view attendees list
         viewCheckInQRCode = findViewById(R.id.view_qr_code_button);
+        shareButton = findViewById(R.id.shareButton);
 
         milestoneEditButton = findViewById(R.id.imageButton5);
         progressBar = findViewById(R.id.progressBar3);
@@ -200,6 +209,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         FirestoreController fc = FirestoreController.getInstance();
         fc.getEventByID(eventID, this);
         fc.getEventAttendantsByEventID(eventID, this);
+        fc.getRegisteredAttendees(eventID, this);
 
         // TODO: PUT PROGRESS BAR PROGRESS IN THE onGetAttendants AND PUT
         //  progressBar.setProgress(attendantList.size());
@@ -215,11 +225,18 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         // Setting onClickListener for the button to view attendees list
         viewEventAttendeesList.setOnClickListener(view -> {
             Intent intent12 = new Intent(getBaseContext(), EventAttendeesInfoActivity.class);
-            intent12.putExtra("eventID", eventID);
+            intent12.putExtra("key", eventID);
             startActivity(intent12);
         });
 
-        // Might not need this anymore, delete when not needed anymore
+        //@Override
+        // Setting onClickListener for the button to share the event QR code to other apps
+        shareButton.setOnClickListener(view -> {
+            // ideally where the fragment should pop-up
+            new shareFragment();
+            shareFragment.newInstance(eventID).show(getSupportFragmentManager(), "Add/Edit City");
+        });
+        
         milestoneEditButton.setOnClickListener(v -> {
             ManageMilestoneDialog manageMilestoneDialog = new ManageMilestoneDialog();
             manageMilestoneDialog.show(getSupportFragmentManager(), "ManageMilestonesDialog");

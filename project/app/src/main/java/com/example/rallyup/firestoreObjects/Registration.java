@@ -13,6 +13,7 @@ public class Registration {
      */
     private String userID;
 
+
     /**
      * Constructs a new empty Registration object.
      */
@@ -69,5 +70,7 @@ public class Registration {
     public void setUserID(String userID) {
         this.userID = userID;
     }
+
+
 
 }
