@@ -121,7 +121,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
 
         // TODO: Add milestone criteria
         notificationObject.createNotification(
-                    OrganizerEventDetailsActivity.class,
+                    MainActivity.class,
                     notification_channel_ID,
                     "A Milestone Achieved!",
                     String.format(Locale.getDefault(), count + " verified attendees for " + eventView.getText().toString()),

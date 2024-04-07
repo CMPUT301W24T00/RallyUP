@@ -3,6 +3,7 @@ package com.example.rallyup.notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -72,6 +73,9 @@ public class NotificationObject{
      * Creates a notification and shows shows it on the app
      * @param classObject A class object (usually ActivityOfInterest.class) of where you want to go when
      *                    clicking the notification
+     *                    As of right now, just bring it back to MainActivity.class
+     *                    Otherwise some of the intents needed to access certain classes are not available
+     *                    currently.
      * @param channelID A String for the ID of the channel the notifications are linked to,
      *      *                  not displayed on the app.
      * @param contentTitle A string of what the title of the notification would show as in the notification popup
@@ -98,14 +102,24 @@ public class NotificationObject{
                                    boolean autoCancel,
                                    boolean isBigNotification,
                                    @Nullable CharSequence bigMessage) {
+        // https://developer.android.com/develop/ui/views/notifications/navigation#DirectEntry
         // Setting up the intent on where we want to go for the notification tap
-        Intent intent = new Intent(context, classObject);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent resultIntent = new Intent(context, classObject);
+
+        // Create the TaskStackBuilder and add the intent, which inflates the back
+        // stack.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        // Get the PendingIntent containing the entire back stack
+
+        resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent =
-                PendingIntent.getActivity(context,
-                        0,
-                        intent,
-                        PendingIntent.FLAG_IMMUTABLE);
+                stackBuilder.getPendingIntent(0,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+//                PendingIntent.getActivity(context,
+//                        0,
+//                        resultIntent,
+//                        PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID)
                 .setContentIntent(pendingIntent) // Set the intent that fires when the user taps the notification.

@@ -36,12 +36,15 @@
             android:theme="@style/Theme.RallyUP" />
         <activity
             android:name=".uiReference.organizers.EventAttendeesInfoActivity"
+            android:parentActivityName=".uiReference.organizers.OrganizerEventDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".uiReference.organizers.OrganizerEventDetailsActivity"
+            android:parentActivityName=".uiReference.organizers.OrganizerEventListActivity"
             android:exported="false" />
         <activity
             android:name=".uiReference.organizers.OrganizerEventListActivity"
+            android:parentActivityName=".uiReference.splashScreen"
             android:exported="false" />
         <activity
             android:name=".uiReference.attendees.AttendeeRegisteredEvent"
