@@ -280,9 +280,7 @@ public class FirestoreController {
                     String eDate = thisEvent.getEventDate();
                     if (Integer.parseInt(eDate.substring(0, 4)) >= year) {
                         if (Integer.parseInt(eDate.substring(4, 6)) >= month) {
-                            if(Integer.parseInt(eDate.substring(4,6)) == month && Integer.parseInt(eDate.substring(4,6)) >= day){
-                                EventList.add(thisEvent);
-                            }
+                            EventList.add(thisEvent);
                         }
                     }
                 }
