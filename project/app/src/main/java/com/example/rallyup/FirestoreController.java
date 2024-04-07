@@ -540,7 +540,7 @@ public class FirestoreController {
                     aRegistration = documentSnapshot.toObject(Registration.class);
                     if (aRegistration.getEventID().equals(eventID)) { // if the specific eventID is found
                         found = true;
-                        //Toast.makeText(context, "You have already registered for this event!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "You have already registered for this event!", Toast.LENGTH_LONG).show();
                         // need to go through and fix messages after databases have been cleaned up
                     }
                 }

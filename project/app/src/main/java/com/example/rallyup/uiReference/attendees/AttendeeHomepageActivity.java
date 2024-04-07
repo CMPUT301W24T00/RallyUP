@@ -45,7 +45,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     FirestoreController fc = FirestoreController.getInstance();
     LocalStorageController ls = LocalStorageController.getInstance();
     String userID;
-    boolean checkIn, verified = false;
+    boolean checkIn, verified;
 
 
 
@@ -116,7 +116,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_homepage);
-        String userID = ls.getUserID(this);
+        userID = ls.getUserID(this);
 
         fc.getUserByID(userID, this);
 
@@ -190,6 +190,10 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         if(checkIn) {
             if(verified){
                 fc.updateAttendance(scannedEvent, userID, this);
+                Intent intent;
+                intent = new Intent(AttendeeHomepageActivity.this, AttendeeEventDetails.class);
+                intent.putExtra("key", scannedEvent);
+                startActivity(intent);
                 Toast.makeText(this, "Check-In Successful! Enjoy the event!", Toast.LENGTH_LONG).show();
             }
 
@@ -200,7 +204,6 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
                 intent.putExtra("key", scannedEvent);
                 startActivity(intent);
             }
-
 
         }
         else{

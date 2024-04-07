@@ -165,7 +165,8 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
             if(verified){
                 fc.updateAttendance(scannedEvent, userID,  this);
                 Intent intent;
-                intent = new Intent(AttendeeMyEventsActivity.this, AttendeeHomepageActivity.class);
+                intent = new Intent(AttendeeMyEventsActivity.this, AttendeeEventDetails.class);
+                intent.putExtra("key", scannedEvent);
                 startActivity(intent);
                 Toast.makeText(this, "Check-In Successful! Enjoy the event!", Toast.LENGTH_LONG).show();
             }
