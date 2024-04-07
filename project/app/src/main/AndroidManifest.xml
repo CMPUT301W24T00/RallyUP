@@ -76,7 +76,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".progressBar.ProgressBarActivity" />
         <activity android:name=".uiReference.organizers.AddEventActivity" />
         <activity android:name=".uiReference.attendees.QRBaseActivity" />
         <activity android:name=".uiReference.attendees.ScannerActivity" />
