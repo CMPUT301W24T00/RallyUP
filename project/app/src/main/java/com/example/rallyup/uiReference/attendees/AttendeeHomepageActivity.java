@@ -3,8 +3,12 @@ package com.example.rallyup.uiReference.attendees;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +22,9 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.GeoPoint;
 
 
@@ -56,7 +62,9 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     String userID;
     boolean checkIn, verified = false;
 
-    
+    boolean geoLocation;
+    Location curLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     /**
      * Upon getting a user, we will initialize the views using the details of the user
@@ -69,6 +77,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         firstNameView.setText(user.getFirstName());
         lastNameView.setText(user.getLastName());
         usernameView.setText(user.getId());
+        geoLocation = user.getGeolocation();
         //attProfilePicture.setImageDrawable(user.getProfilePicture());
     }
 
@@ -84,9 +93,6 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     }
 
 
-
-
-
     /**
      * Upon getting the verification status of the user for this event, we perform the required check-in or share action
      * @param verified the verification status of the user for this event
@@ -95,6 +101,36 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     public void onGetVerified(boolean verified) {
         this.verified = verified;
         switchPage();
+    }
+
+    private void getLastLocation() {
+        if (!geoLocation) {
+            return;
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        if (fusedLocationProviderClient != null) {
+            task.addOnSuccessListener(location -> {
+                Toast.makeText(AttendeeHomepageActivity.this, "Doomed but before", Toast.LENGTH_LONG).show();
+                if (location != null) {
+                    curLocation = location;
+                    Toast.makeText(this, "Latitude: " + curLocation.getLatitude() + ", Longitude: " + curLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "bruh location is null", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+            task.addOnFailureListener(e -> {
+                Toast.makeText(AttendeeHomepageActivity.this, "Doomed", Toast.LENGTH_LONG).show();
+
+            });
+        } else {
+            Toast.makeText(AttendeeHomepageActivity.this, "Doomed coz null", Toast.LENGTH_LONG).show();
+
+        }
     }
 
     // String attFirstName = findViewById(R.id.att_first_name)
@@ -113,8 +149,14 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
 
                     String read = result.getContents();
                     //Log.d("Scanned QR Code", "QR CODE ID: " + read.substring(1));
-
+                    fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
                     checkIn = read.charAt(0) == 'c';
+                    getLastLocation();
+                    if (curLocation != null) {
+                        Toast.makeText(this, "Latitude: " + curLocation.getLatitude() + ", Longitude: " + curLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Location not available", Toast.LENGTH_SHORT).show();
+                    }
                     String qrID = read.substring(1);
                     fc.getEventByQRID(qrID, this);
                 }
@@ -135,6 +177,9 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
 
         fc.getUserByID(userID, this);
 
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+//        getLastLocation();
 
         // Text views
         firstNameView = findViewById(R.id.att_first_name);
