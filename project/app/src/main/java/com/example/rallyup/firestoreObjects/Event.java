@@ -191,7 +191,9 @@ public class Event {
         // check if the time is a valid integer
         int timeValue;
 
+
         // turn string into integer to validate
+        //TODO: uncomment
         try {
             timeValue = Integer.parseInt(eventTime);
         } catch (NumberFormatException e) {
@@ -230,6 +232,7 @@ public class Event {
      *
      * @param currentlySignedUp The new amount of people currently signed up to attend this event.
      */
+    //TODO: uncomment
     public void setCurrentlySignedUp(int currentlySignedUp) {
         if (currentlySignedUp < 0) {
             throw new IllegalArgumentException("Number of people signed up cannot be negative.");

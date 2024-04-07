@@ -32,7 +32,9 @@ public class userClassUnitTest {
                 "ka19Vl8P4QH9QQ90kWvm",
                 "7801234567",
                 true,
-                newPoint);
+                newPoint,
+                true,
+                "dJmfbLxfSzS40YRf-IcJpf:APA91bGUyM-F_A7fClNvo9ocr88DQ2Q63UksJVfEQr1PPyrqOKKm0aan2sgio32zd8lyYFTvc-M1MKPequNEVoNXZ3a9_86EyOaprEsr3JKiLMJxsQ0GY11GWDBmPxEXZliYNLT8xOB3");
         return newMock;
     }
 
@@ -52,13 +54,15 @@ public class userClassUnitTest {
     public void testDefaultUser() {
         User defUser = defaultUser();
 
-        assertEquals("Sample email", defUser.getEmail());
+        assertEquals("", defUser.getEmail());
         assertEquals("", defUser.getFirstName());
         assertEquals("", defUser.getLastName());
         assertEquals("", defUser.getId());
         assertEquals("", defUser.getPhoneNumber());
         assertNull(defUser.getLatlong());
         assertFalse(defUser.getGeolocation());
+        assertFalse(defUser.getWantNotifications());
+        assertEquals("", defUser.getFcmToken());
 
     }
 
@@ -205,6 +209,43 @@ public class userClassUnitTest {
         double delta = 0.000001;
         assertEquals(newLatLong.getLatitude(), testUser.getLatlong().getLatitude(), delta);
         assertEquals(newLatLong.getLongitude(), testUser.getLatlong().getLongitude(), delta);
+    }
+
+    /**
+     * Tests the get want notifications boolean
+     */
+    @Test
+    public void testGetNotifications() {
+        User testUser = mockUser();
+        assertTrue(testUser.getWantNotifications());
+    }
+    /**
+     * Tests the set want notifications boolean
+     */
+    @Test
+    public void testSetNotifications() {
+        User testUser = mockUser();
+        testUser.setWantNotifications(false);
+        assertFalse(testUser.getWantNotifications());
+    }
+
+    /**
+     * Tests the get FCM token method
+     */
+    @Test
+    public void testGetFCM() {
+        User testUser = mockUser();
+        assertEquals("dJmfbLxfSzS40YRf-IcJpf:APA91bGUyM-F_A7fClNvo9ocr88DQ2Q63UksJVfEQr1PPyrqOKKm0aan2sgio32zd8lyYFTvc-M1MKPequNEVoNXZ3a9_86EyOaprEsr3JKiLMJxsQ0GY11GWDBmPxEXZliYNLT8xOB3", testUser.getFcmToken());
+    }
+
+    /**
+     * Tests the set FCM token method
+     */
+    @Test
+    public void testSetFCM() {
+        User testUser = mockUser();
+        testUser.setFcmToken("eEWefne39-IcJpf:APA91bGUyM-F_A7fClNvo9ocr88DQ2Q63UksJVfEQr1PPyrqOKKm0aan2sgio32zd8lyYFTvc-M1MKPequNEVoNXZ3a9_86EyOaprEsr3JKiLMJxsQ0GY11GWDBmPxEXZliYNLT8xOB3");
+        assertEquals("eEWefne39-IcJpf:APA91bGUyM-F_A7fClNvo9ocr88DQ2Q63UksJVfEQr1PPyrqOKKm0aan2sgio32zd8lyYFTvc-M1MKPequNEVoNXZ3a9_86EyOaprEsr3JKiLMJxsQ0GY11GWDBmPxEXZliYNLT8xOB3", testUser.getFcmToken());
     }
 
 }

@@ -125,7 +125,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
                     MainActivity.class,
                     notification_channel_ID,
                     "A Milestone Achieved!",
-                    String.format(Locale.getDefault(), count + " verified attendees for " + eventView.getText().toString()),
+                    String.format(Locale.getDefault(), attendantList.size() + " verified attendees for " + eventView.getText().toString()),
                     (R.drawable.rally_up_title_screen),
                     0,
                     NotificationCompat.VISIBILITY_PUBLIC,

@@ -927,16 +927,21 @@ public class FirestoreController {
      * @param poster an imageview object of a poster
      */
     public void getPosterByEventID(String posterPath, Context context, ImageView poster) {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference(posterPath);
+        if (posterPath != null) {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference(posterPath);
+            Glide.with(context)
+                    .load(storageReference)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) // <= ADDED
+                    .skipMemoryCache(true) // <= ADDED
+                    .error(R.drawable.ic_launcher_foreground)
+                    .into(poster);
+        } else {
+            throw new IllegalArgumentException("poster path is null");
+        }
 //        Glide.with(context)
 //                .load(storageReference)
 //                .into(poster);
-        Glide.with(context)
-                .load(storageReference)
-                .diskCacheStrategy(DiskCacheStrategy.NONE) // <= ADDED
-                .skipMemoryCache(true) // <= ADDED
-                .error(R.drawable.ic_launcher_foreground)
-                .into(poster);
+
     }
 
     public void deleteFile(String filePath){

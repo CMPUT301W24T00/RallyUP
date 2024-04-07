@@ -36,6 +36,9 @@ public class User {
      * @param wantNotifications Whether the user wants notifications or not
      * @param fcmToken The string of the user's FCM Token to be used for receiving notifications
      */
+
+     // used to have only email constructor
+     
     public User(String email, String firstName, String lastName,
                 String id, String phoneNumber,
                 Boolean geolocation, GeoPoint latlong,
