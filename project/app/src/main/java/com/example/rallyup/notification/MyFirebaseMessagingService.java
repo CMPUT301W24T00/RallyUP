@@ -55,29 +55,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                 this);
     }
 
-    @Override
-    public void onMessageReceived(@NonNull RemoteMessage message) {
-        Log.d(TAG, "From: " + message.getFrom());
-
-        if (!message.getData().isEmpty()){
-            Log.d(TAG, "Message data payload: " + message.getData());
-            // If the data "topic" "eventID" == "eventID_announcements" then bring the user
-            if(Objects.equals("announcements", message.getData().get("typeOfNotification"))){
-                Intent intent = new Intent(getBaseContext(), AttendeeEventDetails.class);
-                intent.putExtra("key", message.getData().get("eventID"));
-                startActivity(intent);
-
-            } else if (Objects.equals("milestones", message.getData().get("typeOfNotification"))) {
-                Intent intent = new Intent(getBaseContext(), OrganizerEventDetailsActivity.class);
-                intent.putExtra("key", message.getData().get("eventID"));
-                startActivity(intent);
-
-            } else {
-                Log.w(TAG, "Message did not have valid typeOfNotification value!");
-                Toast.makeText(getBaseContext(), "Invalid type of notification", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
+//    @Override
+//    public void onMessageReceived(@NonNull RemoteMessage message) {
+//        Log.d(TAG, "From: " + message.getFrom());
+//
+//        if (!message.getData().isEmpty()){
+//            Log.d(TAG, "Message data payload: " + message.getData());
+//            // If the data "topic" "eventID" == "eventID_announcements" then bring the user
+//            if(Objects.equals("announcements", message.getData().get("typeOfNotification"))){
+//                Intent intent = new Intent(getBaseContext(), AttendeeEventDetails.class);
+//                intent.putExtra("key", message.getData().get("eventID"));
+//                startActivity(intent);
+//
+//            } else if (Objects.equals("milestones", message.getData().get("typeOfNotification"))) {
+//                Intent intent = new Intent(getBaseContext(), OrganizerEventDetailsActivity.class);
+//                intent.putExtra("key", message.getData().get("eventID"));
+//                startActivity(intent);
+//
+//            } else {
+//                Log.w(TAG, "Message did not have valid typeOfNotification value!");
+//                Toast.makeText(getBaseContext(), "Invalid type of notification", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
 }

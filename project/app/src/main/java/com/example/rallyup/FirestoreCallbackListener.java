@@ -61,6 +61,13 @@ public interface FirestoreCallbackListener {
     }
 
     /**
+     * Upon getting a list of User FCM Token strings
+     * @param fcmTokens a list of user FCM Tokens
+     */
+    default void onGetFCMTokens(List<String> fcmTokens){
+    }
+
+    /**
      * Upon getting an image
      * @param bm a bitmap of the image
      */

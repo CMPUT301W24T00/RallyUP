@@ -191,38 +191,6 @@ public class NotificationObject{
     // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages?authuser=1#notification
     // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages?authuser=1#androidnotification
 
-    public void androidConfigNotifications(JSONObject androidNotificationJSON) throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        //JSONObject jsonItem = new JSONObject();
-
-        /*
-        * Follow this structure
-        * AndroidConfig JSON ==
-        * {
-        *   "priority": enum (AndroidMessagePriority),
-        *   "restricted_package_name": string,
-        *   "notification": {object (AndroidNotification)},
-        *   "direct_boot_ok": boolean
-        * }
-        *
-        * AndroidNotification JSON ==
-        * {
-        *   "title": string,
-        *   "body": string,
-        *   "icon":string (hopefully a RallyUp Icon),
-        *   Just Follow the reference
-        * }
-        * */
-
-        // jsonObject = {"key":value, "key1":value1, {jsonItem}}
-        // jsonItem = {"key":value, "key1":value1, ...}
-
-        jsonObject.put("priority", "PRIORITY_UNSPECIFIED");
-        jsonObject.put("restriced_package_name", "com.example.rallyup");
-        // Assuming that we have created a JSONObject for androidNotificationJSON
-        jsonObject.put("notification", androidNotificationJSON);
-    }
-
     public JSONObject androidNotificationJSON(String notifTitle, String notifBody, String channelID) throws JSONException {
         JSONObject notificationJSON = new JSONObject();
 

@@ -17,7 +17,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.User;
 import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
 import com.example.rallyup.uiReference.organizers.OrganizerEventListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,10 +34,12 @@ import com.google.firebase.messaging.FirebaseMessaging;
  * This class contains the activity for the main menu splash screen
  * @author Isla Medina
  */
-public class splashScreen extends AppCompatActivity{
+public class splashScreen extends AppCompatActivity implements FirestoreCallbackListener {
 
     Button attendeeBtn;
     Button organizerBtn;
+    FirestoreController fc = FirestoreController.getInstance();
+    LocalStorageController lc = LocalStorageController.getInstance();
 
     // RIP STRAIGHT FROM: https://firebase.google.com/docs/cloud-messaging/android/client
     // Declare the launcher at the top of your Activity/Fragment:
@@ -49,6 +55,7 @@ public class splashScreen extends AppCompatActivity{
                             Toast.LENGTH_SHORT).show();
                     // Set the wantNotifications of the user to false
                 }
+                fc.getUserByID(lc.getUserID(this), this);
             });
 
     private void askNotificationPermission() {
@@ -60,7 +67,8 @@ public class splashScreen extends AppCompatActivity{
                 // set the wantNotifications of the user to true
                 // (just in case if they allowed notifications in the settings
                 // and not from the notification permission dialog)
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                fc.getUserByID(lc.getUserID(this), this);
+            //} else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                 // TODO: display an educational UI explaining to the user the features that will be enabled
                 //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
                 //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
@@ -72,6 +80,20 @@ public class splashScreen extends AppCompatActivity{
         }
     }
 
+    @Override
+    public void onGetUser(User user) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Update the data in the Firebase
+            fc.updateUserBooleanFields(lc.getUserID(this), "wantNotifications", ContextCompat.checkSelfPermission(getBaseContext(),
+                    Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED,this);
+
+            Toast.makeText(getBaseContext(), "Notification Perm: " + (ContextCompat.checkSelfPermission(getBaseContext(),
+                    Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "Made it to onGetUser", Toast.LENGTH_SHORT).show();
+        }
+    }
     // TODO: For 6 April 2024 - If notificationPermissions allowed -> user.setWantNotifications(true);
 
     @Override

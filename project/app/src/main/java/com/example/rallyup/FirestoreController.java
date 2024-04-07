@@ -25,12 +25,15 @@ import com.example.rallyup.firestoreObjects.User;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -40,6 +43,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -178,6 +182,7 @@ public class FirestoreController {
             } else {
                 user.setLatlong(null);
             }
+            user.setWantNotifications(documentSnapshot.getBoolean("wantNotifications"));
 
             callbackListener.onGetUser(user);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
@@ -586,11 +591,13 @@ public class FirestoreController {
     public void getCheckedInUsers(List<String> userList, FirestoreCallbackListener callbackListener) {
         List<User> users = new ArrayList<>();
         for(String userID : userList){
+            // WILL throw error/logic problems for OrganizerEventDetailsActivity
             Query query = usersRef.whereEqualTo("userID", userID);
             query.get().addOnSuccessListener(queryDocumentSnapshots -> {
                 for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     User aUser;
                     aUser = documentSnapshot.toObject(User.class);
+
                     if(aUser.getFirstName() != null){
                         users.add(aUser);
                     }
@@ -598,6 +605,57 @@ public class FirestoreController {
                 callbackListener.onGetUsers(users);
             }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
         }
+    }
+
+    /**
+     * This method uses the eventID given to query all attendees that have the same eventID
+     * Then it passes their userIDs into a list that getCheckedInUsersFCMTokens() will use
+     * to get the users' FCM Tokens and pass that into a list.
+     * @param eventID String of the eventID that the user is interested in
+     * @param callbackListener the listener that will return the information once query is done
+     */
+    public void getAttendeeIDsForFCMTokens(String eventID, FirestoreCallbackListener callbackListener){
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<String> userIDs = new ArrayList<>();
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Attendance attendance;
+                attendance = documentSnapshot.toObject(Attendance.class);
+                String aUserID = attendance.getUserID();
+                if(aUserID != null){
+                    userIDs.add(aUserID);
+                }
+            }
+            getCheckedInUsersFCMTokens(userIDs, callbackListener);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
+     * This method queries all users that have their "wantNotifications" field set to true,
+     * then see if their documentId is within the userList that was passed through.
+     * If it is, then we add their FCMToken assuming that it's valid and not null.
+     * @param userList String of the userIDs that we want to send notifications to
+     * @param callbackListener the listener that will return the information once query is done
+     */
+    public void getCheckedInUsersFCMTokens(List<String> userList, FirestoreCallbackListener callbackListener){
+        List<String> fcmTokens = new ArrayList<>();
+        // Get user documents THAT WANT notifications
+        usersRef.whereEqualTo("wantNotifications", true)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (QueryDocumentSnapshot snapshot : task.getResult()){
+                            // IF the array of userIDs in userList CONTAINS the current documentID (== userID)
+                            if (userList.contains(snapshot.getId())){
+                                // Add the value from field "fcmToken" of the current document
+                                fcmTokens.add(snapshot.getString("fcmToken"));
+                                Log.d("getCheckedInUsersFCMTokens", snapshot.getId());
+                            }
+                        }
+                        callbackListener.onGetFCMTokens(fcmTokens);
+                    }
+                });
     }
 
     /**

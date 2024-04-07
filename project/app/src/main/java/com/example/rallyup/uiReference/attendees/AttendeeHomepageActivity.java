@@ -181,7 +181,6 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
 
         fc.getUserByID(userID, this);
 
-
         // Text views
         firstNameView = findViewById(R.id.att_first_name);
         lastNameView = findViewById(R.id.att_last_name);
@@ -215,7 +214,6 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
             Intent intent = new Intent(getBaseContext(), splashScreen.class);  // placeholder for attendee opener
             startActivity(intent);
         });
-
 
         // scan a qr code
         QRCodeScannerBtn.setOnClickListener(v -> {
