@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.firestoreObjects.QrCode;
+import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.firestoreObjects.User;
 
 import java.util.List;
@@ -68,6 +69,13 @@ public interface FirestoreCallbackListener {
     }
 
     /**
+     * Upon getting a list of User FCM Token strings
+     * @param fcmTokens a list of user FCM Tokens
+     */
+    default void onGetFCMTokens(List<String> fcmTokens){
+    }
+
+    /**
      * Upon getting an image
      * @param bm a bitmap of the image
      */
@@ -87,6 +95,13 @@ public interface FirestoreCallbackListener {
      * @param attendantList a list of attendance objects
      */
     default void onGetAttendants(List<Attendance> attendantList) {
+    }
+
+    /**
+     * Upon getting a list of attendants currently registered for a specified event
+     * @param registrationList a list of attendance objects
+     */
+    default void onGetRegisteredAttendants(List<Registration> registrationList){
     }
 
     /**
@@ -119,5 +134,4 @@ public interface FirestoreCallbackListener {
     default void onGetCheckIns(Integer timesCheckedIn) {
 
     }
-
 }

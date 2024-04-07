@@ -55,17 +55,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <ImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/att_profile_picture"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:layout_gravity="center"
                             android:background="@drawable/attendee_icon_temp"
                             android:foregroundGravity="center"
+                            android:padding="5dp"
+                            android:scaleType="centerCrop"
+                            app:shapeAppearanceOverlay="@style/circleStyle"
+                            app:strokeWidth="5dp"
+                            app:strokeColor="@color/lightColor"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"></ImageView>
+                            app:layout_constraintTop_toTopOf="parent"></com.google.android.material.imageview.ShapeableImageView>
 
                         <TextView
                             android:id="@+id/att_homepage_profile_picture_textview"
