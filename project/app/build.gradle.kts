@@ -88,6 +88,10 @@ dependencies {
 
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
+    val fragmentVersion = "1.6.2"
+
+    // Java language implementation
+    implementation("androidx.fragment:fragment:$fragmentVersion")
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")

@@ -60,7 +60,6 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         firstNameView.setText(user.getFirstName());
         lastNameView.setText(user.getLastName());
         usernameView.setText(user.getId());
-        //attProfilePicture.setImageDrawable(user.getProfilePicture());
     }
 
     /**
@@ -189,8 +188,19 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
      */
     public void switchPage() {
         if(checkIn) {
-            fc.updateAttendance(scannedEvent, userID, verified, this);
-            Toast.makeText(this, "Check-In Successful! Enjoy the event!", Toast.LENGTH_LONG).show();
+            if(verified){
+                fc.updateAttendance(scannedEvent, userID, this);
+                Toast.makeText(this, "Check-In Successful! Enjoy the event!", Toast.LENGTH_LONG).show();
+            }
+
+            else{
+                Toast.makeText(this, "Please register for this event before you attempt to check-in!", Toast.LENGTH_LONG).show();
+                Intent intent;
+                intent = new Intent(AttendeeHomepageActivity.this, AttendeeEventDetails.class);
+                intent.putExtra("key", scannedEvent);
+                startActivity(intent);
+            }
+
 
         }
         else{

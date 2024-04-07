@@ -168,6 +168,24 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.116" />
 
+                        <ImageButton
+                            android:id="@+id/shareButton"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="39dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="14dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/transparent"
+                            android:clickable="true"
+                            android:foregroundTint="@color/transparent"
+                            app:layout_constraintBottom_toTopOf="@+id/view_qr_code_button"
+                            app:layout_constraintEnd_toStartOf="@+id/event_attendees_button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/total_attendees"
+                            app:srcCompat="?attr/actionModeShareDrawable"
+                            app:tint="@color/darkColor" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </FrameLayout>

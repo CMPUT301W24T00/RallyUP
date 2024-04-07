@@ -25,7 +25,6 @@ public class attendanceClassTest {
      */
     private Attendance mockAttendance() {
         Attendance newMock = new Attendance(
-                true,
                 "048ACC2B534046668F6BAA2EA43F170C",
                 5,
                 "ka19Vl8P4QH9QQ90kWvm");
@@ -48,28 +47,28 @@ public class attendanceClassTest {
         Attendance nullAtt = nullAttendance();
         assertNull(nullAtt.getEventID());
         assertNull(nullAtt.getUserID());
-        assertEquals(false, nullAtt.isAttendeeVerified());
+        //assertEquals(false, nullAtt.isAttendeeVerified());
         assertEquals(0, nullAtt.getTimesCheckedIn());
     }
 
     /**
      * This method tests the isAttendeeVerified method
      */
-    @Test
-    public void testGetVerified() {
-        Attendance testAtt = mockAttendance();
-        assertTrue(testAtt.isAttendeeVerified());
-    }
+//    @Test
+//    public void testGetVerified() {
+//        Attendance testAtt = mockAttendance();
+//        assertTrue(testAtt.isAttendeeVerified());
+//    }
 
     /**
      * This method tests the setAttendeeVerified method
      */
-    @Test
-    public void testSetVerified() {
-        Attendance testAtt = mockAttendance();
-        testAtt.setAttendeeVerified(false);
-        assertFalse(testAtt.isAttendeeVerified());
-    }
+//    @Test
+//    public void testSetVerified() {
+//        Attendance testAtt = mockAttendance();
+//        testAtt.setAttendeeVerified(false);
+//        assertFalse(testAtt.isAttendeeVerified());
+//    }
 
     /**
      * This method tests the getEventID method

@@ -113,6 +113,7 @@ public class ChooseReUseEventFragment extends DialogFragment {
      *
      * @return the dialog to be created
      */
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction.

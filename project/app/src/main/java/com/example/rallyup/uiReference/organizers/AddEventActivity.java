@@ -76,7 +76,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
     private String eventDate, eventTime, userID;
-    private Integer signupLimit = -1;
+    private Integer signupLimit = 1;
     private Boolean geolocation, signupLimitInput, reUseQR, newQR;
     private Boolean posterUploaded = false;
     private List<Event> usersPreviousEvents = new ArrayList<>();
