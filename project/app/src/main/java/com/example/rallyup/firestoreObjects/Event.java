@@ -194,16 +194,16 @@ public class Event {
 
         // turn string into integer to validate
         //TODO: uncomment
-//        try {
-//            timeValue = Integer.parseInt(eventTime);
-//        } catch (NumberFormatException e) {
-//            throw new IllegalArgumentException("Time must be a valid integer value");
-//        }
-//
-//        // check if the time is within the valid range (0 - 2400)
-//        if (timeValue < 0 || timeValue > 2400) {
-//            throw new IllegalArgumentException("Time must be between 0 and 2400");
-//        }
+        try {
+            timeValue = Integer.parseInt(eventTime);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Time must be a valid integer value");
+        }
+
+        // check if the time is within the valid range (0 - 2400)
+        if (timeValue < 0 || timeValue > 2400) {
+            throw new IllegalArgumentException("Time must be between 0 and 2400");
+        }
 
         this.eventTime = eventTime;
     }
@@ -234,12 +234,12 @@ public class Event {
      */
     //TODO: uncomment
     public void setCurrentlySignedUp(int currentlySignedUp) {
-//        if (currentlySignedUp < 0) {
-//            throw new IllegalArgumentException("Number of people signed up cannot be negative.");
-//        }
-//        if (currentlySignedUp > signUpLimit) {
-//            throw new IllegalArgumentException("Number of people signed up cannot exceed the sign-up limit.");
-//        }
+        if (currentlySignedUp < 0) {
+            throw new IllegalArgumentException("Number of people signed up cannot be negative.");
+        }
+        if (currentlySignedUp > signUpLimit) {
+            throw new IllegalArgumentException("Number of people signed up cannot exceed the sign-up limit.");
+        }
         this.currentlySignedUp = currentlySignedUp;
     }
     /**
