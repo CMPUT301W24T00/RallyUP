@@ -102,7 +102,7 @@ public class splashScreen extends AppCompatActivity implements FirestoreCallback
         setContentView(R.layout.activity_splash_screen);
 
         // Initializing the Admin SDK for Firebase
-        FirebaseApp.initializeApp(this);
+        //FirebaseApp.initializeApp(this);
 
         organizerBtn = findViewById(R.id.organizer_button);
         attendeeBtn = findViewById(R.id.attendee_button);
