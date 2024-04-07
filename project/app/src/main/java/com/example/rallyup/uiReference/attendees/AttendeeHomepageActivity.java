@@ -74,7 +74,6 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     boolean checkIn, verified = false;
 
     boolean geoLocation;
-    Location curLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
 
     /**
@@ -166,39 +165,51 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     }
 
     private void getLastLocation() {
+        // check if user has geolocation enabled
         if (!geoLocation) {
+            // set point to null
+            fc.updateUserGeoPointFields(ls.getUserID(this), "latlong",null,AttendeeHomepageActivity.this);
             return;
         }
+
+        // similar permissions check where if location was not granted
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            fc.updateUserGeoPointFields(ls.getUserID(this), "latlong",null,AttendeeHomepageActivity.this);
             return;
         }
-        Log.d("getLastLocation", "before task initializaiton");
+
+        // task for location provider
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        Log.d("getLastLocation", "before if condition");
+
+        // check if was able to initialize location provider
         if (fusedLocationProviderClient != null) {
-            Log.d("getLastLocation", "fused not null");
+
+            // if successful
             task.addOnSuccessListener(location -> {
-//                Toast.makeText(AttendeeHomepageActivity.this, "Doomed but before", Toast.LENGTH_LONG).show();
-                Log.d("getLastLocation", "before location condition");
+
+                // check if location of device is null
                 if (location != null) {
-                    curLocation = location;
-//                    Toast.makeText(this, "Latitude: " + curLocation.getLatitude() + ", Longitude: " + curLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+
                     GeoPoint newPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
                     fc.updateUserGeoPointFields(ls.getUserID(this), "latlong",newPoint,AttendeeHomepageActivity.this);
-                    Log.d("getLastLocation", "Latitude: " + curLocation.getLatitude() + ", Longitude: " + curLocation.getLongitude());
+                    Log.d("getLastLocation", "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude());
                 } else {
 //                    Toast.makeText(this, "bruh location is null", Toast.LENGTH_SHORT).show();
                     Log.d("getLastLocation", "Location is null");
 
                 }
             });
+
+            // upon failure of task
             task.addOnFailureListener(e -> {
-                Toast.makeText(AttendeeHomepageActivity.this, "Doomed", Toast.LENGTH_LONG).show();
+                Log.d("getLastLocation", "Task failure");
+
+//                Toast.makeText(AttendeeHomepageActivity.this, "Doomed", Toast.LENGTH_LONG).show();
 
             });
+            // location provide is null
         } else {
-            Toast.makeText(AttendeeHomepageActivity.this, "Doomed coz null", Toast.LENGTH_LONG).show();
-
+            Log.d("getLastLocation", "Location provider null");
         }
     }
 
