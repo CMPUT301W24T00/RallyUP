@@ -60,6 +60,7 @@ public class FirestoreController {
     private final CollectionReference eventRegistrationRef;
 
     private final CollectionReference qrRef;
+    private final String qrImageStorageLocation = "images/QR/"; // + the QRCodeID
 
     /**
      * This method constructs a firestore controller using references to the firecase and important collections
@@ -79,6 +80,48 @@ public class FirestoreController {
      */
     public static FirestoreController getInstance() {
         return instance;
+    }
+
+    /**
+     * This method gets the bitmap associated with a QrCode object
+     * @param qrCode a QrCode object to get the bitmap of
+     * @param callbackListener a listener for the firestore
+     */
+    public void getBitmapByQRCode(QrCode qrCode, FirestoreCallbackListener callbackListener) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference(qrImageStorageLocation + qrCode.getQrId());
+        storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        // Convert the bytes to a Bitmap
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        // Use the Bitmap
+                        callbackListener.onGetBitmap(bitmap);
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
+     * This method gets the share qrCode related to the event
+     * @param jobId the string identification of a job
+     * @param eventID a string for the identification of an event
+     * @param callbackListener a listener for the firestore
+     */
+    public void getQRCodeByEventID(String jobId, String eventID, Boolean checkIn, FirestoreCallbackListener callbackListener) {
+        DocumentReference docRef = eventsRef.document(eventID);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                String tag = (checkIn) ? "checkInQRRef" : "shareQRRef";
+                String qrID = documentSnapshot.getString(tag);
+                DocumentReference docRef = qrRef.document(qrID);
+                docRef.get().addOnSuccessListener(documentSnapshot_ -> {
+                    QrCode qrCode;
+                    qrCode = documentSnapshot_.toObject(QrCode.class);
+                    callbackListener.onGetQrCode(qrCode, jobId);
+                }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
+            }
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
     }
 
     /**
@@ -128,21 +171,22 @@ public class FirestoreController {
     }
 
     /**
-     * This method takes in a qr code objecet and a bitmap, and allows the user to modify/update a qr code
+     * This method takes in a qr code object and a bitmap, and allows the user to modify/update a qr code
      * @param qrCode an object containing the details of a qr code
      * @param bm a bitmap
      */
     public void updateQrCode(QrCode qrCode, Bitmap bm) {
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("eventID", qrCode.getEventID());
         FirebaseStorage storage = FirebaseStorage.getInstance();
-
         StorageReference storageReference = storage.getReference();
-        StorageReference qrImgRef = storageReference.child("images/QR/"+ qrCode.getQrId());
+        StorageReference qrImgRef = storageReference.child(qrImageStorageLocation + qrCode.getQrId());
         uploadImageBitmap(bm, qrImgRef);
 
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("eventID", qrCode.getEventID());
         data.put("image", qrImgRef.getPath());
         data.put("checkIn", qrCode.isCheckIn());
+        data.put("qrID", qrCode.getQrId());
+
         qrRef.document(qrCode.getQrId()).set(data);
     }
 
@@ -766,8 +810,8 @@ public class FirestoreController {
         data.put("reUseQR", event.getReUseQR());
         data.put("newQR", event.getNewQR());
         data.put("posterRef", event.getPosterRef());
-        data.put("shareQRRef", event.getShareQRRef());
-        data.put("checkInQRRef", event.getCheckInQRRef());
+        data.put("shareQRRef", event.getShareQRId());
+        data.put("checkInQRRef", event.getCheckInQRId());
         data.put("userID", event.getOwnerID());
         data.put("eventID", event.getEventID());
 

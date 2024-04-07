@@ -20,8 +20,8 @@ public class Event {
     private Boolean reUseQR;
     private Boolean newQR;
     private String posterRef;
-    private String shareQRRef;
-    private String checkInQRRef;
+    private String shareQRId;
+    private String checkInQRId;
     private String ownerID;
     private String eventID;
 
@@ -45,14 +45,14 @@ public class Event {
      * @param reUseQR          The permissions for reusing QR Codes for the event.
      * @param newQR            The permissions for generating new QR Codes for the event.
      * @param posterRef        The String path to where the Event poster is stored in firebase icloud storage.
-     * @param shareQRRef       The String path to where the share QR code image is stored in firebase icloud storage.
-     * @param checkInQRRef     The String path to where the check in QR code image is stored in firebase icloud storage.
+     * @param shareQRId       The QRID to where the share QR code image is stored in firebase icloud storage.
+     * @param checkInQRId     The QRID to where the check in QR code image is stored in firebase icloud storage.
      * @param ownerID          A String that represents the unique userID of the event owner.
      * @param eventID          A String that represents the unique event ID.
      */
     public Event(String eventName, String eventLocation, String eventDescription, String eventDate, String eventTime,
                  int signUpLimit, int currentlySignedUp, Boolean signUpLimitBool, Boolean geolocation, Boolean reUseQR, Boolean newQR,
-                 String posterRef, String shareQRRef, String checkInQRRef, String ownerID, String eventID) {
+                 String posterRef, String shareQRId, String checkInQRId, String ownerID, String eventID) {
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventDescription = eventDescription;
@@ -65,8 +65,8 @@ public class Event {
         this.reUseQR = reUseQR;
         this.newQR = newQR;
         this.posterRef = posterRef;
-        this.shareQRRef = shareQRRef;
-        this.checkInQRRef = checkInQRRef;
+        this.shareQRId = shareQRId;
+        this.checkInQRId = checkInQRId;
         this.ownerID = ownerID;
         this.eventID = eventID;
     }
@@ -343,8 +343,8 @@ public class Event {
      *
      * @return The path to the event share QR code image stored in firebase icloud storage.
      */
-    public String getShareQRRef() {
-        return shareQRRef;
+    public String getShareQRId() {
+        return shareQRId;
     }
 
     /**
@@ -352,8 +352,8 @@ public class Event {
      *
      * @param shareQRRef The new path to the share QR code image stored in firebase icloud storage.
      */
-    public void setShareQRRef(String shareQRRef) {
-        this.shareQRRef = shareQRRef;
+    public void setShareQRId(String shareQRRef) {
+        this.shareQRId = shareQRRef;
     }
 
     /**
@@ -361,8 +361,8 @@ public class Event {
      *
      * @return The path to the event check-in QR code image stored in firebase icloud storage.
      */
-    public String getCheckInQRRef() {
-        return checkInQRRef;
+    public String getCheckInQRId() {
+        return checkInQRId;
     }
 
     /**
@@ -370,8 +370,8 @@ public class Event {
      *
      * @param checkInQRRef The new path to the check-in QR code image stored in firebase icloud storage.
      */
-    public void setCheckInQRRef(String checkInQRRef) {
-        this.checkInQRRef = checkInQRRef;
+    public void setCheckInQRId(String checkInQRRef) {
+        this.checkInQRId = checkInQRRef;
     }
 
     /**
