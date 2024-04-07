@@ -84,8 +84,20 @@ public class Event {
         setEventID(documentSnapshot.getString("eventID"));
         setEventName(documentSnapshot.getString("eventName"));
         setEventDate(documentSnapshot.getString("eventDate"));
+//        setEventTime(documentSnapshot.getString("eventTime"));
         setEventLocation(documentSnapshot.getString("eventLocation"));
         setEventDescription(documentSnapshot.getString("eventDescription"));
+//        setSignUpLimit(Math.toIntExact(documentSnapshot.getLong("signUpLimit")));
+//        setCurrentlySignedUp(Math.toIntExact(documentSnapshot.getLong("currentlySignedUp")));
+//        setSignUpLimitBool(documentSnapshot.getBoolean("signUpLimitBool"));
+//        setOwnerID(documentSnapshot.getString("userID"));
+//        setCheckInQRRef(documentSnapshot.getString("checkInQRRef"));
+//        setShareQRRef(documentSnapshot.getString("shareQRRef"));
+//        setPosterRef(documentSnapshot.getString("posterRef"));
+//        setGeolocation(documentSnapshot.getBoolean("geolocation"));
+//        setNewQR(documentSnapshot.getBoolean("newQR"));
+//        setReUseQR(documentSnapshot.getBoolean("reUseQR"));
+
     }
 
     /**

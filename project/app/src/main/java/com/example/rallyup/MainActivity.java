@@ -8,12 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.rallyup.uiReference.attendees.AttendeeUpdateActivity;
 import com.example.rallyup.notification.NotificationObject;
-import com.example.rallyup.progressBar.ProgressBarActivity;
 import com.example.rallyup.uiReference.organizers.EventAttendeesInfoActivity;
-
-import org.checkerframework.checker.units.qual.A;
 
 /**
  * This class contains the main activity of the app which will temporarily hold direct access to features
@@ -34,9 +30,18 @@ public class MainActivity extends AppCompatActivity {
         // Create your notification channels AS SOON as the App begins
         // Doesn't hurt if you keep recreating new ones
         NotificationObject notificationObject = new NotificationObject(this);
-        notificationObject.createNotificationChannel(getString(R.string.notification_channel_ID_milestone),
-                getString(R.string.notification_channel_description_milestone),
-                getString(R.string.notification_channel_description_milestone),
+
+        String notification_channel_ID =
+                getString(R.string.notification_channel_ID_default);
+        String notification_channel_name =
+                getString(R.string.notification_channel_name_default);
+        String notification_channel_description=
+                getString(R.string.notification_channel_description_default);
+
+        notificationObject.createNotificationChannel(
+                notification_channel_ID,
+                notification_channel_name,
+                notification_channel_description,
                 NotificationCompat.PRIORITY_DEFAULT);
 
         Button progressButton = findViewById(R.id.ProgressBarButton);
@@ -46,16 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        Button attendeeUpdateInfoButton = findViewById(R.id.AttendeeUpdateInfoButton);
 
-
-        progressButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =
-                        new Intent(com.example.rallyup.MainActivity.this,
-                                ProgressBarActivity.class);
-                startActivity(intent);
-            }
-        });
         uiLayoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -47,11 +47,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/attendeeUpdateInfoImageViewXML"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:background="@drawable/attendee_icon_temp"
+                    app:shapeAppearanceOverlay="@style/circleStyle"
+                    app:strokeWidth="5dp"
+                    app:strokeColor="@color/lightColor"
                     android:foregroundGravity="center"
                     android:paddingStart="6dp"
                     android:paddingTop="6dp"
