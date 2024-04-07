@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,6 +43,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -202,6 +204,7 @@ public class FirestoreController {
             } else {
                 user.setLatlong(null);
             }
+            user.setWantNotifications(documentSnapshot.getBoolean("wantNotifications"));
 
             callbackListener.onGetUser(user);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
@@ -652,6 +655,29 @@ public class FirestoreController {
     }
 
     /**
+     * This method uses the eventID given to query all attendees that have the same eventID
+     * Then it passes their userIDs into a list that getCheckedInUsersFCMTokens() will use
+     * to get the users' FCM Tokens and pass that into a list.
+     * @param eventID String of the eventID that the user is interested in
+     * @param callbackListener the listener that will return the information once query is done
+     */
+    public void getAttendeeIDsForFCMTokens(String eventID, FirestoreCallbackListener callbackListener){
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<String> userIDs = new ArrayList<>();
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Attendance attendance;
+                attendance = documentSnapshot.toObject(Attendance.class);
+                String aUserID = attendance.getUserID();
+                if(aUserID != null){
+                    userIDs.add(aUserID);
+                }
+            }
+            getCheckedInUsersFCMTokens(userIDs, callbackListener);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
      * This method retrieves all userID's of the users checked-in to a specific event
      * @param eventID the unique ID of the user
      * @param callbackListener a listener for the firestore
@@ -672,6 +698,34 @@ public class FirestoreController {
     }
 
     /**
+     * This method queries all users that have their "wantNotifications" field set to true,
+     * then see if their documentId is within the userList that was passed through.
+     * If it is, then we add their FCMToken assuming that it's valid and not null.
+     * @param userList String of the userIDs that we want to send notifications to
+     * @param callbackListener the listener that will return the information once query is done
+     */
+    public void getCheckedInUsersFCMTokens(List<String> userList, FirestoreCallbackListener callbackListener){
+        List<String> fcmTokens = new ArrayList<>();
+        // Get user documents THAT WANT notifications
+        usersRef.whereEqualTo("wantNotifications", true)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (QueryDocumentSnapshot snapshot : task.getResult()){
+                            // IF the array of userIDs in userList CONTAINS the current documentID (== userID)
+                            if (userList.contains(snapshot.getId())){
+                                // Add the value from field "fcmToken" of the current document
+                                fcmTokens.add(snapshot.getString("fcmToken"));
+                                Log.d("getCheckedInUsersFCMTokens", snapshot.getId());
+                            }
+                        }
+                        callbackListener.onGetFCMTokens(fcmTokens);
+                    }
+                });
+    }
+                                          
+    /**
      * This method retrieves all userID's of the users checked-in to a specific event
      * @param eventID the unique ID of the user
      * @param callbackListener a listener for the firestore
@@ -691,7 +745,6 @@ public class FirestoreController {
             callbackListener.onGetRegisteredAttendants(registeredUsers);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
-
 
     /**
      * Adds a new Event to the event collection in firebase
@@ -753,6 +806,8 @@ public class FirestoreController {
     public void createUserID(final OnCompleteListener<DocumentReference> onCompleteListener) {
         usersRef.add(new User())
                 .addOnCompleteListener(onCompleteListener);
+
+        // Should we initialize the user ID as well here?
     }
 
     /**
@@ -829,6 +884,9 @@ public class FirestoreController {
      */
     public void getPosterByEventID(String posterPath, Context context, ImageView poster) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(posterPath);
+//        Glide.with(context)
+//                .load(storageReference)
+//                .into(poster);
         Glide.with(context)
                 .load(storageReference)
                 .diskCacheStrategy(DiskCacheStrategy.NONE) // <= ADDED
@@ -836,6 +894,24 @@ public class FirestoreController {
                 .error(R.drawable.ic_launcher_foreground)
                 .into(poster);
     }
+
+    public void deleteFile(String filePath){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePath);
+        storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                // File deleted successfully
+                Log.w("FirestoreController", "File deleted from " + filePath);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // OH NO ERROR!
+                Log.e("FirestoreController", "File unable to be deleted: ", e);
+            }
+        });
+    }
+
 }
 
 

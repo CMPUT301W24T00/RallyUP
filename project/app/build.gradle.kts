@@ -62,6 +62,13 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("com.google.maps.android:android-maps-utils:3.8.0")
 
+    // Google FCM Notification
+    implementation("com.google.firebase:firebase-messaging")
+    // OkHTTP for talking to Firebase servers for Notifications
+    // Version 4.12.0 is most recent
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+
     // implementation("org.testng:testng:6.9.6")
 
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
@@ -75,6 +82,7 @@ dependencies {
 
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.zxing:core:3.4.1")
+
 //    implementation(files("C:/Users/reima/AppData/Local/Android/Sdk/platforms/android-34/android.jar"))
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
