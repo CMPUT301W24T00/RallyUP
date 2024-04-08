@@ -148,7 +148,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
             Event selectedEvent = eventAdapter.getItem(i);
 
             String eventID = selectedEvent.getEventID();
-            Intent intent = new Intent(AttendeeMyEventsActivity.this, AttendeeEventDetails.class);
+            Intent intent = new Intent(AttendeeMyEventsActivity.this, AttendeeRegisteredEvent.class);
             intent.putExtra("key", eventID);
             startActivity(intent);
         });
