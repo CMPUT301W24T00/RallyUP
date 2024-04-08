@@ -14,198 +14,197 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/att_main_details"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <ImageButton
+                    android:id="@+id/att_registered_back_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:contentDescription="BackButton"
+                    android:src="@drawable/back_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.051"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/roundedCornersTop" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/rectangle_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/lightColor" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <ImageButton
-                        android:id="@+id/att_registered_back_btn"
+                    <TextView
+                        android:id="@+id/att_registered_event_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#00000000"
-                        android:contentDescription="BackButton"
-                        android:src="@drawable/back_arrow"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.051"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:text="@string/event_name"
+                        android:textColor="@color/darkColor"
+                        android:textSize="40dp" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/roundedCornersTop" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <View
-                        android:id="@+id/rectangle_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@color/lightColor" />
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_extrabold"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:text="@string/announcements_fixed"
+                        android:textColor="@color/darkColor"
+                        android:textSize="30sp" />
 
-                        <TextView
-                            android:id="@+id/att_registered_event_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/inter_extrabold"
-                            android:text="@string/event_name"
-                            android:textColor="@color/darkColor"
-                            android:textSize="40dp" />
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="300dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_margin="20dp"
-                            android:background="@drawable/rounded_border">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <LinearLayout
-                                    android:id="@+id/linearLayout6"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.609">
-
-                                    <ImageView
-                                        android:id="@+id/imageView7"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="20dp"
-                                        android:layout_weight="1"
-                                        app:srcCompat="@drawable/date_calendar" />
-
-                                    <TextView
-                                        android:id="@+id/att_register_event_date"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/inter_semibold"
-                                        android:text="@string/event_date"
-                                        android:textColor="@color/darkColor"
-                                        android:textSize="18sp" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/linearLayout3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    app:layout_constraintBottom_toTopOf="@+id/att_register_event_details"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.8">
-
-                                    <ImageView
-                                        android:id="@+id/imageView13"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="20dp"
-                                        android:layout_weight="1"
-                                        app:srcCompat="@drawable/location" />
-
-                                    <TextView
-                                        android:id="@+id/att_register_event_location"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/inter_semibold"
-                                        android:text="@string/event_location"
-                                        android:textColor="@color/darkColor"
-                                        android:textSize="18sp" />
-
-                                </LinearLayout>
-
-                                <TextView
-                                    android:id="@+id/att_register_event_details"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/inter_medium"
-                                    android:gravity="center"
-                                    android:padding="10dp"
-                                    android:text="@string/event_details"
-                                    android:textColor="@color/darkColor"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.0"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.502" />
-
-                                <View
-                                    android:id="@+id/backgroundOverlay"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="#BF481620"
-                                    android:visibility="invisible"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.0"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.0" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        </FrameLayout>
-
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter_extrabold"
-                            android:gravity="center"
-                            android:text="@string/announcements_fixed"
-                            android:textColor="@color/darkColor"
-                            android:textSize="30sp" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:foreground="@drawable/rounded_border_brown">
 
                         <ListView
                             android:id="@+id/announcements_list"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp"
                             android:background="@drawable/rounded_border_brown" />
+                    </FrameLayout>
 
-                    </LinearLayout>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="20dp"
+                        android:background="@drawable/rounded_border">
 
-                </FrameLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-            </LinearLayout>
-        </ScrollView>
+                            <LinearLayout
+                                android:id="@+id/linearLayout6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.609">
+
+                                <ImageView
+                                    android:id="@+id/imageView7"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_weight="1"
+                                    app:srcCompat="@drawable/date_calendar" />
+
+                                <TextView
+                                    android:id="@+id/att_register_event_date"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/inter_semibold"
+                                    android:text="@string/event_date"
+                                    android:textColor="@color/darkColor"
+                                    android:textSize="18sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linearLayout3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintBottom_toTopOf="@+id/att_register_event_details"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.8">
+
+                                <ImageView
+                                    android:id="@+id/imageView13"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_weight="1"
+                                    app:srcCompat="@drawable/location" />
+
+                                <TextView
+                                    android:id="@+id/att_register_event_location"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/inter_semibold"
+                                    android:text="@string/event_location"
+                                    android:textColor="@color/darkColor"
+                                    android:textSize="18sp" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/att_register_event_details"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_medium"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="@string/event_details"
+                                android:textColor="@color/darkColor"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.847" />
+
+                            <View
+                                android:id="@+id/backgroundOverlay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#BF481620"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
 
     </FrameLayout>
 
