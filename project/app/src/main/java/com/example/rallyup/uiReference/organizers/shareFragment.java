@@ -87,6 +87,9 @@ public class shareFragment extends DialogFragment implements FirestoreCallbackLi
         controller.getQRIDByEventID("checkIn", eventID, true, this);
     }
 
+    /**
+     * Default constructor for the share fragment
+     */
 //    @Override
 //    public void onGetQrCode(QrCode qrCode, String jobId){
 //        if(jobId.equals("share")){
@@ -158,7 +161,11 @@ public class shareFragment extends DialogFragment implements FirestoreCallbackLi
         });
     }
 
-
+    /**
+     * This method allows for the sharing of an image to other apps
+     * @param mBitmap the bitmap to be shared
+     * @param checkIn the boolean for check in
+     */
     public void share(Bitmap mBitmap, Boolean checkIn){
         //Drawable mDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable._icon__email_, null);
         //assert mDrawable != null;

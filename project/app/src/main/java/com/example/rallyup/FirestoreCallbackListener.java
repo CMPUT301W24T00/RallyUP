@@ -156,10 +156,7 @@ public interface FirestoreCallbackListener {
 
     }
     default void onGetCheckInQRPath(String qrPath){
-
     }
-
-
     default void onGetLatLngs(List<LatLng> latLngs){
 
     }

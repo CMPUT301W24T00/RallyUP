@@ -14,6 +14,9 @@ import com.example.rallyup.firestoreObjects.Event;
 
 import java.util.List;
 
+/**
+ * This class contains the activity that allows an admin to browse events to be deleted
+ */
 public class AdminBrowseEventsActivity extends AppCompatActivity implements FirestoreCallbackListener {
     ListView listView;
     ImageButton backBtn;

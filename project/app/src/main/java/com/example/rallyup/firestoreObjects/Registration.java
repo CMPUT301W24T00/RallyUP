@@ -2,6 +2,9 @@ package com.example.rallyup.firestoreObjects;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
+/**
+ * This class represents the registration record of a user for an event
+ */
 public class Registration {
     /**
      * The ID of the event.

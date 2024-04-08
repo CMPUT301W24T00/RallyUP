@@ -14,6 +14,9 @@ import com.example.rallyup.firestoreObjects.User;
 
 import java.util.List;
 
+/**
+ * This class contains the activity tha allows an admin to browse profiles to be deleted
+ */
 public class AdminBrowseProfiles extends AppCompatActivity implements FirestoreCallbackListener {
     ListView listView;
     ImageButton backBtn;
