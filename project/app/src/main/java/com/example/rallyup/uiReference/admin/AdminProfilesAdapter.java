@@ -17,6 +17,9 @@ import com.example.rallyup.firestoreObjects.User;
 
 import java.util.List;
 
+/**
+ * This class contains the adapter for the profile objects
+ */
 public class AdminProfilesAdapter extends BaseAdapter implements FirestoreCallbackListener {
     private Context context;
     private List<User> userList;

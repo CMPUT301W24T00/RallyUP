@@ -85,12 +85,62 @@ public class FirestoreController {
         return instance;
     }
 
+
+    /**
+     * This method deletes an image based on the path
+     * @param path a string for the identification of an image
+     * @param callbackListener a listener for the firestore
+     */
+    public void deleteImageByPath(String path, FirestoreCallbackListener callbackListener) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child(path);
+        // Delete the document
+        imageRef.delete().addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
+     * This method gets all the images associated with a user or event
+     * @param callbackListener a listener for the firestore
+     */
+    public void getImageReferences(FirestoreCallbackListener callbackListener) {
+        List<Object> combinedEventsUsers = new ArrayList<>();
+
+        usersRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<User> userList = new ArrayList<>();
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                User thisUser = documentSnapshot.toObject(User.class);
+                thisUser.setId(documentSnapshot.getId());
+                userList.add(thisUser);
+            }
+            combinedEventsUsers.addAll(userList);
+
+            // Now fetch events
+            eventsRef.get().addOnSuccessListener(eventQueryDocumentSnapshots -> {
+                List<Event> eventList = new ArrayList<>();
+                for (QueryDocumentSnapshot eventDocumentSnapshot : eventQueryDocumentSnapshots) {
+                    Event thisEvent = eventDocumentSnapshot.toObject(Event.class);
+                    if (thisEvent.getEventName() != null) {
+                        eventList.add(thisEvent);
+                    }
+                }
+                combinedEventsUsers.addAll(eventList);
+
+                // Invoke callback with combined data
+                callbackListener.onGetImages(combinedEventsUsers);
+
+            }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting events documents: " + e));
+
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting users documents: " + e));
+
+    }
+
     /**
      * This method gets the bitmap associated with a QrCode object
      * @param qrCode a QrCode object to get the bitmap of
      * @param callbackListener a listener for the firestore
      */
-    public void getBitmapByQRCode(QrCode qrCode, FirestoreCallbackListener callbackListener) {
+    public void getBitmapByQRCode(QrCode qrCode, String jobId, FirestoreCallbackListener callbackListener) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(qrImageStorageLocation + qrCode.getQrId());
         storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
@@ -98,7 +148,39 @@ public class FirestoreController {
                         // Convert the bytes to a Bitmap
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         // Use the Bitmap
-                        callbackListener.onGetBitmap(bitmap);
+                        if(jobId.equals("share")){
+                            callbackListener.onGetShareBitmap(bitmap);
+                        }
+                        else{
+                            callbackListener.onGetCheckInBitmap(bitmap);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
+     * This method gets the bitmap associated with a QrCode object
+     * @param qrId the unique id of the QrCode object to get the bitmap of
+     * @param callbackListener a listener for the firestore
+     */
+    public void getBitmapByQRID(String qrId, String jobId, FirestoreCallbackListener callbackListener) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference(qrImageStorageLocation + qrId);
+        Log.d("GETBITMAP", "getBitmapByQRCode: "+storageReference);
+        storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        // Convert the bytes to a Bitmap
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        // Use the Bitmap
+                        if(jobId.equals("checkIn")){
+                            callbackListener.onGetCheckInBitmap(bitmap);
+                            callbackListener.onGetCheckInQRPath(qrImageStorageLocation + qrId);
+                        }
+                        if(jobId.equals("share")){
+                            callbackListener.onGetShareBitmap(bitmap);
+                            callbackListener.onGetShareQRPath(qrImageStorageLocation + qrId);
+                        }
                     }
                 })
                 .addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
@@ -109,20 +191,17 @@ public class FirestoreController {
      * @param jobId the string identification of a job
      * @param eventID a string for the identification of an event
      * @param callbackListener a listener for the firestore
+     * @param checkIn the boolean for check in
      */
-    public void getQRCodeByEventID(String jobId, String eventID, Boolean checkIn, FirestoreCallbackListener callbackListener) {
+    public void getQRIDByEventID(String jobId, String eventID, Boolean checkIn, FirestoreCallbackListener callbackListener) {
         DocumentReference docRef = eventsRef.document(eventID);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 String tag = (checkIn) ? "checkInQRRef" : "shareQRRef";
                 String qrID = documentSnapshot.getString(tag);
-                DocumentReference docRef = qrRef.document(qrID);
-                docRef.get().addOnSuccessListener(documentSnapshot_ -> {
-                    QrCode qrCode;
-                    qrCode = documentSnapshot_.toObject(QrCode.class);
-                    callbackListener.onGetQrCode(qrCode, jobId);
-                }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
+                Log.d("QRID", "onSuccess: " + qrID);
+                callbackListener.onGetQRID(qrID, jobId);
             }
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
     }
@@ -571,6 +650,7 @@ public class FirestoreController {
      * @param eventID the event being registered for
      * @param userID the user checking in
      * @param callbackListener a listener for the firestore
+     * @param context the context for the activtiy
      */
     public void newRegistration(String eventID, String userID, Context context, FirestoreCallbackListener callbackListener) {
         Query query = eventRegistrationRef.whereEqualTo("userID", userID);
@@ -725,7 +805,7 @@ public class FirestoreController {
      * This method uses the userIDs in the userList and passes the corresponding user's GeoPoint coordinates into
      * a list of LatLng objects called latLngs. In which the callbackListener has access to.
      * @param userList A list of string objects, hopefully the userIDs of users
-     * @param callbackListner The callbackListener of choice
+     * @param callbackListener The callbackListener of choice
      */
     public void getLatLongFromUsers(List<String> userList, FirestoreCallbackListener callbackListener){
         List<LatLng> latLngs = new ArrayList<>();
@@ -893,6 +973,10 @@ public class FirestoreController {
         eventAttendanceRef.document(attendanceID).set(data);
     }
 
+    /**
+     * This method adds a registration object to the event registration collection
+     * @param registration the registration object
+     */
     public void addRegistration(Registration registration) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("eventID", registration.getEventID());
@@ -1004,6 +1088,10 @@ public class FirestoreController {
 
     }
 
+    /**
+     * This method deletes a file given a filepath
+     * @param filePath the path of the file
+     */
     public void deleteFile(String filePath){
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePath);
         storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {

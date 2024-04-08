@@ -20,6 +20,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * This class contains the adapter for the event objects
+ */
 public class AdminEventAdapter extends BaseAdapter implements FirestoreCallbackListener {
         private Context context;
         private List<Event> eventList;
@@ -123,6 +126,11 @@ public class AdminEventAdapter extends BaseAdapter implements FirestoreCallbackL
             return convertView;
     }
 
+    /**
+     * This function properly formats a given date
+     * @param date the date to be formatted
+     * @return the formatted version of the date
+     */
     public String getProperDateFormatting(String date) {
         String year = date.substring(0,4);
         String month;
