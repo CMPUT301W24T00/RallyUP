@@ -7,6 +7,7 @@ import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.firestoreObjects.User;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -132,6 +133,10 @@ public interface FirestoreCallbackListener {
      * @param timesCheckedIn an Integer that represents how many times the user has checked in to that event
      */
     default void onGetCheckIns(Integer timesCheckedIn) {
+
+    }
+
+    default void onGetLatLngs(List<LatLng> latLngs){
 
     }
 }

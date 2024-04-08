@@ -18,7 +18,10 @@ import com.example.rallyup.firestoreObjects.Event;
 
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.Registration;
+import com.google.android.gms.maps.model.LatLng;
+
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.example.rallyup.firestoreObjects.User;
@@ -696,6 +699,63 @@ public class FirestoreController {
                 //}
             }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
         }
+    }
+    
+    /**
+     * This method uses eventID to get the userIDs into an array and passes it through to getLatLongFromUsers
+     * @param eventID The eventID string
+     * @param callbackListener The FirestoreCallbackListener of choice
+     */
+    public void getCheckedInUserIDs2(String eventID, FirestoreCallbackListener callbackListener) {
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID); //eventRegistrationRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<String> userList = new ArrayList<>();
+            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Attendance attendance;
+                attendance = documentSnapshot.toObject(Attendance.class);
+                String aUserID = attendance.getUserID();
+                if(aUserID != null){
+                    userList.add(aUserID);
+                }
+            }
+            getLatLongFromUsers(userList, callbackListener);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+    /**
+     * This method uses the userIDs in the userList and passes the corresponding user's GeoPoint coordinates into
+     * a list of LatLng objects called latLngs. In which the callbackListener has access to.
+     * @param userList A list of string objects, hopefully the userIDs of users
+     * @param callbackListner The callbackListener of choice
+     */
+    public void getLatLongFromUsers(List<String> userList, FirestoreCallbackListener callbackListener){
+        List<LatLng> latLngs = new ArrayList<>();
+        usersRef.whereEqualTo("geolocation", true)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                // If our userList contains the current Document we're looking at
+                                if (userList.contains(documentSnapshot.getId())) {
+                                    // If so, then get the GeoPoint of the user
+                                    GeoPoint geoPoint = (GeoPoint) documentSnapshot.get("latlong");
+                                    try {
+                                        // Because some people may have null geoPoints (which shouldn't be the case)
+                                        // but just for good measure
+                                        latLngs.add(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()));
+                                    } catch (NullPointerException e){
+                                        Log.e("getLatLongFromUsers", "NullPointerException: ", e);
+                                    }
+                                    Log.d("getLatLongFromUsers", "GeoPoint: " + geoPoint);
+                                }
+                            }
+                        } else {
+                            Log.w("getLatLongFromUsers", "Task was unsuccessful!");
+                        }
+                        callbackListener.onGetLatLngs(latLngs);
+                        Log.d("getLatLongFromUsers", "Reached the end of the onComplete");
+                    }
+                });
     }
 
     /**
