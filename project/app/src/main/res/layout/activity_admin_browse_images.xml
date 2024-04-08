@@ -45,11 +45,18 @@
                 android:textAlignment="textEnd"
                 tools:ignore="RtlCompat"  />
         </LinearLayout>
+
         <GridView
+            android:id="@+id/admin_images_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusableInTouchMode="true"
-            android:padding="40dp"
-            android:numColumns="2" />
+            android:layout_gravity="center_horizontal"
+            android:columnWidth="150dp"
+            android:horizontalSpacing="10dp"
+            android:numColumns="auto_fit"
+            android:padding="10dp"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

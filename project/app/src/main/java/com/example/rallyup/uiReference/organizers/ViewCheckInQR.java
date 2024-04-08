@@ -64,8 +64,6 @@ public class ViewCheckInQR extends DialogFragment implements FirestoreCallbackLi
             controller.getBitmapByQRID(checkInCode, jobId, this);
         }
     }
-
-
     public ViewCheckInQR() {
         // Required empty public constructor
     }

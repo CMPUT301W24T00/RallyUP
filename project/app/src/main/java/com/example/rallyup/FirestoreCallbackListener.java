@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.Notification;
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.firestoreObjects.User;
@@ -15,6 +16,18 @@ import java.util.List;
  * This interface contains all methods that occur whenever an attribute is required from the firestore
  */
 public interface FirestoreCallbackListener {
+
+    /**
+     * Upon getting an notification list
+     * @param notifications a list containing the returned notifications
+     */
+    default void onGetNotifications(List<Notification> notifications) {}
+
+    /**
+     * Upon getting an image list
+     * @param combinedEventsUsers a list containing the returned images
+     */
+    default void onGetImages(List<Object> combinedEventsUsers) {}
 
     /**
      * Upon getting a bitmap
@@ -161,10 +174,7 @@ public interface FirestoreCallbackListener {
 
     }
     default void onGetCheckInQRPath(String qrPath){
-
     }
-
-
     default void onGetLatLngs(List<LatLng> latLngs){
 
     }
