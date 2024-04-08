@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 
+import com.example.rallyup.firestoreObjects.Notification;
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.Registration;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -56,8 +57,8 @@ public class FirestoreController {
     private final CollectionReference usersRef;
     private final CollectionReference eventsRef;
     private final CollectionReference eventAttendanceRef;
-
     private final CollectionReference eventRegistrationRef;
+    private final CollectionReference notificationRef;
 
     private final CollectionReference qrRef;
     private final String qrImageStorageLocation = "images/QR/"; // + the QRCodeID
@@ -72,6 +73,7 @@ public class FirestoreController {
         eventAttendanceRef = dbRef.collection("eventAttendance");
         eventRegistrationRef = dbRef.collection("eventRegistration");
         qrRef = dbRef.collection("qrCodes");
+        notificationRef = dbRef.collection("notifications");
     }
 
     /**
@@ -82,6 +84,16 @@ public class FirestoreController {
         return instance;
     }
 
+
+    /**
+     * This method creates a new notification
+     * @param callbackListener a listener for the firestore
+     */
+    public void createNotification(Notification notification, FirestoreCallbackListener callbackListener) {
+        notificationRef.add(notification).addOnSuccessListener(documentReference -> {
+            //callbackListener.on(event);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
 
     /**
      * This method deletes an image based on the path
