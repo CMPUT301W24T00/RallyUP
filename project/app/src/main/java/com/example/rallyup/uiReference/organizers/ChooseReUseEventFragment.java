@@ -51,9 +51,9 @@ public class ChooseReUseEventFragment extends DialogFragment {
     public interface OnInputListener {
         /**
          * This method send an input
-         * @param input a string for input
+         * @param i an integer for input
          */
-        void sendInput(String input);
+        void sendInput(int i);
     }
 
     /**
@@ -130,9 +130,10 @@ public class ChooseReUseEventFragment extends DialogFragment {
                 .setItems(seq, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position of the selected event.
-                        eventChosen = seq[which].toString();
-                        String input = getEventID("a");
-                        mOnInputListener.sendInput(input);
+//                        eventChosen = seq[which].toString();
+//                        String input = getEventID("a");
+//                        mOnInputListener.sendInput(input);
+                        mOnInputListener.sendInput(which);
 
                     }
                 });

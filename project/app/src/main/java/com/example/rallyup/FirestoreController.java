@@ -90,7 +90,7 @@ public class FirestoreController {
      * @param qrCode a QrCode object to get the bitmap of
      * @param callbackListener a listener for the firestore
      */
-    public void getBitmapByQRCode(QrCode qrCode, FirestoreCallbackListener callbackListener) {
+    public void getBitmapByQRCode(QrCode qrCode, String jobId, FirestoreCallbackListener callbackListener) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(qrImageStorageLocation + qrCode.getQrId());
         storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
@@ -98,7 +98,39 @@ public class FirestoreController {
                         // Convert the bytes to a Bitmap
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         // Use the Bitmap
-                        callbackListener.onGetBitmap(bitmap);
+                        if(jobId.equals("share")){
+                            callbackListener.onGetShareBitmap(bitmap);
+                        }
+                        else{
+                            callbackListener.onGetCheckInBitmap(bitmap);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
+     * This method gets the bitmap associated with a QrCode object
+     * @param qrId the unique id of the QrCode object to get the bitmap of
+     * @param callbackListener a listener for the firestore
+     */
+    public void getBitmapByQRID(String qrId, String jobId, FirestoreCallbackListener callbackListener) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference(qrImageStorageLocation + qrId);
+        Log.d("GETBITMAP", "getBitmapByQRCode: "+storageReference);
+        storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        // Convert the bytes to a Bitmap
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        // Use the Bitmap
+                        if(jobId.equals("checkIn")){
+                            callbackListener.onGetCheckInBitmap(bitmap);
+                            callbackListener.onGetCheckInQRPath(qrImageStorageLocation + qrId);
+                        }
+                        if(jobId.equals("share")){
+                            callbackListener.onGetShareBitmap(bitmap);
+                            callbackListener.onGetShareQRPath(qrImageStorageLocation + qrId);
+                        }
                     }
                 })
                 .addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
@@ -111,19 +143,15 @@ public class FirestoreController {
      * @param callbackListener a listener for the firestore
      * @param checkIn the boolean for check in
      */
-    public void getQRCodeByEventID(String jobId, String eventID, Boolean checkIn, FirestoreCallbackListener callbackListener) {
+    public void getQRIDByEventID(String jobId, String eventID, Boolean checkIn, FirestoreCallbackListener callbackListener) {
         DocumentReference docRef = eventsRef.document(eventID);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 String tag = (checkIn) ? "checkInQRRef" : "shareQRRef";
                 String qrID = documentSnapshot.getString(tag);
-                DocumentReference docRef = qrRef.document(qrID);
-                docRef.get().addOnSuccessListener(documentSnapshot_ -> {
-                    QrCode qrCode;
-                    qrCode = documentSnapshot_.toObject(QrCode.class);
-                    callbackListener.onGetQrCode(qrCode, jobId);
-                }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
+                Log.d("QRID", "onSuccess: " + qrID);
+                callbackListener.onGetQRID(qrID, jobId);
             }
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
     }

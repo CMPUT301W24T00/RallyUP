@@ -74,6 +74,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     // @ MARCUS in the function for if the user selects to reuse a QR Code you
     // would save the path to the QR images to these variables
     private String posterPath, shareQRPath, checkInQRPath;
+    private String shareQRId, checkInQRId;
 
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
@@ -98,9 +99,24 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 
     private Uri image = null;
 
-    private String reUseQrID;
+    // private String reUseCheckInQrId, reUseShareQrId;
+    private String reuseEventId;
 
     Map<String, Boolean> generatedDict = new HashMap<>();
+
+    @Override
+    public void onGetEvent(Event event) {
+        String reUseCheckInQrId = event.getCheckInQRId();
+        String reUseShareQrId = event.getShareQRId();
+
+        int currentlySignedUp = 0;
+        Event newEvent = new Event(eventName, eventLocation, eventDescription,
+                eventDate, eventTime, signupLimit, currentlySignedUp, signupLimitInput,
+                geolocation, reUseQR, newQR,
+                posterPath, reUseShareQrId, reUseCheckInQrId, userID, eventID);
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.addEvent(newEvent);
+    }
 
     @Override
     public void onGetEvents(List<Event> events) {
@@ -133,11 +149,13 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             shareImageView.setImageBitmap(bitmap);
             shareImageView.setVisibility(View.VISIBLE);
             shareDisplayText.setVisibility(View.VISIBLE);
+            shareQRId = qrCode.getQrId();
         } else {
             // Check-in QR code
             checkInImageView.setImageBitmap(bitmap);
             checkInImageView.setVisibility(View.VISIBLE);
             checkInDisplayText.setVisibility(View.VISIBLE);
+            checkInQRId = qrCode.getQrId();
         }
 
         // Create eventId
@@ -159,6 +177,13 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
         }
         if (allTrue) {
             // NOW create the event
+            // send the event values to fb
+            int currentlySignedUp = 0;
+            Event newEvent = new Event(eventName, eventLocation, eventDescription,
+                    eventDate, eventTime, signupLimit, currentlySignedUp, signupLimitInput,
+                    geolocation, reUseQR, newQR,
+                    posterPath, shareQRId, checkInQRId, userID, eventID);
+            fc.addEvent(newEvent);
         }
     }
 
@@ -330,14 +355,14 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 
     /**
      * Retrieving the user input from the ChooseReUseEventFragment
-     * @param input a String variable that represents the list option the user selected in the fragment dialogue
+     * @param i an integer variable that represents the list option the user selected in the fragment dialogue
      */
     // Code sourced from:
     // Reference: https://www.geeksforgeeks.org/how-to-pass-data-from-dialog-fragment-to-activity-in-android/
     @Override
-    public void sendInput(String input)
+    public void sendInput(int i)
     {
-        reUseQrID = input;
+        reuseEventId = usersPreviousEvents.get(i).getEventID();
     }
 
 
@@ -491,11 +516,11 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * Uses the firebase to pull up the QR Codes from the event the user selected to reuse QR Codes from,
      * // and sets those QR Codes to be associated with this event
      */
-    public void generateReUseQRCode() {
+    public void getReUseQRCode() {
         // ** @ MARCUS here is the function where we should be switching the QR code to
         // the QR code from the event the user selected to reuse. The event ID should be stored in the variable
         // reUseQrID
-        String qrID = reUseQrID;
+
     }
 
     private void generateQRCode(String jobId) {
@@ -656,13 +681,12 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
         controller.uploadImageBitmap(checkInImageView, checkInQRRef);
     }
 
-
-    /**
-     * This method generates an event id
-     */
-    public void generateEventID() {
-        eventID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-    }
+//    /**
+//     * This method generates an event id
+//     */
+//    public void generateEventID() {
+//        eventID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+//    }
 
     /**
      * This method gets the id of a user from the local storage
@@ -689,8 +713,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
-            generateEventID();
-            getUserID();
+            // generateEventID();
+            // getUserID();
             if(newQR){
 //                generateShareQR();
 //                generateCheckInQR();
@@ -704,17 +728,17 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                 storageRef = storage.getReference();
                 posterRef = storageRef.child("images/Posters/"+ eventID);
                 posterPath = posterRef.getPath();
-                shareQRRef = storageRef.child("images/ShareQR/"+ eventID);
-                shareQRPath = shareQRRef.getPath();
-                checkInQRRef = storageRef.child("images/CheckInQR/"+ eventID);
-                checkInQRPath = checkInQRRef.getPath();
-                uploadCheckInQR();
-                uploadShareQR();
-                posterUploaded = false;
+//                shareQRRef = storageRef.child("images/ShareQR/"+ eventID);
+//                shareQRPath = shareQRRef.getPath();
+//                checkInQRRef = storageRef.child("images/CheckInQR/"+ eventID);
+//                checkInQRPath = checkInQRRef.getPath();
+//                uploadCheckInQR();
+//                uploadShareQR();
             }
             else {
                 // if the user selected to reUse a past Event QR Code
-                generateReUseQRCode();
+                FirestoreController fc = FirestoreController.getInstance();
+                fc.getEventByID(reuseEventId, this);
             }
             // Uploading the Poster to Firebase Icloud Storage
             uploadPoster();
@@ -732,15 +756,16 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             posterImage.setImageDrawable(null);
             resetQR();
             uploadPosterText.setVisibility(View.VISIBLE);
+            posterUploaded = false;
 
             // send the event values to fb
-            int currentlySignedUp = 0;
-            Event newEvent = new Event(eventName, eventLocation, eventDescription,
-                    eventDate, eventTime, signupLimit, currentlySignedUp, signupLimitInput,
-                    geolocation, reUseQR, newQR,
-                    posterPath, shareQRPath, checkInQRPath, userID, eventID);
-            FirestoreController fc = FirestoreController.getInstance();
-            fc.addEvent(newEvent);
+//            int currentlySignedUp = 0;
+//            Event newEvent = new Event(eventName, eventLocation, eventDescription,
+//                    eventDate, eventTime, signupLimit, currentlySignedUp, signupLimitInput,
+//                    geolocation, reUseQR, newQR,
+//                    posterPath, shareQRPath, checkInQRPath, userID, eventID);
+//            FirestoreController fc = FirestoreController.getInstance();
+//            fc.addEvent(newEvent);
 
             Intent intent = new Intent(getBaseContext(), OrganizerEventListActivity.class);
             startActivity(intent);

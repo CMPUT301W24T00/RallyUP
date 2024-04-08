@@ -39,7 +39,7 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
 
 
 
-    FirestoreController controller = new FirestoreController();
+    FirestoreController controller = FirestoreController.getInstance();
 
     /**
      * Upon getting an event it will set the proper fields

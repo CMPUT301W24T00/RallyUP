@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.QrCode;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,18 +40,65 @@ public class shareFragment extends DialogFragment implements FirestoreCallbackLi
     private String eventID;
 
     private Event event;
+    FirestoreController controller = FirestoreController.getInstance();
+    ImageView shareQR, checkInQR;
+    Bitmap shareBM, checkInBM;
+    String checkInCode, shareCode;
+
+
+    @Override
+    public void onGetQRID(String qrID, String jobId){
+        Log.d("TAG", "onGetQRID: " + jobId + " " +qrID);
+        if(jobId.equals("checkIn")){
+            checkInCode = qrID;
+            controller.getBitmapByQRID(checkInCode, jobId, this);
+        }
+        else{
+            shareCode = qrID;
+            controller.getBitmapByQRID(shareCode, jobId, this);
+        }
+    }
+
+    @Override
+    public void onGetCheckInBitmap(Bitmap bitmap) {
+        checkInBM = bitmap;
+    }
+
+    @Override
+    public void onGetShareBitmap(Bitmap bitmap) {
+        shareBM = bitmap;
+    }
+
+    @Override
+    public void onGetShareQRPath(String qrPath){
+        controller.getPosterByEventID(qrPath, getContext(), shareQR);
+    }
+
+    @Override
+    public void onGetCheckInQRPath(String qrPath){
+        controller.getPosterByEventID(qrPath, getContext(), checkInQR);
+    }
 
 
     @Override
     public void onGetEvent(Event event) {
         this.event = event;
-        //controller.getPosterByEventID(event.getShareQRRef(), getContext(), shareQR);
-        //controller.getPosterByEventID(event.getCheckInQRRef(), getContext(), checkInQR);
+        controller.getQRIDByEventID("share", eventID, false, this);
+        controller.getQRIDByEventID("checkIn", eventID, true, this);
     }
 
     /**
      * Default constructor for the share fragment
      */
+//    @Override
+//    public void onGetQrCode(QrCode qrCode, String jobId){
+//        if(jobId.equals("share")){
+//            controller.getBitmapByQRCode(qrCode, "share", this);
+//        }
+//        else{
+//            controller.getBitmapByQRCode(qrCode, "checkIn", this);
+//        }
+//    }
     public shareFragment() {
         // Required empty public constructor
     }
@@ -77,7 +126,6 @@ public class shareFragment extends DialogFragment implements FirestoreCallbackLi
         if (getArguments() != null) {
             eventID = getArguments().getString(ARG_PARAM1);
         }
-        FirestoreController controller = FirestoreController.getInstance();
         controller.getEventByID(eventID, this);
 
 
@@ -97,19 +145,19 @@ public class shareFragment extends DialogFragment implements FirestoreCallbackLi
         super.onViewCreated(view, savedInstanceState);
         Button shareCheckInQRButton = (Button) view.findViewById(R.id.checkInQRShareButton);
         Button shareEventDetailsQRButton = (Button) view.findViewById(R.id.eventDetailsQRShareButton);
-        ImageView shareQR = (ImageView) view.findViewById(R.id.shareEventInfoQRCode);
+        shareQR = (ImageView) view.findViewById(R.id.shareEventInfoQRCode);
+        checkInQR = (ImageView) view.findViewById(R.id.checkInQRCode);
+        //Drawable mDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable._icon__email_, null);
+        //assert mDrawable != null;
+        //Bitmap mBitmap = ((BitmapDrawable)mDrawable).getBitmap();
+        //shareQR.setImageBitmap(mBitmap);
+        //checkInQR.setImageBitmap(mBitmap);
 
-        ImageView checkInQR = (ImageView) view.findViewById(R.id.checkInQRCode);
-        Drawable mDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable._icon__email_, null);
-        assert mDrawable != null;
-        Bitmap mBitmap = ((BitmapDrawable)mDrawable).getBitmap();
-        shareQR.setImageBitmap(mBitmap);
-        checkInQR.setImageBitmap(mBitmap);
         shareCheckInQRButton.setOnClickListener(v -> {
-            share(mBitmap, false);
+            share(checkInBM, true);
         });
         shareEventDetailsQRButton.setOnClickListener(v -> {
-            share(mBitmap, true);
+            share(shareBM, false);
         });
     }
 

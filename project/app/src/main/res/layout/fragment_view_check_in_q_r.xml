@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/QRImage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightColor"
+    tools:context=".uiReference.organizers.ViewCheckInQR">
+
+    <ImageView
+        android:id="@+id/checkInQRImage"
+        android:layout_width="251dp"
+        android:layout_height="248dp" />
+</FrameLayout>

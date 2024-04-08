@@ -234,7 +234,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         shareButton.setOnClickListener(view -> {
             // ideally where the fragment should pop-up
             new shareFragment();
-            shareFragment.newInstance(eventID).show(getSupportFragmentManager(), "Add/Edit City");
+            shareFragment.newInstance(eventID).show(getSupportFragmentManager(), "Select Share Options");
         });
         
         milestoneEditButton.setOnClickListener(v -> {
@@ -245,7 +245,8 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         viewCheckInQRCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                new ViewCheckInQR();
+                ViewCheckInQR.newInstance(eventID).show(getSupportFragmentManager(), "View Check-In QR Code");
             }
         });
 
