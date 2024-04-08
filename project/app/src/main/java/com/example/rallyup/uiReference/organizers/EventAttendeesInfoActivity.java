@@ -28,10 +28,12 @@ import com.example.rallyup.uiReference.AttendeeCheckInAdapter;
 import com.example.rallyup.uiReference.AttendeeRegisteredAdapter;
 import com.example.rallyup.uiReference.testingClasses.AttListArrayAdapter;
 import com.example.rallyup.uiReference.testingClasses.AttendeeStatsClass;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
@@ -96,31 +98,42 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
     // Gradient of the HeatMap
     Gradient gradient = new Gradient(colors, startingPoints);
 
-    @Override
-    public void onGetUsers(List<User> userList) {
-        // LatLngs list for the heatmap
-        List<LatLng> latLngs = new ArrayList<>();
+//     @Override
+//     public void onGetUsers(List<User> userList) {
+//         // LatLngs list for the heatmap
+//         List<LatLng> latLngs = new ArrayList<>();
 
-        //FirestoreCallbackListener.super.onGetUsers(userList);
-        // Iterate through the list and add the LatLng objects into an array
-        for(User user:userList){
-            if (user.getGeolocation()){
-                latLngs.add(new LatLng(user.getLatlong().getLatitude(), user.getLatlong().getLongitude()));
-                //Toast.makeText(getBaseContext(), "User LatLng Added!", Toast.LENGTH_SHORT).show();
-            }
-            //System.out.println("userID: " + user.getId());
-            //System.out.println("getGeolocation: " + user.getGeolocation());
-        }
-        // Add the HeatMap overlay after we received ALL the
-        addHeatMap(latLngs);
-    }
+//         //FirestoreCallbackListener.super.onGetUsers(userList);
+//         // Iterate through the list and add the LatLng objects into an array
+//         for(User user:userList){
+//             if (user.getGeolocation()){
+//                 latLngs.add(new LatLng(user.getLatlong().getLatitude(), user.getLatlong().getLongitude()));
+//                 //Toast.makeText(getBaseContext(), "User LatLng Added!", Toast.LENGTH_SHORT).show();
+//             }
+//             //System.out.println("userID: " + user.getId());
+//             //System.out.println("getGeolocation: " + user.getGeolocation());
+//         }
+//         // Add the HeatMap overlay after we received ALL the
+//         //latLngs.add(new LatLng(-4.0383, 21.7587));
+//         //latLngs.add(new LatLng(-4.0383, 21.7587));
+//         addHeatMap(latLngs);
+//     }
 
     @Override
     public void onGetEvent(Event event) {
         // If the Event's geolocation is true, then do the map.
+        //fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
         if (event.getGeolocation()){
-            fc.getCheckedInUserIDs(event.getEventID(), this);
+            //fc.getCheckedInUserIDs(event.getEventID(), this);
+            fc.getCheckedInUserIDs2(event.getEventID(), this);
         }
+    }
+
+    @Override
+    public void onGetLatLngs(List<LatLng> latLngs) {
+        // Set the latLngs here into our heatmap
+        addHeatMap(latLngs);
+        Log.d("EventAttendeesInfoActivity - onGetLatLngs", "latLngs size: " + latLngs.size());
     }
 
     /**
@@ -143,8 +156,11 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         // Then call the FirestoreController to do something
         // (probably to retrieve the lat longs of users)
         fc.getEventByID(eventID, this);
+        
         // test event ID: 048ACC2B534046668F6BAA2EA43F170C
         //fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
+        //fc.getEventByID("048ACC2B534046668F6BAA2EA43F170C", this);
+        //fc.getCheckedInUserIDs2("048ACC2B534046668F6BAA2EA43F170C", this);
 
         // SupportMapFragment that manages the GoogleMap object
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -167,6 +183,7 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
             }
         });
 
+
         // array of strings?
 //        String[] users = {
 //                "Edmonton", "Vancouver", "Toronto"
@@ -180,7 +197,6 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
 //        for (int i = 0; i < users.length; i++) {
 //            dataList.add(new AttendeeStatsClass(users[i], countedCheckIns[i]));
 //        }
-
     }
 
     // Great reference from StackOverflow:
@@ -226,9 +242,13 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
      */
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        // edmonton actual Lat Long (according to Google): 53.5461, -113.4937
+        LatLng edmontonLatLng = new LatLng(53.5461, -113.4937);
         if (map != null){
+            map.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(edmontonLatLng, 1, 0, 0)));
             return;
         }
         map = googleMap;
+        map.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(edmontonLatLng, 1, 0, 0)));
     }
 }

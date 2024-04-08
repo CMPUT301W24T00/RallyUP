@@ -2,8 +2,12 @@ package com.example.rallyup.uiReference.attendees;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +23,14 @@ import com.example.rallyup.R;
 
 
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.User;
 import com.example.rallyup.uiReference.EventAdapter;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.GeoPoint;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
@@ -46,6 +55,9 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
     FloatingActionButton QRCodeScannerBtn;
     LocalStorageController ls = LocalStorageController.getInstance();
     String userID;
+
+    boolean geoLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
 
 
@@ -75,6 +87,10 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
         switchPage();
     }
 
+    @Override
+    public void onGetUser(User user) {
+        geoLocation = user.getGeolocation();
+    }
     /**
      * Upon getting the list of events, it links the necessary adapter
      * @param events a collection of event objects
@@ -85,6 +101,55 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
         listView.setAdapter(eventAdapter);
     }
 
+    private void getLastLocation() {
+        // check if user has geolocation enabled
+        if (!geoLocation) {
+            Log.d("getLastLocation", "Geolocation is not enabled");
+            // set point to null
+            fc.updateUserGeoPointFields(ls.getUserID(this), "latlong",null,AttendeeMyEventsActivity.this);
+            return;
+        }
+
+        // similar permissions check where if location was not granted
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            fc.updateUserGeoPointFields(ls.getUserID(this), "latlong",null,AttendeeMyEventsActivity.this);
+            return;
+        }
+
+        // task for location provider
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+
+        // check if was able to initialize location provider
+        if (fusedLocationProviderClient != null) {
+
+            // if successful
+            task.addOnSuccessListener(location -> {
+
+                // check if location of device is null
+                if (location != null) {
+
+                    GeoPoint newPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
+                    fc.updateUserGeoPointFields(ls.getUserID(this), "latlong",newPoint,AttendeeMyEventsActivity.this);
+                    Log.d("getLastLocation", "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude());
+                } else {
+//                    Toast.makeText(this, "bruh location is null", Toast.LENGTH_SHORT).show();
+                    Log.d("getLastLocation", "Location is null");
+
+                }
+            });
+
+            // upon failure of task
+            task.addOnFailureListener(e -> {
+                Log.d("getLastLocation", "Task failure");
+
+//                Toast.makeText(AttendeeHomepageActivity.this, "Doomed", Toast.LENGTH_LONG).show();
+
+            });
+            // location provide is null
+        } else {
+            Log.d("getLastLocation", "Location provider null");
+        }
+    }
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {
@@ -94,10 +159,11 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
                 } else {
                     // function calls for when an id has been scanned go here
                     //Toast.makeText(AttendeeHomepageActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-
+                    fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
                     String read = result.getContents();
                     //Log.d("Scanned QR Code", "QR CODE ID: " + read.substring(1));
                     checkIn = read.charAt(0) == 'c';
+                    getLastLocation();
                     String qrID = read.substring(1);
                     fc.getEventByQRID(qrID, this);
                 }
@@ -125,6 +191,9 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
 
         FirestoreController fc = FirestoreController.getInstance();
         fc.getEventsByUserID(userID, this);
+        fc.getUserByID(userID, this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
 
         //controller = FirestoreController.getInstance();
         //controller.getEventsByUserID(ls.getUserID(this), this);
@@ -148,7 +217,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
             Event selectedEvent = eventAdapter.getItem(i);
 
             String eventID = selectedEvent.getEventID();
-            Intent intent = new Intent(AttendeeMyEventsActivity.this, AttendeeEventDetails.class);
+            Intent intent = new Intent(AttendeeMyEventsActivity.this, AttendeeRegisteredEvent.class);
             intent.putExtra("key", eventID);
             startActivity(intent);
         });
@@ -165,7 +234,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
             if(verified){
                 fc.updateAttendance(scannedEvent, userID,  this);
                 Intent intent;
-                intent = new Intent(AttendeeMyEventsActivity.this, AttendeeEventDetails.class);
+                intent = new Intent(AttendeeMyEventsActivity.this, AttendeeRegisteredEvent.class);
                 intent.putExtra("key", scannedEvent);
                 startActivity(intent);
                 Toast.makeText(this, "Check-In Successful! Enjoy the event!", Toast.LENGTH_LONG).show();

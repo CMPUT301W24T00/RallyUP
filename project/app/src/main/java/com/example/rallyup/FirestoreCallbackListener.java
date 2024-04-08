@@ -8,6 +8,7 @@ import com.example.rallyup.firestoreObjects.Notification;
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.firestoreObjects.User;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -32,8 +33,16 @@ public interface FirestoreCallbackListener {
      * Upon getting a bitmap
      * @param bitmap an object containing the image bitmap
      */
-    default void onGetBitmap(Bitmap bitmap) {
+    default void onGetShareBitmap(Bitmap bitmap) {
     }
+
+    /**
+     * Upon getting a bitmap
+     * @param bitmap an object containing the image bitmap
+     */
+    default void onGetCheckInBitmap(Bitmap bitmap) {
+    }
+
 
     /**
      * Upon getting an event
@@ -145,6 +154,17 @@ public interface FirestoreCallbackListener {
      * @param timesCheckedIn an Integer that represents how many times the user has checked in to that event
      */
     default void onGetCheckIns(Integer timesCheckedIn) {
+
+    }
+
+    default void onGetQRID(String jobId, String qrID){
+    }
+    default void onGetShareQRPath(String qrPath){
+
+    }
+    default void onGetCheckInQRPath(String qrPath){
+    }
+    default void onGetLatLngs(List<LatLng> latLngs){
 
     }
 }
