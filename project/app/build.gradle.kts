@@ -98,6 +98,7 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
     val fragmentVersion = "1.6.2"
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     // Java language implementation
     implementation("androidx.fragment:fragment:$fragmentVersion")

@@ -98,7 +98,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 
     private Uri image = null;
 
-    private String reUseQrID;
+    private String reUseQrID, shareQRID, checkInQRID;
 
     Map<String, Boolean> generatedDict = new HashMap<>();
 
@@ -108,14 +108,16 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     }
 
     @Override
-    public void onGetQrCode(QrCode qrCode, String jobId) {
+    public void onGetQrCode(QrCode qrCode, String jobId, String qrId) {
         String encodedText;
         if (jobId.equals("share")) {
             // Share QR code
             encodedText = "s" + qrCode.getQrId();
+            shareQRID = qrId;
         } else {
             // Check-in QR code
             encodedText = "c" + qrCode.getQrId();
+            checkInQRID = qrId;
         }
 
         MultiFormatWriter writer = new MultiFormatWriter();
@@ -705,9 +707,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                 posterRef = storageRef.child("images/Posters/"+ eventID);
                 posterPath = posterRef.getPath();
                 shareQRRef = storageRef.child("images/ShareQR/"+ eventID);
-                shareQRPath = shareQRRef.getPath();
+                //shareQRPath = shareQRRef.getPath();
                 checkInQRRef = storageRef.child("images/CheckInQR/"+ eventID);
-                checkInQRPath = checkInQRRef.getPath();
+                //checkInQRPath = checkInQRRef.getPath();
                 uploadCheckInQR();
                 uploadShareQR();
                 posterUploaded = false;
@@ -738,7 +740,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             Event newEvent = new Event(eventName, eventLocation, eventDescription,
                     eventDate, eventTime, signupLimit, currentlySignedUp, signupLimitInput,
                     geolocation, reUseQR, newQR,
-                    posterPath, shareQRPath, checkInQRPath, userID, eventID);
+                    posterPath, shareQRID, checkInQRID, userID, eventID);
             FirestoreController fc = FirestoreController.getInstance();
             fc.addEvent(newEvent);
 
