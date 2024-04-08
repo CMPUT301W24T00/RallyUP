@@ -14,13 +14,15 @@ import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.Notification;
+
+import java.util.List;
 
 /**
  * This class contains the event activity for an attendee's registered events
  * @author Isla Medina
  */
 public class AttendeeRegisteredEvent extends AppCompatActivity implements FirestoreCallbackListener {
-
 
     private View backgroundOverlay;
     ListView announcementsList;
@@ -30,6 +32,19 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
     TextView locationTextView;
     TextView descriptionTextView;
     TextView nameTextView;
+
+    private String eventID;
+
+    /**
+     * Upon getting a notification list, it will initialize the necessary views with the notification's details
+     * @param notifications a list containing the notifications
+     */
+    @Override
+    public void onGetNotifications(List<Notification> notifications) {
+        for (Notification notification : notifications) {
+            // add to the list
+        }
+    }
 
     /**
      * Upon getting an event, it will initialize the necessary views with the event's details
@@ -41,6 +56,10 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
         locationTextView.setText(event.getEventLocation());
         descriptionTextView.setText(event.getEventDescription());
         nameTextView.setText(event.getEventName());
+        eventID = event.getEventID();
+
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.getNotificationsByEventID(eventID, this);
     }
 
     /**
@@ -98,6 +117,4 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
         getSupportFragmentManager().popBackStack();
         backgroundOverlay.setVisibility(View.GONE);
     }
-
-
 }
