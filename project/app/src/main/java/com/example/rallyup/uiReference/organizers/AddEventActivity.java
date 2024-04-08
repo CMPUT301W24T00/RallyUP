@@ -724,10 +724,10 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                 // if the user wants new QR Codes to be generated
                 // Code for uploading these images to firebase icloud storage sourced from
                 // Reference: https://firebase.google.com/docs/storage/android/upload-files
-//                storage = FirebaseStorage.getInstance();
-//                storageRef = storage.getReference();
-//                posterRef = storageRef.child("images/Posters/"+ eventID);
-//                posterPath = posterRef.getPath();
+                storage = FirebaseStorage.getInstance();
+                storageRef = storage.getReference();
+                posterRef = storageRef.child("images/Posters/"+ eventID);
+                posterPath = posterRef.getPath();
 //                shareQRRef = storageRef.child("images/ShareQR/"+ eventID);
 //                shareQRPath = shareQRRef.getPath();
 //                checkInQRRef = storageRef.child("images/CheckInQR/"+ eventID);
