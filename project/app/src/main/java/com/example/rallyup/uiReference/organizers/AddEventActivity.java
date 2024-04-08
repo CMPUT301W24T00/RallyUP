@@ -45,7 +45,9 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -76,7 +78,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
     private String eventDate, eventTime, userID;
-    private Integer signupLimit = -1;
+    private Integer signupLimit = 1;
     private Boolean geolocation, signupLimitInput, reUseQR, newQR;
     private Boolean posterUploaded = false;
     private List<Event> usersPreviousEvents = new ArrayList<>();
@@ -97,6 +99,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     private Uri image = null;
 
     private String reUseQrID;
+
+    Map<String, Boolean> generatedDict = new HashMap<>();
 
     @Override
     public void onGetEvents(List<Event> events) {
@@ -141,6 +145,21 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
         qrCode.setCheckIn(!jobId.equals("share"));
         FirestoreController fc = FirestoreController.getInstance();
         fc.updateQrCode(qrCode, bitmap);
+
+        // Are all necessary values done generating?
+        generatedDict.put(jobId, true);
+
+        // Check if all values are true
+        boolean allTrue = true;
+        for (boolean value : generatedDict.values()) {
+            if (!value) {
+                allTrue = false;
+                break;
+            }
+        }
+        if (allTrue) {
+            // NOW create the event
+        }
     }
 
     /**
@@ -251,8 +270,6 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             }
         });
 
-
-
         // Generating the new QR Code that is encoded with the event name when the user checks the
         // "Generate new QR Code" box
         newQRSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -271,7 +288,6 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             }
         });
 
-
         // sends all the information to firebase when the User clicks the "ADD" button
         // (Does input validation first)
         createButton.setOnClickListener(new View.OnClickListener() {
@@ -281,8 +297,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             }
         });
 
-
-
+        // Add entries to the dictionary
+        generatedDict.put("checkIn", false);
+        generatedDict.put("share", false);
     }
 
     /**
