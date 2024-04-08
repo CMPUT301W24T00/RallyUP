@@ -61,7 +61,7 @@ public class AdminHomepageActivity extends AppCompatActivity {
         imagesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AdminBrowseImages.class);  // placeholder for attendee opener
+                Intent intent = new Intent(getBaseContext(), AdminBrowseImagesActivity.class);  // placeholder for attendee opener
                 startActivity(intent);
             }
         });
