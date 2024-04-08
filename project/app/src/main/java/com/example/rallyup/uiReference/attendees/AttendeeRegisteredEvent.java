@@ -17,6 +17,9 @@ import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.firestoreObjects.Notification;
+import com.example.rallyup.uiReference.NotificationAdapter;
+import com.example.rallyup.uiReference.admin.AdminBrowseImagesActivity;
+import com.example.rallyup.uiReference.admin.AdminBrowseImagesAdapter;
 
 import java.util.List;
 
@@ -38,12 +41,12 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
     TextView eventName, eventDate, eventLocation, eventDetails;
     Event displayEvent;
 
-    TextView dateTextView;
-    TextView locationTextView;
-    TextView descriptionTextView;
-    TextView nameTextView;
+//    TextView dateTextView;
+//    TextView locationTextView;
+//    TextView descriptionTextView;
+//    TextView nameTextView;
     FirestoreController controller = FirestoreController.getInstance();
-
+    NotificationAdapter notificationAdapter;
 
     private String eventID;
 
@@ -53,9 +56,8 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
      */
     @Override
     public void onGetNotifications(List<Notification> notifications) {
-        for (Notification notification : notifications) {
-            // add to the list
-        }
+        notificationAdapter = new NotificationAdapter(AttendeeRegisteredEvent.this, notifications);
+        announcementsList.setAdapter(notificationAdapter);
     }
 
     /**
@@ -64,11 +66,11 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
      */
     @Override
     public void onGetEvent(Event event) {
-        Log.d("TAG", "onGetEvent: " + event.getEventName());
-        dateTextView.setText(event.getEventDate());
-        locationTextView.setText(event.getEventLocation());
-        descriptionTextView.setText(event.getEventDescription());
-        nameTextView.setText(event.getEventName());
+
+//        dateTextView.setText(event.getEventDate());
+//        locationTextView.setText(event.getEventLocation());
+//        descriptionTextView.setText(event.getEventDescription());
+//        nameTextView.setText(event.getEventName());
       
         eventID = event.getEventID();
         FirestoreController fc = FirestoreController.getInstance();
@@ -113,6 +115,7 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
                 startActivity(intent);
             }
         });
+
 
     }
 

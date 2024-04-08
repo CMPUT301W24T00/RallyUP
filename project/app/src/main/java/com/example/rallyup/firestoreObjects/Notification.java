@@ -7,7 +7,6 @@ public class Notification {
     private String eventID;
     private String title;
     private String description;
-    private String notificationID;
 
     /**
      * Constructs a new Notification with the specified event ID, title, and description.
@@ -20,6 +19,13 @@ public class Notification {
         this.eventID = eventID;
         this.title = title;
         this.description = description;
+    }
+
+    /**
+     * Default constructor
+     */
+    public Notification() {
+        // Default constructor
     }
 
     /**
