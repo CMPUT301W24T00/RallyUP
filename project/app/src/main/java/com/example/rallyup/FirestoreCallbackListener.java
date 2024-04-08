@@ -20,8 +20,16 @@ public interface FirestoreCallbackListener {
      * Upon getting a bitmap
      * @param bitmap an object containing the image bitmap
      */
-    default void onGetBitmap(Bitmap bitmap) {
+    default void onGetShareBitmap(Bitmap bitmap) {
     }
+
+    /**
+     * Upon getting a bitmap
+     * @param bitmap an object containing the image bitmap
+     */
+    default void onGetCheckInBitmap(Bitmap bitmap) {
+    }
+
 
     /**
      * Upon getting an event
@@ -135,6 +143,16 @@ public interface FirestoreCallbackListener {
     default void onGetCheckIns(Integer timesCheckedIn) {
 
     }
+
+    default void onGetQRID(String jobId, String qrID){
+    }
+    default void onGetShareQRPath(String qrPath){
+
+    }
+    default void onGetCheckInQRPath(String qrPath){
+
+    }
+
 
     default void onGetLatLngs(List<LatLng> latLngs){
 
