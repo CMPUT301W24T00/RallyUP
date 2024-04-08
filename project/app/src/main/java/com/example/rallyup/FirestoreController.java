@@ -17,18 +17,21 @@ import com.example.rallyup.firestoreObjects.Event;
 
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.Registration;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.example.rallyup.firestoreObjects.User;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -600,6 +603,56 @@ public class FirestoreController {
                 callbackListener.onGetUsers(users);
             }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
         }
+    }
+
+    public void getCheckedInUserIDs2(String eventID, FirestoreCallbackListener callbackListener) {
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID); //eventRegistrationRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<String> userList = new ArrayList<>();
+            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Attendance attendance;
+                attendance = documentSnapshot.toObject(Attendance.class);
+                String aUserID = attendance.getUserID();
+                //Registration aRegistration;
+                //aRegistration = documentSnapshot.toObject(Registration.class);
+                //String aUserID = aRegistration.getUserID();
+                if(aUserID != null){
+                    userList.add(aUserID);
+                }
+            }
+            getLatLongFromUsers(userList, callbackListener);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    public void getLatLongFromUsers(List<String> userList, FirestoreCallbackListener callbackListener){
+        List<LatLng> latLngs = new ArrayList<>();
+        usersRef.whereEqualTo("geolocation", true)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                // If our userList contains the current Document we're looking at
+                                if (userList.contains(documentSnapshot.getId())) {
+                                    // If so, then get the GeoPoint of the user
+                                    GeoPoint geoPoint = (GeoPoint) documentSnapshot.get("latlong");
+                                    try {
+                                        // Because some people may have null geoPoints (which shouldn't be the case)
+                                        // but just for good measure
+                                        latLngs.add(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()));
+                                    } catch (NullPointerException e){
+                                        Log.e("getLatLongFromUsers", "NullPointerException: ", e);
+                                    }
+                                    Log.d("getLatLongFromUsers", "GeoPoint: " + geoPoint);
+                                }
+                            }
+                        } else {
+                            Log.w("getLatLongFromUsers", "Task was unsuccessful!");
+                        }
+                        callbackListener.onGetLatLngs(latLngs);
+                        Log.d("getLatLongFromUsers", "Reached the end of the onComplete");
+                    }
+                });
     }
 
     /**

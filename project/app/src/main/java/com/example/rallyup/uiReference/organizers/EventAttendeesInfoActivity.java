@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.health.connect.datatypes.HeartRateRecord;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -89,15 +90,26 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
             //System.out.println("getGeolocation: " + user.getGeolocation());
         }
         // Add the HeatMap overlay after we received ALL the
+        //latLngs.add(new LatLng(-4.0383, 21.7587));
+        //latLngs.add(new LatLng(-4.0383, 21.7587));
         addHeatMap(latLngs);
     }
 
     @Override
     public void onGetEvent(Event event) {
         // If the Event's geolocation is true, then do the map.
+        //fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
         if (event.getGeolocation()){
-            fc.getCheckedInUserIDs(event.getEventID(), this);
+            //fc.getCheckedInUserIDs(event.getEventID(), this);
+            fc.getCheckedInUserIDs2(event.getEventID(), this);
         }
+    }
+
+    @Override
+    public void onGetLatLngs(List<LatLng> latLngs) {
+        // Set the latLngs here into our heatmap
+        addHeatMap(latLngs);
+        Log.d("EventAttendeesInfoActivity - onGetLatLngs", "latLngs size: " + latLngs.size());
     }
 
     /**
@@ -118,9 +130,11 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         String eventID = getIntent().getStringExtra("eventID");
         // Then call the FirestoreController to do something
         // (probably to retrieve the lat longs of users)
-        fc.getEventByID(eventID, this);
+        //fc.getEventByID(eventID, this);
         // test event ID: 048ACC2B534046668F6BAA2EA43F170C
         //fc.getCheckedInUserIDs("048ACC2B534046668F6BAA2EA43F170C", this);
+        fc.getEventByID("048ACC2B534046668F6BAA2EA43F170C", this);
+        //fc.getCheckedInUserIDs2("048ACC2B534046668F6BAA2EA43F170C", this);
 
         // SupportMapFragment that manages the GoogleMap object
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -136,27 +150,6 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-        // array of strings?
-//        String[] users = {
-//                "Edmonton", "Vancouver", "Toronto"
-//        };
-//        Integer[] countedCheckIns = {
-//                2, 5, 8
-//        };
-//
-//        dataList = new ArrayList<>();
-//        // creating a new array list with objects of City
-//        for (int i = 0; i < users.length; i++) {
-//            dataList.add(new AttendeeStatsClass(users[i], countedCheckIns[i]));
-//        }
-
-        // add adapter for the attendees list
-        attlist = findViewById(R.id.attnCheckInList);        // the view that displays all the books
-
-        // connecting the view to the adapter that will be updating its appearance as changes occur in app
-        attListAdapter = new AttListArrayAdapter(this, dataList);
-        attlist.setAdapter(attListAdapter);
     }
 
     // Great reference from StackOverflow:
