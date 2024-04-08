@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
@@ -62,6 +63,7 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
         attBrowseEventsBackBtn = findViewById(R.id.browse_events_back_button);
         listView = findViewById(R.id.att_browse_events_list);
 
+        TextView pageTitle = findViewById(R.id.browseEventsTitle);
 
         // real list
         controller = FirestoreController.getInstance();
@@ -91,6 +93,11 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
             String eventID = selectedEvent.getEventID();
             Intent intent = new Intent(AttendeeBrowseEventsActivity.this, AttendeeEventDetails.class);
             intent.putExtra("key", eventID);
+            startActivity(intent);
+        });
+
+        pageTitle.setOnClickListener(view -> {
+            Intent intent = new Intent(getBaseContext(), AttendeeBrowseEventsActivity.class);
             startActivity(intent);
         });
     }

@@ -104,9 +104,9 @@ public class ViewCheckInQR extends DialogFragment implements FirestoreCallbackLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         checkInQR = (ImageView) view.findViewById(R.id.checkInQRImage);
-        Drawable mDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable._icon__email_, null);
-        assert mDrawable != null;
-        Bitmap mBitmap = ((BitmapDrawable)mDrawable).getBitmap();
+        //Drawable mDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable._icon__email_, null);
+        //assert mDrawable != null;
+        //Bitmap mBitmap = ((BitmapDrawable)mDrawable).getBitmap();
         //checkInQR.setImageBitmap(mBitmap);
     }
 }
