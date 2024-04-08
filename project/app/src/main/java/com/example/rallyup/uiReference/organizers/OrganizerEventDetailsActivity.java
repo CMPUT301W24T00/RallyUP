@@ -410,7 +410,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
             String title100 = "100% Milestone";
             String body100 = "100% of the users registered for your event have checked in!";
 
-            notificationObject.createNotification(EventAttendeesInfoActivity.class, notification_channel_ID, title100, body100, (R.drawable._icon__email_),
+            notificationObject.createNotification(EventAttendeesInfoActivity.class, notification_channel_ID, title100, body100, (R.drawable.rallyup_icon),
                     0,
                     NotificationCompat.VISIBILITY_PUBLIC,
                     NotificationCompat.PRIORITY_DEFAULT,
@@ -421,7 +421,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         } else if ((double) currentlyCheckedIn /milestonesMax == 0.5)  {
             String title50 = "50% MileStone!";
             String body50 = "50% of the users registered for your event have checked in!";
-            notificationObject.createNotification(EventAttendeesInfoActivity.class, notification_channel_ID, title50, body50, (R.drawable._icon__email_),
+            notificationObject.createNotification(EventAttendeesInfoActivity.class, notification_channel_ID, title50, body50, (R.drawable.rallyup_icon),
                     0,
                     NotificationCompat.VISIBILITY_PUBLIC,
                     NotificationCompat.PRIORITY_DEFAULT,
@@ -432,7 +432,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         } else if (currentlyCheckedIn == 1) {
             String title = "First Check-In!";
             String body = "The first attendee has checked into your event!";
-            notificationObject.createNotification(EventAttendeesInfoActivity.class, notification_channel_ID, title, body, (R.drawable._icon__email_),
+            notificationObject.createNotification(EventAttendeesInfoActivity.class, notification_channel_ID, title, body, (R.drawable.rallyup_icon),
                     0,
                     NotificationCompat.VISIBILITY_PUBLIC,
                     NotificationCompat.PRIORITY_DEFAULT,

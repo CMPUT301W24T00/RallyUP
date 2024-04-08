@@ -67,7 +67,6 @@ public class AdminBrowseImagesAdapter extends BaseAdapter implements FirestoreCa
      */
     @Override
     public Object getItem(int position) {
-//        Log.d("EVENTADAPTER", "onItemClick:" + userList.get(position).getId());
         return dupedcombinedEventsUsers.get(position);
     }
 
@@ -109,11 +108,9 @@ public class AdminBrowseImagesAdapter extends BaseAdapter implements FirestoreCa
         for (Object item : combinedEventsUsers) {
             String path = getPath(item);
             StorageReference storageReference = FirebaseStorage.getInstance().getReference(path);
-            // Log.d("SOBBINSDHFGSJD PATH", path);
             // Check if the reference points to an existing object in Firebase Storage
             storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
                 // If the reference points to an existing object, add the item to dupedcombinedEventsUsers
-                // Log.d("SOBBINSDHFGSJD PATH", path);
                 this.dupedcombinedEventsUsers.add(item);
 
                 // Increment the completed tasks counter
@@ -140,7 +137,6 @@ public class AdminBrowseImagesAdapter extends BaseAdapter implements FirestoreCa
                 }
             });
         }
-        //Log.d("lord help me", String.valueOf(this.dupedcombinedEventsUsers.size()));
     }
 
 
@@ -170,7 +166,6 @@ public class AdminBrowseImagesAdapter extends BaseAdapter implements FirestoreCa
         ImageButton deleteButton = convertView.findViewById(R.id.delete_button);
 
         Object item = this.dupedcombinedEventsUsers.get(position);
-        // Log.d("HKJHSDFKJHSDF", String.valueOf(dupedcombinedEventsUsers.size()));
         fController.getPosterByEventID(getPath(item), context, adminImages);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
