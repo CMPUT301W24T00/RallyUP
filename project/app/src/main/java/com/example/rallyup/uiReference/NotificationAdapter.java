@@ -16,11 +16,19 @@ import com.example.rallyup.uiReference.admin.AdminBrowseImagesAdapter;
 
 import java.util.List;
 
+/**
+ * This class contains the notification adapter for the event details activity
+ */
 public class NotificationAdapter extends BaseAdapter {
     private Context context;
     private List<Notification> notificationList;
     private LayoutInflater inflater;
 
+    /**
+     * This is the constructor for the notification adapter
+     * @param context the context of the activity
+     * @param noteList the list of notification objects
+     */
     public NotificationAdapter(Context context, List<Notification> noteList ) {
         this.context = context;
         this.notificationList = noteList;

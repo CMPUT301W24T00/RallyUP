@@ -114,6 +114,7 @@ public class FirestoreController {
     /**
      * This method creates a new notification
      * @param callbackListener a listener for the firestore
+     * @param notification the notification object
      */
     public void createNotification(Notification notification, FirestoreCallbackListener callbackListener) {
         notificationRef.add(notification).addOnSuccessListener(documentReference -> {
@@ -174,6 +175,7 @@ public class FirestoreController {
      * This method gets the bitmap associated with a QrCode object
      * @param qrCode a QrCode object to get the bitmap of
      * @param callbackListener a listener for the firestore
+     * @param jobId the id of the job
      */
     public void getBitmapByQRCode(QrCode qrCode, String jobId, FirestoreCallbackListener callbackListener) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(qrImageStorageLocation + qrCode.getQrId());
@@ -198,6 +200,7 @@ public class FirestoreController {
      * This method gets the bitmap associated with a QrCode object
      * @param qrId the unique id of the QrCode object to get the bitmap of
      * @param callbackListener a listener for the firestore
+     * @param jobId the id of the job
      */
     public void getBitmapByQRID(String qrId, String jobId, FirestoreCallbackListener callbackListener) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(qrImageStorageLocation + qrId);
@@ -307,6 +310,11 @@ public class FirestoreController {
         qrRef.document(qrCode.getQrId()).set(data);
     }
 
+    /**
+     * This method updates the qr of an event by the qr code id
+     * @param qrCodeId the string qr code id
+     * @param eventId the string event id
+     */
     public void updateQRCodeEventIDbyQRCodeID(String qrCodeId, String eventId) {
         DocumentReference docRef = qrRef.document(qrCodeId);
         // Create a map with the field you want to update
