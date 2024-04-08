@@ -28,6 +28,7 @@ import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.Notification;
 import com.example.rallyup.firestoreObjects.User;
 import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.notification.NotificationObject;
@@ -256,6 +257,18 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
 
                 // Where we get the data for our Attendees and sending the notification
                 fc.getAttendeeIDsForFCMTokens(eventID, OrganizerEventDetailsActivity.this);
+
+                // Add notification to database
+                Notification notification = new Notification(eventID,
+                        editNotificationTitle.getText().toString(),
+                        editNotificationBody.getText().toString());
+                fc.createNotification(notification, this);
+
+                editNotificationBody.setText("");
+                editNotificationTitle.setText("");
+                Toast toasty = Toast.makeText(OrganizerEventDetailsActivity.this,
+                        "Notification sent!", Toast.LENGTH_SHORT);
+                toasty.show();
             } else {
                 Toast toasty = Toast.makeText(OrganizerEventDetailsActivity.this,
                         "Missing title and/or body text.", Toast.LENGTH_SHORT);

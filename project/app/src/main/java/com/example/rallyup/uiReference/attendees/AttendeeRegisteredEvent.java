@@ -15,6 +15,9 @@ import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.Notification;
+
+import java.util.List;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,7 +28,6 @@ import java.util.Locale;
  * @author Isla Medina
  */
 public class AttendeeRegisteredEvent extends AppCompatActivity implements FirestoreCallbackListener {
-
 
     private View backgroundOverlay;
     ListView announcementsList;
@@ -42,12 +44,34 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
     FirestoreController controller = FirestoreController.getInstance();
 
 
+    private String eventID;
+
+    /**
+     * Upon getting a notification list, it will initialize the necessary views with the notification's details
+     * @param notifications a list containing the notifications
+     */
+    @Override
+    public void onGetNotifications(List<Notification> notifications) {
+        for (Notification notification : notifications) {
+            // add to the list
+        }
+    }
+
     /**
      * Upon getting an event it will set the proper fields
      * @param event an event that contains important details
      */
     @Override
     public void onGetEvent(Event event) {
+        dateTextView.setText(event.getEventDate());
+        locationTextView.setText(event.getEventLocation());
+        descriptionTextView.setText(event.getEventDescription());
+        nameTextView.setText(event.getEventName());
+      
+        eventID = event.getEventID();
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.getNotificationsByEventID(eventID, this);
+      
         displayEvent = event;
         setFields();
     }
@@ -143,5 +167,4 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
         getSupportFragmentManager().popBackStack();
         backgroundOverlay.setVisibility(View.GONE);
     }
-
 }
