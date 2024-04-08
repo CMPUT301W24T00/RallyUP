@@ -90,8 +90,6 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
         eventLocation = findViewById(R.id.att_register_event_location);
         eventDetails = findViewById(R.id.att_register_event_details);
 
-
-
         registerButton.setOnClickListener(view ->{
             LocalStorageController ls = LocalStorageController.getInstance();
             String userID = ls.getUserID(this);

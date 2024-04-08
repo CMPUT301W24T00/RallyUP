@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -107,7 +108,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     @Override
     public void onGetEvent(Event event) {
         String reUseCheckInQrId = event.getCheckInQRId();
+        Log.d("CheckIn", "onGetEvent: " + reUseCheckInQrId);
         String reUseShareQrId = event.getShareQRId();
+        Log.d("share", "onGetEvent: " + reUseShareQrId);
 
         int currentlySignedUp = 0;
         Event newEvent = new Event(eventName, eventLocation, eventDescription,
@@ -116,6 +119,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                 posterPath, reUseShareQrId, reUseCheckInQrId, userID, eventID);
         FirestoreController fc = FirestoreController.getInstance();
         fc.addEvent(newEvent);
+        controller.updateQRCodeEventIDbyQRCodeID(reUseCheckInQrId, newEvent.getEventID());
+        controller.updateQRCodeEventIDbyQRCodeID(reUseShareQrId, newEvent.getEventID());
     }
 
     @Override
@@ -667,19 +672,19 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 
     }
 
-    /**
-     * This method uploads the newly generated share QR Code image to firebase iCloud storage
-     */
-    public void uploadShareQR() {
-        controller.uploadImageBitmap(shareImageView, shareQRRef);
-    }
-
-    /**
-     * This method uploads the newly generated check-in QR Code image to firebase iCloud storage
-     */
-    public void uploadCheckInQR() {
-        controller.uploadImageBitmap(checkInImageView, checkInQRRef);
-    }
+//    /**
+//     * This method uploads the newly generated share QR Code image to firebase iCloud storage
+//     */
+//    public void uploadShareQR() {
+//        controller.uploadImageBitmap(shareImageView, shareQRRef);
+//    }
+//
+//    /**
+//     * This method uploads the newly generated check-in QR Code image to firebase iCloud storage
+//     */
+//    public void uploadCheckInQR() {
+//        controller.uploadImageBitmap(checkInImageView, checkInQRRef);
+//    }
 
 //    /**
 //     * This method generates an event id
@@ -724,10 +729,10 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                 // if the user wants new QR Codes to be generated
                 // Code for uploading these images to firebase icloud storage sourced from
                 // Reference: https://firebase.google.com/docs/storage/android/upload-files
-                storage = FirebaseStorage.getInstance();
-                storageRef = storage.getReference();
-                posterRef = storageRef.child("images/Posters/"+ eventID);
-                posterPath = posterRef.getPath();
+//                storage = FirebaseStorage.getInstance();
+//                storageRef = storage.getReference();
+//                posterRef = storageRef.child("images/Posters/"+ eventID);
+//                posterPath = posterRef.getPath();
 //                shareQRRef = storageRef.child("images/ShareQR/"+ eventID);
 //                shareQRPath = shareQRRef.getPath();
 //                checkInQRRef = storageRef.child("images/CheckInQR/"+ eventID);
@@ -740,6 +745,11 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                 FirestoreController fc = FirestoreController.getInstance();
                 fc.getEventByID(reuseEventId, this);
             }
+            storage = FirebaseStorage.getInstance();
+            storageRef = storage.getReference();
+            posterRef = storageRef.child("images/Posters/"+ eventID);
+            posterPath = posterRef.getPath();
+
             // Uploading the Poster to Firebase Icloud Storage
             uploadPoster();
             // Clearing the views of the form

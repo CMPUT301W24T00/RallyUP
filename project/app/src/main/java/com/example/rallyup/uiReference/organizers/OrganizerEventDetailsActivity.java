@@ -59,17 +59,20 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     implements FirestoreCallbackListener {
     NotificationObject notificationObject = new NotificationObject(this);
 
-    Button viewEventAttendeesList; // Button to view the list of attendees for the event
-    Button viewCheckInQRCode;
-    ImageButton orgEventDetailsBackBtn; // ImageButton to navigate back to the event list
+    private Button viewEventAttendeesList; // Button to view the list of attendees for the event
+    private Button viewCheckInQRCode;
+    private ImageButton orgEventDetailsBackBtn; // ImageButton to navigate back to the event list
 
-    ImageButton milestoneEditButton, shareButton;
-    Button sendNotificationButton;
-    EditText editNotificationTitle;
-    EditText editNotificationBody;
-    ProgressBar progressBar;
-    String eventID;
-    Event event;
+    private ImageButton milestoneEditButton, shareButton;
+    private Button sendNotificationButton;
+    private EditText editNotificationTitle;
+    private EditText editNotificationBody;
+    private ProgressBar progressBar;
+    private String eventID;
+    private Event event;
+    private int milestonesMax, currentlyRegistered, currentlyCheckedIn;
+    private boolean registrationLimit;
+
 
 
 
@@ -114,6 +117,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         editNotificationBody = findViewById(R.id.notification_details);
 
         eventTotalAttendees.setText(String.format(Locale.getDefault(),attendantList.size() + " checked-in attendees"));
+        currentlyCheckedIn = attendantList.size();
         
         progressBar.setProgress(attendantList.size());
 
@@ -168,6 +172,24 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     }
 
     /**
+     * Upon getting the registration details of an event it will set the proper fields
+     * @param objects a list of 3 objects that contains important details. The first value is a Boolean, the second and third are integers
+     */
+    @Override
+    public void onGetRegistrationInfo(Object[] objects) {
+        registrationLimit = (Boolean) objects[0];
+        int registrationMax = (int) objects[1];
+        currentlyRegistered = (int) objects[2];
+        if(registrationLimit){
+            milestonesMax = registrationMax;
+        }
+        else {
+            milestonesMax = currentlyRegistered;
+        }
+        manageMilestones();
+    }
+
+    /**
      * Called when the activity is starting. This is where most initialization should go. Shows the organizer event details xml and displays for the user
      *
      * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
@@ -210,6 +232,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         fc.getEventByID(eventID, this);
         fc.getEventAttendantsByEventID(eventID, this);
         fc.getRegisteredAttendees(eventID, this);
+        fc.getRegistrationInfo(eventID, this);
 
         // TODO: PUT PROGRESS BAR PROGRESS IN THE onGetAttendants AND PUT
         //  progressBar.setProgress(attendantList.size());
@@ -348,5 +371,17 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         } catch (JSONException e){
             Log.e("OrganizerEventDetailsActivity", "notification JSON object error: ", e);
         }
+    }
+
+    private void manageMilestones(){
+        if(currentlyCheckedIn/milestonesMax == 1){
+            //send announcement to the user here
+            //sendAnnouncement();
+        } else if (currentlyCheckedIn/milestonesMax == 0.5)  {
+            //send a 50% of registered users have now checked in!
+        } else if (currentlyCheckedIn == 1) {
+
+        }
+
     }
 }

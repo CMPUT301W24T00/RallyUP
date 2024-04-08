@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rallyup.FirestoreCallbackListener;
@@ -171,11 +172,21 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         eventAttBackButton = findViewById(R.id.event_attendees_back_button);
         controller.getCheckedInAttendees(eventID, this);
         controller.getRegisteredAttendees(eventID, this);
+        TextView pageTitle = findViewById(R.id.org_attendee_details_title);
 
         eventAttBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), OrganizerEventDetailsActivity.class);
+                intent.putExtra("key", eventID);
+                startActivity(intent);
+            }
+        });
+
+        pageTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), EventAttendeesInfoActivity.class);
                 intent.putExtra("key", eventID);
                 startActivity(intent);
             }

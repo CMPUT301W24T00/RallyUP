@@ -46,6 +46,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -147,7 +148,7 @@ public class FirestoreController {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String tag = (checkIn) ? "checkInQRRef" : "shareQRRef";
+                String tag = (checkIn) ? "checkInQRId" : "shareQRId";
                 String qrID = documentSnapshot.getString(tag);
                 Log.d("QRID", "onSuccess: " + qrID);
                 callbackListener.onGetQRID(qrID, jobId);
@@ -219,6 +220,27 @@ public class FirestoreController {
         data.put("qrID", qrCode.getQrId());
 
         qrRef.document(qrCode.getQrId()).set(data);
+    }
+
+    public void updateQRCodeEventIDbyQRCodeID(String qrCodeId, String eventId) {
+        DocumentReference docRef = qrRef.document(qrCodeId);
+        // Create a map with the field you want to update
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("eventID", eventId);
+
+        // Update the document
+        docRef.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("FC", "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FC", "Error updating document", e);
+                    }
+                });
     }
 
     /**
@@ -564,6 +586,7 @@ public class FirestoreController {
      * @param callbackListener a listener for the firestore
      */
     public void getEventByID(String eventID, FirestoreCallbackListener callbackListener) {
+        Log.d("GETEVENTBYID", "getEventByID: " + eventID);
         DocumentReference docRef = eventsRef.document(eventID);
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             Event thisEvent;
@@ -898,8 +921,8 @@ public class FirestoreController {
         data.put("reUseQR", event.getReUseQR());
         data.put("newQR", event.getNewQR());
         data.put("posterRef", event.getPosterRef());
-        data.put("shareQRRef", event.getShareQRId());
-        data.put("checkInQRRef", event.getCheckInQRId());
+        data.put("shareQRId", event.getShareQRId());
+        data.put("checkInQRId", event.getCheckInQRId());
         data.put("userID", event.getOwnerID());
         data.put("eventID", event.getEventID());
 
