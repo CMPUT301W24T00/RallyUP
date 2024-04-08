@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         android:orientation="vertical">
 
@@ -53,7 +53,7 @@
             <View
                 android:id="@+id/rectangle_back"
                 android:layout_width="wrap_content"
-                android:layout_height="645dp"
+                android:layout_height="match_parent"
                 android:background="@color/lightColor" />
 
             <LinearLayout
@@ -64,7 +64,7 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="305dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"
                     android:background="@drawable/rounded_border">
@@ -73,118 +73,163 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/org_event_details_location"
+                        <LinearLayout
+                            android:id="@+id/linearLayout2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter_semibold"
-                            android:text="@string/event_location"
-                            android:textColor="@color/darkColor"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="15dp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.052"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.208" />
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            android:id="@+id/org_event_details_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter_semibold"
-                            android:text="@string/event_date"
-                            android:textColor="@color/darkColor"
-                            app:layout_constraintBottom_toTopOf="@+id/org_event_details_location"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.047"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            <ImageView
+                                android:id="@+id/calendarimg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="20dp"
+                                app:srcCompat="@drawable/date_calendar" />
 
-                        <TextView
-                            android:id="@+id/verifed_attendees"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter_semibold"
-                            android:text="@string/num_of_verified_attendees"
-                            android:textColor="@color/darkColor"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.051"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/org_event_details_location"
-                            app:layout_constraintVertical_bias="0.217" />
+                            <TextView
+                                android:id="@+id/org_event_details_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="@string/event_date"
+                                android:textColor="@color/darkColor" />
 
-                        <TextView
-                            android:id="@+id/total_attendees"
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter_semibold"
-                            android:text="@string/num_of_total_attendees"
-                            android:textColor="@color/darkColor"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toTopOf="@+id/org_register_event_details"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.051"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/verifed_attendees"
-                            app:layout_constraintVertical_bias="0.132" />
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+                            <ImageView
+                                android:id="@+id/personimg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="20dp"
+                                app:srcCompat="@drawable/icon_person" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/verifed_attendees"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="21dp"
+                                    android:fontFamily="@font/inter_semibold"
+                                    android:text="@string/num_of_verified_attendees"
+                                    android:textColor="@color/darkColor" />
+
+                                <TextView
+                                    android:id="@+id/total_attendees"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="30dp"
+                                    android:fontFamily="@font/inter_semibold"
+                                    android:text="@string/num_of_total_attendees"
+                                    android:textColor="@color/darkColor" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:padding="15dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+                            <ImageView
+                                android:id="@+id/locationimg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="20dp"
+                                app:srcCompat="@drawable/location" />
+
+                            <TextView
+                                android:id="@+id/org_event_details_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_semibold"
+                                android:text="@string/event_location"
+                                android:textColor="@color/darkColor" />
+                        </LinearLayout>
 
                         <Button
                             android:id="@+id/event_attendees_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/accentColorGreen"
+                            android:fontFamily="@font/inter_semibold"
                             android:text="@string/view_attendees_button"
                             android:textColor="@color/lightColor"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.497"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.715" />
-
-                        <Button
-                            android:id="@+id/view_qr_code_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/accentColorGreen"
-                            android:text="@string/view_check_in_qr_code_button"
-                            android:textColor="@color/lightColor"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.518"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.937" />
+                            app:layout_constraintTop_toBottomOf="@+id/org_register_event_details"
+                            app:layout_constraintVertical_bias="0.059" />
 
                         <TextView
                             android:id="@+id/org_register_event_details"
-                            android:layout_width="169dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_medium"
+                            android:gravity="center_horizontal"
+                            android:padding="10dp"
                             android:text="@string/event_details"
+                            android:textColor="@color/darkColor"
+                            android:textColorHint="@color/darkColor"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.92"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.116" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
                             android:id="@+id/shareButton"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_marginStart="39dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginEnd="14dp"
-                            android:layout_marginBottom="10dp"
                             android:background="@color/transparent"
                             android:clickable="true"
                             android:foregroundTint="@color/transparent"
-                            app:layout_constraintBottom_toTopOf="@+id/view_qr_code_button"
-                            app:layout_constraintEnd_toStartOf="@+id/event_attendees_button"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.049"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/total_attendees"
+                            app:layout_constraintTop_toBottomOf="@+id/org_register_event_details"
+                            app:layout_constraintVertical_bias="0.451"
                             app:srcCompat="?attr/actionModeShareDrawable"
                             app:tint="@color/darkColor" />
+
+                        <Button
+                            android:id="@+id/view_qr_code_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:backgroundTint="@color/accentColorGreen"
+                            android:fontFamily="@font/inter_semibold"
+                            android:text="@string/view_check_in_qr_code_button"
+                            android:textColor="@color/lightColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/event_attendees_button" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -192,7 +237,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_horizontal|center_vertical"
                     android:orientation="horizontal">
 
@@ -222,7 +267,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/progressBarConstraintLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <ProgressBar
                         android:id="@+id/progressBar3"
@@ -241,11 +286,11 @@
                         android:id="@+id/progressBarOverlay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/milestone_check_overlay"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/milestone_check_overlay"
                         tools:layout_editor_absoluteX="87dp"
                         tools:layout_editor_absoluteY="-46dp" />
 
@@ -267,6 +312,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/accentColorGreen"
+                            android:fontFamily="@font/inter_semibold"
                             android:text="@string/send"
                             android:textColor="@color/lightColor"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -281,6 +327,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
+                            android:fontFamily="@font/inter_medium"
                             android:gravity="start|top"
                             android:hint="@string/notification_edit_body"
                             android:inputType="textMultiLine"
@@ -296,8 +343,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:inputType="text"
+                            android:fontFamily="@font/inter_medium"
                             android:hint="@string/title_of_notification"
+                            android:inputType="text"
                             app:layout_constraintBottom_toTopOf="@+id/notification_details"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.132"
