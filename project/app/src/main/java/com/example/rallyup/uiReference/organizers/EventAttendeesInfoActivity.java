@@ -27,8 +27,6 @@ import com.example.rallyup.firestoreObjects.Registration;
 import com.example.rallyup.uiReference.AttendeeCheckInAdapter;
 import com.example.rallyup.uiReference.AttendeeCheckInAdapter;
 import com.example.rallyup.uiReference.AttendeeRegisteredAdapter;
-import com.example.rallyup.uiReference.testingClasses.AttListArrayAdapter;
-import com.example.rallyup.uiReference.testingClasses.AttendeeStatsClass;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -60,7 +58,6 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
         implements OnMapReadyCallback, FirestoreCallbackListener {
 
     ImageButton eventAttBackButton;
-    ArrayList<AttendeeStatsClass> dataList;
     private ListView checkInList;      // the view that everything will be shown on
     private ListView registeredList;
     private final FirestoreController controller = FirestoreController.getInstance();

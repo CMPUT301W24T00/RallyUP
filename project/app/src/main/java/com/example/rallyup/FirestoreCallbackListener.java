@@ -97,6 +97,10 @@ public interface FirestoreCallbackListener {
     default void onGetFCMTokens(List<String> fcmTokens){
     }
 
+    /**
+     * Upon getting a single fcm tokem
+     * @param fcmToken the string fcm token
+     */
     default void onGetFCMToken(String fcmToken){
     }
 

@@ -310,6 +310,11 @@ public class FirestoreController {
         qrRef.document(qrCode.getQrId()).set(data);
     }
 
+    /**
+     * This method updates the qr of an event by the qr code id
+     * @param qrCodeId the string qr code id
+     * @param eventId the string event id
+     */
     public void updateQRCodeEventIDbyQRCodeID(String qrCodeId, String eventId) {
         DocumentReference docRef = qrRef.document(qrCodeId);
         // Create a map with the field you want to update

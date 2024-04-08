@@ -15,7 +15,6 @@ import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.uiReference.EventAdapter;
-import com.example.rallyup.uiReference.ListAdapter;
 import com.example.rallyup.uiReference.attendees.AttendeeBrowseEventsActivity;
 import com.example.rallyup.uiReference.attendees.AttendeeEventDetails;
 import com.example.rallyup.uiReference.attendees.AttendeeMyEventsActivity;
