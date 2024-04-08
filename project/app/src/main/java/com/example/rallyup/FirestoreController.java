@@ -85,6 +85,56 @@ public class FirestoreController {
         return instance;
     }
 
+
+    /**
+     * This method deletes an image based on the path
+     * @param path a string for the identification of an image
+     * @param callbackListener a listener for the firestore
+     */
+    public void deleteImageByPath(String path, FirestoreCallbackListener callbackListener) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child(path);
+        // Delete the document
+        imageRef.delete().addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
+     * This method gets all the images associated with a user or event
+     * @param callbackListener a listener for the firestore
+     */
+    public void getImageReferences(FirestoreCallbackListener callbackListener) {
+        List<Object> combinedEventsUsers = new ArrayList<>();
+
+        usersRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<User> userList = new ArrayList<>();
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                User thisUser = documentSnapshot.toObject(User.class);
+                thisUser.setId(documentSnapshot.getId());
+                userList.add(thisUser);
+            }
+            combinedEventsUsers.addAll(userList);
+
+            // Now fetch events
+            eventsRef.get().addOnSuccessListener(eventQueryDocumentSnapshots -> {
+                List<Event> eventList = new ArrayList<>();
+                for (QueryDocumentSnapshot eventDocumentSnapshot : eventQueryDocumentSnapshots) {
+                    Event thisEvent = eventDocumentSnapshot.toObject(Event.class);
+                    if (thisEvent.getEventName() != null) {
+                        eventList.add(thisEvent);
+                    }
+                }
+                combinedEventsUsers.addAll(eventList);
+
+                // Invoke callback with combined data
+                callbackListener.onGetImages(combinedEventsUsers);
+
+            }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting events documents: " + e));
+
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting users documents: " + e));
+
+    }
+
     /**
      * This method gets the bitmap associated with a QrCode object
      * @param qrCode a QrCode object to get the bitmap of
