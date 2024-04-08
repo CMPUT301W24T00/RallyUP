@@ -28,10 +28,12 @@ import com.example.rallyup.uiReference.AttendeeCheckInAdapter;
 import com.example.rallyup.uiReference.AttendeeRegisteredAdapter;
 import com.example.rallyup.uiReference.testingClasses.AttListArrayAdapter;
 import com.example.rallyup.uiReference.testingClasses.AttendeeStatsClass;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
@@ -240,9 +242,13 @@ public class EventAttendeesInfoActivity extends AppCompatActivity
      */
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        // edmonton actual Lat Long (according to Google): 53.5461, -113.4937
+        LatLng edmontonLatLng = new LatLng(53.5461, -113.4937);
         if (map != null){
+            map.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(edmontonLatLng, 1, 0, 0)));
             return;
         }
         map = googleMap;
+        map.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(edmontonLatLng, 1, 0, 0)));
     }
 }
