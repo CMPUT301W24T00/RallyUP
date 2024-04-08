@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Notification;
 import com.example.rallyup.notification.NotificationObject;
+import com.example.rallyup.uiReference.admin.AdminBrowseImagesAdapter;
 
 import java.util.List;
 
@@ -49,6 +51,13 @@ public class NotificationAdapter extends BaseAdapter {
         Notification notification = notificationList.get(i);
         TextView notificationTitle = view.findViewById(R.id.title_notification);
         notificationTitle.setText(notification.getTitle());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create the popup
+
+            }
+        });
 
         // put firestore stuff here
 
