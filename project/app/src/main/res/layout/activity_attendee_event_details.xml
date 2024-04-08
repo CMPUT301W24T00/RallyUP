@@ -113,7 +113,8 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/inter_semibold"
                                     android:text="@string/event_date"
-                                    android:textColor="@color/darkColor" />
+                                    android:textColor="@color/darkColor"
+                                    android:textSize="18sp" />
 
                             </LinearLayout>
 
@@ -142,23 +143,26 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/inter_semibold"
                                     android:text="@string/event_location"
-                                    android:textColor="@color/darkColor" />
+                                    android:textColor="@color/darkColor"
+                                    android:textSize="18sp" />
 
                             </LinearLayout>
 
                             <TextView
                                 android:id="@+id/att_register_event_details"
                                 android:layout_width="wrap_content"
-                                android:layout_height="117dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_medium"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="@string/event_details"
+                                android:textColor="@color/darkColor"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.551"
+                                app:layout_constraintHorizontal_bias="0.0"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.59" />
+                                app:layout_constraintVertical_bias="0.707" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
