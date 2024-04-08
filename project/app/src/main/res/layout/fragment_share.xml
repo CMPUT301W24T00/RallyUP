@@ -13,60 +13,95 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/shareEventInfoText"
-            android:layout_width="227dp"
-            android:layout_height="50dp"
-            android:fontFamily="@font/inter_bold"
-            android:text="Share QR Code"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/shareEventInfoQRCode"
-            android:layout_width="176dp"
-            android:layout_height="146dp" />
-
-        <Button
-            android:id="@+id/eventDetailsQRShareButton"
-            android:layout_width="179dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/accentColorGreen"
-            android:drawableTint="@color/accentColorGreen"
-            android:foregroundTint="@color/accentColorGreen"
-            android:text="share"
-            android:textColorLink="@color/accentColorGreen"
-            app:backgroundTint="@color/accentColorGreen"
-            app:iconTint="@color/accentColorGreen"
-            app:strokeColor="@color/darkColor" />
+            android:background="@color/lightColor"
+            android:padding="20dp">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="223dp"
-            android:layout_height="49dp"
-            android:fontFamily="@font/inter_bold"
-            android:text="Check-In QR Code"
-            android:textAlignment="center"
-            android:textSize="20sp" />
+            <ImageView
+                android:id="@+id/shareEventInfoQRCode"
+                android:layout_width="176dp"
+                android:layout_height="146dp"
+                android:layout_marginTop="11dp"
+                android:layout_marginBottom="17dp"
+                app:layout_constraintBottom_toTopOf="@+id/eventDetailsQRShareButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/shareEventInfoText"
+                app:layout_constraintVertical_bias="1.0" />
 
-        <ImageView
-            android:id="@+id/checkInQRCode"
-            android:layout_width="179dp"
-            android:layout_height="151dp" />
+            <TextView
+                android:id="@+id/shareEventInfoText"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="SHARE EVENT QR CODE"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/shareEventInfoQRCode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkInQRShareButton" />
 
-        <Button
-            android:id="@+id/checkInQRShareButton"
-            android:layout_width="179dp"
-            android:layout_height="wrap_content"
-            android:background="@color/accentColorGreen"
-            android:drawableTint="@color/accentColorGreen"
-            android:foregroundTint="@color/accentColorGreen"
-            android:text="Share"
-            app:backgroundTint="@color/accentColorGreen" />
+            <Button
+                android:id="@+id/checkInQRShareButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:layout_marginBottom="35dp"
+                android:backgroundTint="@color/accentColorGreen"
+                android:text="SHARE"
+                android:textColor="@color/lightColor"
+                app:layout_constraintBottom_toTopOf="@+id/shareEventInfoText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkInQRCode" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="217dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="CHECK-IN QR CODE"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/checkInQRCode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/checkInQRCode"
+                android:layout_width="172dp"
+                android:layout_height="138dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="11dp"
+                app:layout_constraintBottom_toTopOf="@+id/checkInQRShareButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <Button
+                android:id="@+id/eventDetailsQRShareButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/accentColorGreen"
+                android:text="SHARE"
+                android:textColor="@color/lightColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
