@@ -68,7 +68,7 @@
             android:name=".uiReference.attendees.AttendeeBrowseEventsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".uiReference.splashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,7 +78,6 @@
         </activity>
         <activity android:name=".uiReference.organizers.AddEventActivity" />
         <activity android:name=".uiReference.attendees.ScannerActivity" />
-        <activity android:name=".uiReference.splashScreen" />
         <activity android:name=".uiReference.attendees.AttendeeUpdateActivity" />
 
         <!-- Manifest Code for getting location of Foreground apps (meanings it accesses info
