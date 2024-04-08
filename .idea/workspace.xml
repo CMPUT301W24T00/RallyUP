@@ -38,6 +38,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +109,7 @@
       <recent name="C:\Users\reima\Code\CMPUT 301\javaTesting\RallyUP\project" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.notificationClassUnitTest">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />
       <option name="DEPLOY" value="true" />
@@ -336,9 +337,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.userClassUnitTest" />
         <item itemvalue="Gradle.notificationClassUnitTest" />
         <item itemvalue="Gradle.Tests in 'com.example.rallyup'" />
-        <item itemvalue="Gradle.userClassUnitTest" />
         <item itemvalue="Gradle.registrationClassUnitTest" />
         <item itemvalue="Android Instrumented Tests.Tests in 'com.example.rallyup'" />
       </list>

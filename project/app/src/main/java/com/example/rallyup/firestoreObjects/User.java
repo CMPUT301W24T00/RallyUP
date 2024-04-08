@@ -244,10 +244,18 @@ public class User {
         this.fcmToken = fcmToken;
     }
 
+    /**
+     * Checks if the user is an admin
+     * @return boolean if admin
+     */
     public boolean getAdmin() {
         return admin;
     }
 
+    /**
+     * Sets the boolean condition if admin
+     * @param admin admim boolean
+     */
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
