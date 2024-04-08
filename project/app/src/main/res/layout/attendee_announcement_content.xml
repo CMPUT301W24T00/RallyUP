@@ -13,10 +13,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_border_brown" />
+
+        <View
             android:id="@+id/background_announcement"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/lightColor" />
+            android:background="@color/accentColorYellow" />
 
         <TextView
             android:id="@+id/title_notification"
