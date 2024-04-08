@@ -21,7 +21,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="match_parent"
             android:background="@drawable/rounded_corner_bottom" />
 
         <LinearLayout
@@ -34,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/event_name"
                 android:textAllCaps="true"
@@ -46,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/event_date"
                 android:textColor="@color/darkColor"
@@ -57,6 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="@string/event_location"
                 android:textColor="@color/darkColor"
