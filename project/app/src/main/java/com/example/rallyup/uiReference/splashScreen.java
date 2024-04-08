@@ -45,16 +45,6 @@ public class splashScreen extends AppCompatActivity implements FirestoreCallback
     // Declare the launcher at the top of your Activity/Fragment:
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    // FCM SDK (and your app) can post notifications.
-                    // set the wantNotifications of the user to true
-                } else {
-                    // TODO: Inform user that that your app will not show notifications.
-                    Toast.makeText(getBaseContext(),
-                            "Notifications denied!",
-                            Toast.LENGTH_SHORT).show();
-                    // Set the wantNotifications of the user to false
-                }
                 fc.getUserByID(lc.getUserID(this), this);
             });
 
@@ -88,9 +78,6 @@ public class splashScreen extends AppCompatActivity implements FirestoreCallback
                     Manifest.permission.POST_NOTIFICATIONS) ==
                     PackageManager.PERMISSION_GRANTED,this);
 
-            Toast.makeText(getBaseContext(), "Notification Perm: " + (ContextCompat.checkSelfPermission(getBaseContext(),
-                    Manifest.permission.POST_NOTIFICATIONS) ==
-                    PackageManager.PERMISSION_GRANTED), Toast.LENGTH_SHORT).show();
             //Toast.makeText(getBaseContext(), "Made it to onGetUser", Toast.LENGTH_SHORT).show();
         }
         Log.d("splashScreen", String.valueOf(user.getAdmin()));
