@@ -23,9 +23,11 @@ import com.example.rallyup.R;
 
 
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.User;
 import com.example.rallyup.uiReference.EventAdapter;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.GeoPoint;
@@ -85,6 +87,10 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
         switchPage();
     }
 
+    @Override
+    public void onGetUser(User user) {
+        geoLocation = user.getGeolocation();
+    }
     /**
      * Upon getting the list of events, it links the necessary adapter
      * @param events a collection of event objects
@@ -98,6 +104,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
     private void getLastLocation() {
         // check if user has geolocation enabled
         if (!geoLocation) {
+            Log.d("getLastLocation", "Geolocation is not enabled");
             // set point to null
             fc.updateUserGeoPointFields(ls.getUserID(this), "latlong",null,AttendeeMyEventsActivity.this);
             return;
@@ -152,7 +159,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
                 } else {
                     // function calls for when an id has been scanned go here
                     //Toast.makeText(AttendeeHomepageActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-
+                    fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
                     String read = result.getContents();
                     //Log.d("Scanned QR Code", "QR CODE ID: " + read.substring(1));
                     checkIn = read.charAt(0) == 'c';
@@ -184,6 +191,9 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
 
         FirestoreController fc = FirestoreController.getInstance();
         fc.getEventsByUserID(userID, this);
+        fc.getUserByID(userID, this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
 
         //controller = FirestoreController.getInstance();
         //controller.getEventsByUserID(ls.getUserID(this), this);
