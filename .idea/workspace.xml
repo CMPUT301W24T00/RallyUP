@@ -37,7 +37,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/project/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,8 +66,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -108,7 +108,7 @@
       <recent name="C:\Users\reima\Code\CMPUT 301\javaTesting\RallyUP\project" />
     </key>
   </component>
-  <component name="RunManager" selected="Android App.app">
+  <component name="RunManager" selected="Gradle.notificationClassUnitTest">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="RallyUP.app.main" />
       <option name="DEPLOY" value="true" />
@@ -262,7 +262,7 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="attendanceClassTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="notificationClassUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/project" />
@@ -275,7 +275,7 @@
           <list>
             <option value=":app:testDebugUnitTest" />
             <option value="--tests" />
-            <option value="&quot;com.example.rallyup.attendanceClassTest&quot;" />
+            <option value="&quot;com.example.rallyup.notificationClassUnitTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -336,11 +336,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.notificationClassUnitTest" />
         <item itemvalue="Gradle.Tests in 'com.example.rallyup'" />
         <item itemvalue="Gradle.userClassUnitTest" />
         <item itemvalue="Gradle.registrationClassUnitTest" />
         <item itemvalue="Android Instrumented Tests.Tests in 'com.example.rallyup'" />
-        <item itemvalue="Gradle.attendanceClassTest" />
       </list>
     </recent_temporary>
   </component>
