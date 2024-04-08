@@ -97,10 +97,9 @@
                                 android:textColor="@color/darkColor"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.052"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.208" />
+                                app:layout_constraintVertical_bias="0.203" />
 
                             <TextView
                                 android:id="@+id/att_register_event_date"
@@ -111,21 +110,22 @@
                                 android:textColor="@color/darkColor"
                                 app:layout_constraintBottom_toTopOf="@+id/att_register_event_location"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.047"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.684" />
 
                             <TextView
                                 android:id="@+id/att_register_event_details"
-                                android:layout_width="342dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="117dp"
+                                android:padding="10dp"
                                 android:text="@string/event_details"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.482"
+                                app:layout_constraintHorizontal_bias="0.551"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.558" />
+                                app:layout_constraintVertical_bias="0.59" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 

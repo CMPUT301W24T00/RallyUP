@@ -81,7 +81,7 @@
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="305dp"
+                            android:layout_height="300dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_margin="20dp"
                             android:background="@drawable/rounded_border">
@@ -99,10 +99,9 @@
                                     android:textColor="@color/darkColor"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.052"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintVertical_bias="0.208" />
+                                    app:layout_constraintVertical_bias="0.196" />
 
                                 <TextView
                                     android:id="@+id/att_register_event_date"
@@ -113,14 +112,15 @@
                                     android:textColor="@color/darkColor"
                                     app:layout_constraintBottom_toTopOf="@+id/att_register_event_location"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.047"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="0.444" />
 
                                 <TextView
                                     android:id="@+id/att_register_event_details"
-                                    android:layout_width="342dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="117dp"
+                                    android:padding="10dp"
                                     android:text="@string/event_details"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -128,6 +128,19 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintVertical_bias="0.558" />
+
+                                <View
+                                    android:id="@+id/backgroundOverlay"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="#BF481620"
+                                    android:visibility="invisible"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="0.0"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="0.0" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -141,7 +154,7 @@
                             android:gravity="center"
                             android:text="@string/announcements_fixed"
                             android:textColor="@color/darkColor"
-                            android:textSize="40sp" />
+                            android:textSize="30sp" />
 
                         <ListView
                             android:id="@+id/announcements_list"
@@ -157,16 +170,6 @@
             </LinearLayout>
         </ScrollView>
 
-    <View
-        android:id="@+id/backgroundOverlay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#BF481620"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
