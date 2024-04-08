@@ -21,6 +21,9 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class contains the image adapter for the admin browse event activity
+ */
 public class AdminBrowseImagesAdapter extends BaseAdapter implements FirestoreCallbackListener {
     private Context context;
     private LayoutInflater inflater;
@@ -35,7 +38,7 @@ public class AdminBrowseImagesAdapter extends BaseAdapter implements FirestoreCa
     /**
      * Constructs an event adapter
      * @param context the context for this method
-    //     * @param eventList the list of event objects
+     * @param combinedEventsUsers the list of event objects
      */
     public AdminBrowseImagesAdapter(Context context, List<Object> combinedEventsUsers) {
         this.context = context;
@@ -78,6 +81,11 @@ public class AdminBrowseImagesAdapter extends BaseAdapter implements FirestoreCa
         return position;
     }
 
+    /**
+     * This method gets the string path of an object
+     * @param item the object to get path
+     * @return the string path of the object
+     */
     public String getPath(Object item) {
         String path = null;
         if (item instanceof Event) {
@@ -91,6 +99,9 @@ public class AdminBrowseImagesAdapter extends BaseAdapter implements FirestoreCa
         return path;
     }
 
+    /**
+     * This method contains the functionality of the duped list
+     */
     public void dupedList() {
         totalTasks = combinedEventsUsers.size();
         completedTasks = 0;

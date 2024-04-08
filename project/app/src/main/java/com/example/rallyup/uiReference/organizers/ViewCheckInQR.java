@@ -47,15 +47,29 @@ public class ViewCheckInQR extends DialogFragment implements FirestoreCallbackLi
 //        controller.getBitmapByQRCode(qrCode, "checkIn", this);
 //    }
 
+    /**
+     * Upon getting the path for the check in qr
+     * @param qrPath the path for the qr
+     */
     @Override
     public void onGetCheckInQRPath(String qrPath){
         controller.getPosterByEventID(qrPath, getContext(), checkInQR);
     }
 
+    /**
+     * Upon getting the check in bitmap
+     * @param bitmap the bit map to be checked in
+     */
     @Override
     public void onGetCheckInBitmap(Bitmap bitmap) {
     }
 
+
+    /**
+     * Upon getting a QR id
+     * @param qrID the id of the qr
+     * @param jobId the id of the job
+     */
     @Override
     public void onGetQRID(String qrID, String jobId){
         Log.d("TAG", "onGetQRID: " + jobId + " " +qrID);
@@ -64,6 +78,10 @@ public class ViewCheckInQR extends DialogFragment implements FirestoreCallbackLi
             controller.getBitmapByQRID(checkInCode, jobId, this);
         }
     }
+
+    /**
+     * This is a required empty public constructor
+     */
     public ViewCheckInQR() {
         // Required empty public constructor
     }

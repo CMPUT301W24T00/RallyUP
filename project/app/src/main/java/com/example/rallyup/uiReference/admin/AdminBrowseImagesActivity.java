@@ -14,6 +14,9 @@ import com.example.rallyup.R;
 
 import java.util.List;
 
+/**
+ * This class contains the activity that allows the admin to browse images in the database
+ */
 public class AdminBrowseImagesActivity extends AppCompatActivity implements FirestoreCallbackListener {
 
     GridView gridView;

@@ -157,13 +157,33 @@ public interface FirestoreCallbackListener {
 
     }
 
+    /**
+     * Upon getting the id for the qr
+     * @param jobId the id of the job
+     * @param qrID the id of the qr
+     */
     default void onGetQRID(String jobId, String qrID){
     }
+
+    /**
+     * Upon getting the path for the share qr
+     * @param qrPath the path of the qr
+     */
     default void onGetShareQRPath(String qrPath){
 
     }
+
+    /**
+     * Upon getting the path for the check in qr
+     * @param qrPath the path of the qr
+     */
     default void onGetCheckInQRPath(String qrPath){
     }
+
+    /**
+     * Upon getting the latitude and longitude
+     * @param latLngs the longitude and latitude
+     */
     default void onGetLatLngs(List<LatLng> latLngs){
 
     }
