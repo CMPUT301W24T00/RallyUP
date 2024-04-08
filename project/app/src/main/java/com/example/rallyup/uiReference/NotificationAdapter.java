@@ -58,16 +58,9 @@ public class NotificationAdapter extends BaseAdapter {
 
         Notification notification = notificationList.get(i);
         TextView notificationTitle = view.findViewById(R.id.title_notification);
+        TextView notificationDetails = view.findViewById(R.id.details_notification);
         notificationTitle.setText(notification.getTitle());
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create the popup
-
-            }
-        });
-
-        // put firestore stuff here
+        notificationDetails.setText(notification.getDescription());
 
 
         return view;
