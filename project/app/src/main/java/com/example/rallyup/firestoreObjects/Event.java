@@ -353,10 +353,10 @@ public class Event {
     /**
      * Sets the path to the event share QR Code image stored in firebase icloud storage.
      *
-     * @param shareQRRef The new path to the share QR code image stored in firebase icloud storage.
+     * @param shareQRId The new path to the share QR code image stored in firebase icloud storage.
      */
-    public void setShareQRId(String shareQRRef) {
-        this.shareQRId = shareQRRef;
+    public void setShareQRId(String shareQRId) {
+        this.shareQRId = shareQRId;
     }
 
     /**
@@ -371,10 +371,10 @@ public class Event {
     /**
      * Sets the path to the event check-in QR Code image stored in firebase icloud storage.
      *
-     * @param checkInQRRef The new path to the check-in QR code image stored in firebase icloud storage.
+     * @param checkInQRId The new path to the check-in QR code image stored in firebase icloud storage.
      */
-    public void setCheckInQRId(String checkInQRRef) {
-        this.checkInQRId = checkInQRRef;
+    public void setCheckInQRId(String checkInQRId) {
+        this.checkInQRId = checkInQRId;
     }
 
     /**

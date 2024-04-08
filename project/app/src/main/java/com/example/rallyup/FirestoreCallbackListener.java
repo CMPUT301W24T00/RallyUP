@@ -97,11 +97,22 @@ public interface FirestoreCallbackListener {
     default void onGetFCMTokens(List<String> fcmTokens){
     }
 
+    default void onGetFCMToken(String fcmToken){
+    }
+
     /**
      * Upon getting an image
      * @param bm a bitmap of the image
      */
     default void onGetImage(Bitmap bm) {
+    }
+
+    /**
+     * Upon getting an integer
+     * @param count an integer representing the number of people currently checked in to a specified event
+     */
+    default void onGetCheckInCount(int count){
+
     }
 
     /**
