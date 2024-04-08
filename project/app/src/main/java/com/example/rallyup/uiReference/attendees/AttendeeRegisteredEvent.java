@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -63,6 +64,7 @@ public class AttendeeRegisteredEvent extends AppCompatActivity implements Firest
      */
     @Override
     public void onGetEvent(Event event) {
+        Log.d("TAG", "onGetEvent: " + event.getEventName());
         dateTextView.setText(event.getEventDate());
         locationTextView.setText(event.getEventLocation());
         descriptionTextView.setText(event.getEventDescription());
