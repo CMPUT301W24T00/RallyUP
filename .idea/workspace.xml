@@ -5,7 +5,22 @@
       <config />
     </shared>
     <layouts>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_browse_events.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_admin_homepage.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/activity_organizer_event_list.xml">
+        <config>
+          <theme>@style/Theme.RallyUP</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/project/app/src/main/res/layout/announcement_popup_fragment.xml">
         <config>
           <theme>@style/Theme.RallyUP</theme>
         </config>
@@ -18,6 +33,17 @@
   <component name="ChangeListManager">
     <list default="true" id="bffbf305-125f-4b01-847c-35673d2761f5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreCallbackListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreCallbackListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/FirestoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/Registration.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/firestoreObjects/Registration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/notification/NotificationObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/notification/NotificationObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseEventsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseEventsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseProfiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminBrowseProfiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminEventAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminEventAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminProfilesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/admin/AdminProfilesAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/shareFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/main/java/com/example/rallyup/uiReference/organizers/shareFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/eventClassUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/app/src/test/java/com/example/rallyup/eventClassUnitTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

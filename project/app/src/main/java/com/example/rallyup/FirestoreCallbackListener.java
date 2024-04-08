@@ -136,6 +136,10 @@ public interface FirestoreCallbackListener {
 
     }
 
+    /**
+     * Upon getting the latitude and longitude of the user
+     * @param latLngs the latitude and longitude
+     */
     default void onGetLatLngs(List<LatLng> latLngs){
 
     }

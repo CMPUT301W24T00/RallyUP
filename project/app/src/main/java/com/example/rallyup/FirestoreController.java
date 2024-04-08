@@ -109,6 +109,7 @@ public class FirestoreController {
      * @param jobId the string identification of a job
      * @param eventID a string for the identification of an event
      * @param callbackListener a listener for the firestore
+     * @param checkIn the boolean for check in
      */
     public void getQRCodeByEventID(String jobId, String eventID, Boolean checkIn, FirestoreCallbackListener callbackListener) {
         DocumentReference docRef = eventsRef.document(eventID);
@@ -571,6 +572,7 @@ public class FirestoreController {
      * @param eventID the event being registered for
      * @param userID the user checking in
      * @param callbackListener a listener for the firestore
+     * @param context the context for the activtiy
      */
     public void newRegistration(String eventID, String userID, Context context, FirestoreCallbackListener callbackListener) {
         Query query = eventRegistrationRef.whereEqualTo("userID", userID);
@@ -725,7 +727,7 @@ public class FirestoreController {
      * This method uses the userIDs in the userList and passes the corresponding user's GeoPoint coordinates into
      * a list of LatLng objects called latLngs. In which the callbackListener has access to.
      * @param userList A list of string objects, hopefully the userIDs of users
-     * @param callbackListner The callbackListener of choice
+     * @param callbackListener The callbackListener of choice
      */
     public void getLatLongFromUsers(List<String> userList, FirestoreCallbackListener callbackListener){
         List<LatLng> latLngs = new ArrayList<>();
@@ -893,6 +895,10 @@ public class FirestoreController {
         eventAttendanceRef.document(attendanceID).set(data);
     }
 
+    /**
+     * This method adds a registration object to the event registration collection
+     * @param registration the registration object
+     */
     public void addRegistration(Registration registration) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("eventID", registration.getEventID());
@@ -1004,6 +1010,10 @@ public class FirestoreController {
 
     }
 
+    /**
+     * This method deletes a file given a filepath
+     * @param filePath the path of the file
+     */
     public void deleteFile(String filePath){
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePath);
         storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -24,8 +24,6 @@ import org.json.JSONObject;
 public class NotificationObject{
 
     private Context context;
-    public static final String ANNOUNCEMENTS = "announcements";
-    public static final String MILESTONES = "milestones";
 
     /**
      * Constructor of NotificationObject
@@ -142,124 +140,11 @@ public class NotificationObject{
         manager.notify(notifID, builder.build());
     }
 
-    /**
-     * A similar function as createNotification, except this is focused on pictures
-     * and allowing expansion of notification to show picture
-     * @param classObject A class object (usually ActivityOfInterest.class) of where you want to go when
-     *                    clicking the notification
-     * @param channelID A String for the ID of the channel the notifications are linked to,
-     *                  not displayed on the app.
-     * @param contentTitle A string of what the title of the notification would show as in the notification popup
-     * @param contentText A string of what to show as the body of text of the notification
-     * @param notifID An int for what the notification ID should be
-     * @param smallIcon An int of what the small icon of the notification should be
-     * @param visibility use NotificationCompat.VISIBILITY_* to determine how initially visible you
-     *                   want the notifications
-     * @param priority use NotificationCompat.PRIORITY_* to determine the initial priority of notifications,
-     *                 whether it makes sounds and shows or not, etc.
-     * @param autoCancel Boolean to set whether you want the notification to autocancel when clicked
-     * @param bitmap Bitmap of media that you want to show in the notification
-     */
-    public void createNotificationPictures(Class classObject,
-                                           String channelID,
-                                           String contentTitle,
-                                           String contentText,
-                                           int smallIcon,
-                                           int notifID,
-                                           int visibility,
-                                           int priority,
-                                           boolean autoCancel,
-                                           Bitmap bitmap){
-
-        // Setting up the intent on where we want to go for the notification tap
-        Intent intent = new Intent(context, classObject);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent =
-                PendingIntent.getActivity(context,
-                        0,
-                        intent,
-                        PendingIntent.FLAG_IMMUTABLE);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID)
-                .setContentIntent(pendingIntent) // Set the intent that fires when the user taps the notification.
-                .setContentTitle(contentTitle)
-                .setContentText(contentText)
-                .setSmallIcon(smallIcon)
-                .setLargeIcon(bitmap)
-                .setStyle(new NotificationCompat.BigPictureStyle()
-                        .bigPicture(bitmap)
-                        .bigLargeIcon((Bitmap) null))
-                .setVisibility(visibility)
-                .setPriority(priority)
-                .setAutoCancel(autoCancel);
-
-        // This is to show the notification
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(notifID, builder.build());
-
-    }
-
     // Resources/References:
     // https://stackoverflow.com/questions/20117148/how-to-create-json-object-using-string
     // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages?authuser=1#androidconfig
     // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages?authuser=1#notification
     // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages?authuser=1#androidnotification
 
-    public JSONObject androidNotificationJSON(String notifTitle, String notifBody, String channelID) throws JSONException {
-        JSONObject notificationJSON = new JSONObject();
-
-        notificationJSON.put("title", notifTitle);
-        notificationJSON.put("body", notifBody);
-        notificationJSON.put("icon", "res/drawable/rally_up_title_screen.png");
-
-        return notificationJSON;
-    }
-
-    public JSONObject androidNotificationJSONTest(String token, String notificationTitle, String notificationBody, String eventID, String typeOfNotification) throws JSONException {
-//        {
-//          "message":{
-//              "token":"bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
-//              "notification":{
-//                  "title":"FCM Message",
-//                  "body":"This is an FCM notification message!"
-//              }
-//          }
-//        }
-        JSONObject jsonMessage = new JSONObject();
-        JSONObject jsonMessageContents = getJsonObject(token, notificationTitle, notificationBody, eventID, typeOfNotification);
-
-        // {"message": {"token":"token...", "notification":{"title":"notificationTitle", "body":notificationBody"}}}
-        jsonMessage.put("message", jsonMessageContents);
-
-        return jsonMessage;
-    }
-
-    @NonNull
-    private static JSONObject getJsonObject(String token, String notificationTitle, String notificationBody, String eventID, String typeOfNotification) throws JSONException {
-        JSONObject jsonMessageContents = new JSONObject();
-        JSONObject jsonNotification = new JSONObject();
-        JSONObject jsonEventID = new JSONObject();
-        // token is the FCM token of the user that we want to target
-        // {
-        // "title":"notificationTitle",
-        // "body":"notificationBody"
-        // }
-        jsonNotification.put("title", notificationTitle);
-        jsonNotification.put("body", notificationBody);
-
-        // {
-        // "token":"token(from arg)",
-        // "notification":{"title":"notificationTitle", "body":"notificationBody"},
-        // "data":{"eventID":"eventID..."}
-        // }
-        jsonMessageContents.put("token", token);
-        jsonMessageContents.put("notification", jsonNotification);
-        // Custom data key:value pair, which we will use our eventID and string to determine type of notification
-        jsonEventID.put("eventID", eventID);
-        jsonEventID.put("typeOfNotification", typeOfNotification);
-        jsonMessageContents.put("data", jsonEventID);
-
-        return jsonMessageContents;
-    }
 
 }

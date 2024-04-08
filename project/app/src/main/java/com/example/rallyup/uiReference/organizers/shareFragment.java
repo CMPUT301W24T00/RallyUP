@@ -46,6 +46,10 @@ public class shareFragment extends DialogFragment implements FirestoreCallbackLi
         //controller.getPosterByEventID(event.getShareQRRef(), getContext(), shareQR);
         //controller.getPosterByEventID(event.getCheckInQRRef(), getContext(), checkInQR);
     }
+
+    /**
+     * Default constructor for the share fragment
+     */
     public shareFragment() {
         // Required empty public constructor
     }
@@ -109,7 +113,11 @@ public class shareFragment extends DialogFragment implements FirestoreCallbackLi
         });
     }
 
-
+    /**
+     * This method allows for the sharing of an image to other apps
+     * @param mBitmap the bitmap to be shared
+     * @param checkIn the boolean for check in
+     */
     public void share(Bitmap mBitmap, Boolean checkIn){
         //Drawable mDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable._icon__email_, null);
         //assert mDrawable != null;

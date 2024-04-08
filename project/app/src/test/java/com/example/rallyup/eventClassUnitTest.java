@@ -67,9 +67,9 @@ public class eventClassUnitTest {
         assertNull(mockEvent.getReUseQR());
         assertNull(mockEvent.getGeolocation());
         assertNull(mockEvent.getSignUpLimitBool());
-        assertNull(mockEvent.getShareQRRef());
+        assertNull(mockEvent.getShareQRId());
         assertEquals(0, mockEvent.getSignUpLimit());
-        assertNull(mockEvent.getCheckInQRRef());
+        assertNull(mockEvent.getCheckInQRId());
         assertEquals(0, mockEvent.getCurrentlySignedUp());
     }
 
@@ -346,11 +346,19 @@ public class eventClassUnitTest {
         testEvent.setEventID("3245513B4E6D44B19D6A7DFC89CB1F7E");
         assertEquals("3245513B4E6D44B19D6A7DFC89CB1F7E", testEvent.getEventID());
     }
+
+    /**
+     * Tests the get currently signed up method
+     */
     @Test
     public void testGetCurSignedUp() {
         Event testEvent = mockEvent();
         assertEquals(20, testEvent.getCurrentlySignedUp());
     }
+
+    /**
+     * Tests the set currently signed up method.
+     */
     @Test
     public void testSetCurSignedUp() {
         Event testEvent = mockEvent();
