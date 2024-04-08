@@ -683,14 +683,9 @@ public class FirestoreController {
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             boolean verified = false;
             for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                //Registration aRegistration;
-                //aRegistration = documentSnapshot.toObject(Registration.class);
                 if(documentSnapshot.get("eventID").equals(eventID)){
                     verified = true;
                 }
-//                if (aRegistration.getEventID().equals(eventID)) { // if the specific eventID is found
-//                    verified = true;
-//                }
             }
             callbackListener.onGetVerified(verified);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
@@ -727,19 +722,6 @@ public class FirestoreController {
     public void getCheckedInUsers(List<String> userList, FirestoreCallbackListener callbackListener) {
         List<User> users = new ArrayList<>();
         for(String userID : userList){
-//            Query query = usersRef.whereEqualTo("userID", userID);
-//            query.get().addOnSuccessListener(queryDocumentSnapshots -> {
-//                for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-//                    User aUser;
-//                    aUser = documentSnapshot.toObject(User.class);
-//                    aUser.setId(documentSnapshot.getId());
-//                    if(aUser.getFirstName() != null){
-//                        users.add(aUser);
-//                    }
-//                }
-//                callbackListener.onGetUsers(users);
-//            }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
-//
             DocumentReference docRef = usersRef.document(userID);
             docRef.get().addOnSuccessListener(documentSnapshot -> {
                 User aUser;
@@ -840,15 +822,38 @@ public class FirestoreController {
     public void getCheckedInAttendees(String eventID, FirestoreCallbackListener callbackListener) {
         Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            int count = 0;
             List<Attendance> userList = new ArrayList<>();
             for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                 Attendance anAttendance;
                 anAttendance = documentSnapshot.toObject(Attendance.class);
                 if(anAttendance.getUserID() != null){
                     userList.add(anAttendance);
+                    count++;
                 }
             }
             callbackListener.onGetAttendants(userList);
+            callbackListener.onGetCheckInCount(count);
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
+     * This method retrieves all userID's of the users checked-in to a specific event
+     * @param eventID the unique ID of the user
+     * @param callbackListener a listener for the firestore
+     */
+    public void getCheckedInCount(String eventID, FirestoreCallbackListener callbackListener) {
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            int count = 0;
+            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Attendance anAttendance;
+                anAttendance = documentSnapshot.toObject(Attendance.class);
+                if(anAttendance.getUserID() != null){
+                    count++;
+                }
+            }
+            callbackListener.onGetCheckInCount(count);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
     }
 

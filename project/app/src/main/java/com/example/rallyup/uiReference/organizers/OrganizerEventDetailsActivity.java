@@ -1,12 +1,17 @@
 package com.example.rallyup.uiReference.organizers;
 
+import static com.example.rallyup.uiReference.GlideApp.with;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -24,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Attendance;
@@ -57,7 +63,7 @@ import okhttp3.Response;
  */
 public class OrganizerEventDetailsActivity extends AppCompatActivity
     implements FirestoreCallbackListener {
-    NotificationObject notificationObject = new NotificationObject(this);
+    NotificationObject notificationObject;
 
     private Button viewEventAttendeesList; // Button to view the list of attendees for the event
     private Button viewCheckInQRCode;
@@ -72,11 +78,8 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     private Event event;
     private int milestonesMax, currentlyRegistered, currentlyCheckedIn;
     private boolean registrationLimit;
-
-
-
-
-
+    FirestoreController fc;
+    String notification_channel_ID;
 
     @Override
     public void onGetEvent(Event event) {
@@ -98,13 +101,19 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         eventDescription.setText(event.getEventDescription());
 
         // Load in poster for this event
-        FirestoreController fc = FirestoreController.getInstance();
         fc.getPosterByEventID(event.getPosterRef(), this, eventPoster);
     }
 
     @Override
+    public void onGetCheckInCount(int count){
+        Log.d("TAG", "onGetCheckInCount: " +count);
+        currentlyCheckedIn = count;
+        fc.getRegistrationInfo(eventID, this);
+    }
+
+    @Override
     public void onGetAttendants(List<Attendance> attendantList) {
-        FirestoreController fc = FirestoreController.getInstance();
+        //FirestoreController fc = FirestoreController.getInstance();
 
         TextView eventView = findViewById(R.id.org_event_details_name);
         TextView eventTotalAttendees = findViewById(R.id.total_attendees);
@@ -117,26 +126,26 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         editNotificationBody = findViewById(R.id.notification_details);
 
         eventTotalAttendees.setText(String.format(Locale.getDefault(),attendantList.size() + " checked-in attendees"));
-        currentlyCheckedIn = attendantList.size();
+        //currentlyCheckedIn = attendantList.size();
         
         progressBar.setProgress(attendantList.size());
 
-        String notification_channel_ID =
+        notification_channel_ID =
                 getString(R.string.notification_channel_ID_milestone);
 
         // TODO: Add milestone criteria
-        notificationObject.createNotification(
-                    MainActivity.class,
-                    notification_channel_ID,
-                    "A Milestone Achieved!",
-                    String.format(Locale.getDefault(), attendantList.size() + " verified attendees for " + eventView.getText().toString()),
-                    (R.drawable.rally_up_title_screen),
-                    0,
-                    NotificationCompat.VISIBILITY_PUBLIC,
-                    NotificationCompat.PRIORITY_DEFAULT,
-                    true,
-                    false,
-                    null);
+//        notificationObject.createNotification(
+//                    MainActivity.class,
+//                    notification_channel_ID,
+//                    "A Milestone Achieved!",
+//                    String.format(Locale.getDefault(), attendantList.size() + " verified attendees for " + eventView.getText().toString()),
+//                    (R.drawable.rally_up_title_screen),
+//                    0,
+//                    NotificationCompat.VISIBILITY_PUBLIC,
+//                    NotificationCompat.PRIORITY_DEFAULT,
+//                    true,
+//                    false,
+//                    null);
     }
 
     @Override
@@ -171,6 +180,10 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         //eventPoster.setImageBitmap(bm);
     }
 
+    @Override
+    public void onGetFCMToken(String fcmToken){
+    }
+
     /**
      * Upon getting the registration details of an event it will set the proper fields
      * @param objects a list of 3 objects that contains important details. The first value is a Boolean, the second and third are integers
@@ -182,11 +195,18 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         currentlyRegistered = (int) objects[2];
         if(registrationLimit){
             milestonesMax = registrationMax;
+            progressBar.setMax(milestonesMax);
+            progressBar.setProgress(currentlyCheckedIn);
+            //Log.d("C, M", "onGetRegistrationInfo: "+ currentlyCheckedIn + " " + milestonesMax);
         }
         else {
             milestonesMax = currentlyRegistered;
+            progressBar.setMax(milestonesMax);
+            progressBar.setProgress(currentlyCheckedIn);
+            //Log.d("C, M", "onGetRegistrationInfo: "+ currentlyCheckedIn + milestonesMax);
         }
         manageMilestones();
+
     }
 
     /**
@@ -200,8 +220,10 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         setContentView(R.layout.activity_organizer_event_details);
         Intent intent = getIntent();
         eventID = intent.getStringExtra("key");
+        fc = FirestoreController.getInstance();
+        notificationObject = new NotificationObject(this);
 
-        String notification_channel_ID =
+        notification_channel_ID =
                 getString(R.string.notification_channel_ID_milestone);
         String notification_channel_name =
                 getString(R.string.notification_channel_name_milestone);
@@ -228,11 +250,11 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
 
 
         // FirestoreController here
-        FirestoreController fc = FirestoreController.getInstance();
+        //FirestoreController fc = FirestoreController.getInstance();
         fc.getEventByID(eventID, this);
+        fc.getCheckedInCount(eventID, this);
         fc.getEventAttendantsByEventID(eventID, this);
         fc.getRegisteredAttendees(eventID, this);
-        fc.getRegistrationInfo(eventID, this);
 
         // TODO: PUT PROGRESS BAR PROGRESS IN THE onGetAttendants AND PUT
         //  progressBar.setProgress(attendantList.size());
@@ -248,7 +270,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         // Setting onClickListener for the button to view attendees list
         viewEventAttendeesList.setOnClickListener(view -> {
             Intent intent12 = new Intent(getBaseContext(), EventAttendeesInfoActivity.class);
-            intent12.putExtra("key", eventID);
+            intent12.putExtra("key", event.getEventID());
             startActivity(intent12);
         });
 
@@ -286,11 +308,6 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
             }
         });
 
-        // Change the hardcoded int 30 into a variable of the user milestones
-        // probably like progressBar.getProgress() >= (attendantList.size()/4*attendantList.size()) * 100
-        // progressBar.getProgress() >= attendantList.size()/2
-        // progressBar.getProgress() >= attendantList.size()3/4
-        // progressBar.getProgress() >= attendantList.size()
     }
 
     /**
@@ -374,14 +391,41 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     }
 
     private void manageMilestones(){
-        if(currentlyCheckedIn/milestonesMax == 1){
+        Log.d("MYMATH", "manageMilestones: " + (float)currentlyCheckedIn/milestonesMax);
+        if((double)currentlyCheckedIn/milestonesMax == 1.0){
             //send announcement to the user here
-            //sendAnnouncement();
-        } else if (currentlyCheckedIn/milestonesMax == 0.5)  {
-            //send a 50% of registered users have now checked in!
+            String title100 = "100% Milestone";
+            String body100 = "100% of the users registered for your event have checked in!";
+
+            notificationObject.createNotification(EventAttendeesInfoActivity.class, notification_channel_ID, title100, body100, (R.drawable._icon__email_),
+                    0,
+                    NotificationCompat.VISIBILITY_PUBLIC,
+                    NotificationCompat.PRIORITY_DEFAULT,
+                    true,
+                    false,
+                    null);
+
+        } else if ((double) currentlyCheckedIn /milestonesMax == 0.5)  {
+            String title50 = "50% MileStone!";
+            String body50 = "50% of the users registered for your event have checked in!";
+            notificationObject.createNotification(EventAttendeesInfoActivity.class, notification_channel_ID, title50, body50, (R.drawable._icon__email_),
+                    0,
+                    NotificationCompat.VISIBILITY_PUBLIC,
+                    NotificationCompat.PRIORITY_DEFAULT,
+                    true,
+                    false,
+                    null);
+
         } else if (currentlyCheckedIn == 1) {
-
+            String title = "First Check-In!";
+            String body = "The first attendee has checked into your event!";
+            notificationObject.createNotification(EventAttendeesInfoActivity.class, notification_channel_ID, title, body, (R.drawable._icon__email_),
+                    0,
+                    NotificationCompat.VISIBILITY_PUBLIC,
+                    NotificationCompat.PRIORITY_DEFAULT,
+                    true,
+                    false,
+                    null);
         }
-
     }
 }
