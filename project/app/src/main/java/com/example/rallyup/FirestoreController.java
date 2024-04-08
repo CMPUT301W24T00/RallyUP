@@ -89,6 +89,28 @@ public class FirestoreController {
 
 
     /**
+     * This method retrieves the announcements related to a given event
+     * @param eventID the string identification of an event
+     * @param callbackListener a listener for the firestore
+     */
+    public void getNotificationsByEventID(String eventID, FirestoreCallbackListener callbackListener) {
+        Query query = notificationRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+
+            List<Notification> notifList = new ArrayList<>();
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                if(documentSnapshot.exists()){
+                    Notification notification;
+                    notification = documentSnapshot.toObject(Notification.class);
+                    notifList.add(notification);
+                }
+            }
+            callbackListener.onGetNotifications(notifList);
+
+        }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting documents: " + e));
+    }
+
+    /**
      * This method creates a new notification
      * @param callbackListener a listener for the firestore
      */
