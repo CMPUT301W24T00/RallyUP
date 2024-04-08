@@ -366,6 +366,13 @@ public class FirestoreController {
             }
             user.setWantNotifications(documentSnapshot.getBoolean("wantNotifications"));
 
+            Boolean value = documentSnapshot.getBoolean("admin");
+            if (value != null) {
+                user.setAdmin(value);
+            } else {
+                user.setAdmin(false);
+            }
+
             callbackListener.onGetUser(user);
         }).addOnFailureListener(e -> Log.e("FirestoreController", "Error getting document: " + e));
     }

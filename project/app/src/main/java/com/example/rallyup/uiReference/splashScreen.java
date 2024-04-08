@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,11 +21,11 @@ import com.example.rallyup.FirestoreController;
 import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.User;
+import com.example.rallyup.uiReference.admin.AdminHomepageActivity;
 import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
 import com.example.rallyup.uiReference.organizers.OrganizerEventListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 //import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -38,6 +37,7 @@ public class splashScreen extends AppCompatActivity implements FirestoreCallback
 
     Button attendeeBtn;
     Button organizerBtn;
+    Button adminBtn;
     FirestoreController fc = FirestoreController.getInstance();
     LocalStorageController lc = LocalStorageController.getInstance();
 
@@ -93,6 +93,10 @@ public class splashScreen extends AppCompatActivity implements FirestoreCallback
                     PackageManager.PERMISSION_GRANTED), Toast.LENGTH_SHORT).show();
             //Toast.makeText(getBaseContext(), "Made it to onGetUser", Toast.LENGTH_SHORT).show();
         }
+        Log.d("splashScreen", String.valueOf(user.getAdmin()));
+        if (user.getAdmin()) {
+            adminBtn.setVisibility(View.VISIBLE);
+        }
     }
     // TODO: For 6 April 2024 - If notificationPermissions allowed -> user.setWantNotifications(true);
 
@@ -106,6 +110,7 @@ public class splashScreen extends AppCompatActivity implements FirestoreCallback
 
         organizerBtn = findViewById(R.id.organizer_button);
         attendeeBtn = findViewById(R.id.attendee_button);
+        adminBtn = findViewById(R.id.admin_button);
 
         // Ask for notification permissions RIGHT AT THE BEGINNING
         askNotificationPermission();
@@ -129,7 +134,16 @@ public class splashScreen extends AppCompatActivity implements FirestoreCallback
             }
         });
 
+        adminBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), AdminHomepageActivity.class);  // placeholder for attendee opener
+                startActivity(intent);
+            }
+        });
 
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.getUserByID(lc.getUserID(this), this);
     }
 
     /**

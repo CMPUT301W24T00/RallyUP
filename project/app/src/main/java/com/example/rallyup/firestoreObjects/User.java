@@ -15,6 +15,7 @@ public class User {
     private GeoPoint latlong;
     private Boolean wantNotifications = false;
     private String fcmToken = "";
+    private boolean admin = false;
 
     /**
      * Default constructor for User.
@@ -241,5 +242,13 @@ public class User {
      */
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }
